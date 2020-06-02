@@ -10,8 +10,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.LayoutInflaterCompat;
 
 import com.hym.appstore.R;
+import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 import com.xuexiang.xui.XUI;
 import com.xuexiang.xui.utils.StatusBarUtils;
 
@@ -24,6 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private Unbinder mUnbinder;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        LayoutInflaterCompat.setFactory2(getLayoutInflater(), new IconicsLayoutInflater2(getDelegate()));
         super.onCreate(savedInstanceState);
         XUI.initTheme(this);
         StatusBarUtils.initStatusBarStyle(this,false, ActivityCompat.getColor(this, R.color.theme_blue));

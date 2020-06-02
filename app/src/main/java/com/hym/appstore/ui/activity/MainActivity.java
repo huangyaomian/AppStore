@@ -1,48 +1,73 @@
 package com.hym.appstore.ui.activity;
 
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 import com.hym.appstore.R;
+import com.hym.appstore.bean.FragmentInfo;
+import com.hym.appstore.ui.adapter.MyViewPagerAdapter;
+import com.hym.appstore.ui.fragment.GameFragment;
+import com.hym.appstore.ui.fragment.RankingFragment;
+import com.hym.appstore.ui.fragment.RecommendFragment;
+import com.hym.appstore.ui.fragment.SortFragment;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.ionicons_typeface_library.Ionicons;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.List;
 
-import static com.xuexiang.xui.XUI.getContext;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity {
 
-    private Toolbar toolbar;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.appBarLayout)
+    AppBarLayout appBarLayout;
+    @BindView(R.id.main_tab_layout)
+    TabLayout mainTabLayout;
+    @BindView(R.id.main_viewpager)
+    ViewPager mainViewpager;
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
 
-    private DrawerLayout mDrawerLayout;
+    private List<FragmentInfo> fragmentInfos;
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        // NavigationView 可以将滑动菜单页面的实现变得非常简单
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        init();
+        initView();
+
+    }
+
+    @Override
+    public void init() {
+        //fragmentinfo 数据集合
+        fragmentInfos =  new ArrayList<>();
+
+// NavigationView 可以将滑动菜单页面的实现变得非常简单
         ActionBar supportActionBar = getSupportActionBar();
         //Toolbar 的最左边加入一个导航按钮；引得用户滑动
         if (supportActionBar != null) {
@@ -60,38 +85,36 @@ public class MainActivity extends BaseActivity {
                 return true;
             }
         });
+    }
 
+    @Override
+    public void initView() {
+        fragmentInfos.add(new FragmentInfo("推荐", RecommendFragment.class));
+        fragmentInfos.add(new FragmentInfo("排行", RankingFragment.class));
+        fragmentInfos.add(new FragmentInfo("游戏", GameFragment.class));
+        fragmentInfos.add(new FragmentInfo("分类", SortFragment.class));
+        MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(),fragmentInfos);
+        mainViewpager.setAdapter(myViewPagerAdapter);
+        mainTabLayout.setupWithViewPager(mainViewpager);
+    }
 
-
+    @Override
+    public void initData() {
 
     }
 
-    /**
-     * 模拟数据刷新
-     */
-    private void refreshFruits() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                    }
-                });
-            }
-        }).start();
-    }
+    @Override
+    public void initEvent() {
 
+    }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar, menu);//加载toolbar.xml 菜单文件
+//        getMenuInflater().inflate(R.menu.toolbar, menu);//加载toolbar.xml 菜单文件
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar, menu);
+        menu.findItem(R.id.delete).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_android_delete).color(getResources().getColor(R.color.TextColor)).actionBar());
         return true;
     }
 
@@ -117,23 +140,6 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
-    @Override
-    public void init() {
 
-    }
 
-    @Override
-    public void initView() {
-
-    }
-
-    @Override
-    public void initData() {
-
-    }
-
-    @Override
-    public void initEvent() {
-
-    }
 }
