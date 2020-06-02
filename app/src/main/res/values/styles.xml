@@ -7,6 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+
     <!-- bmob application theme. -->
     <style name="AppTheme1" parent="XUITheme.Phone" >
         <item name="android:windowAnimationStyle">@style/Animation</item>

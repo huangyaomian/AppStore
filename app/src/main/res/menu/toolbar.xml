@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
     <item
-        android:id="@+id/backup"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="backup"
+        android:id="@+id/search"
+        android:title="search"
         app:showAsAction="always" /><!--always 表示永远显示在toolbar中 如果屏幕空间不够则不显示 -->
     <item
         android:id="@+id/delete"
-        android:title=""
+        android:title="delete"
         app:showAsAction="ifRoom" /><!--ifRoom 表示屏幕空间足够的情况下；显示在Toolbar中；不够的话；就显示在菜单中 -->
 <!--    android:icon="@drawable/ic_launcher_background"-->
     <item
         android:id="@+id/setting"
-
         android:icon="@drawable/ic_launcher_background"
         android:title="11"
         app:showAsAction="never"/>
@@ -23,6 +23,5 @@
         android:icon="@drawable/ic_launcher_background"
         android:title="22"
         app:showAsAction="never"/><!--never 表示永远显示在菜单中 -->
-
 
 </menu>

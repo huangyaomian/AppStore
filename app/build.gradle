@@ -71,4 +71,7 @@ dependencies {
     implementation "com.mikepenz:iconics-views:3.2.5"
     implementation 'com.mikepenz:ionicons-typeface:2.0.1.5@aar'//字体库
 
+    //ToastUtils
+    implementation 'com.hjq:toast:8.2'
+
 }

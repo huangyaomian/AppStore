@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.multidex.MultiDex;
 
+import com.hjq.toast.ToastUtils;
 import com.xuexiang.xui.XUI;
 
 
@@ -17,6 +18,9 @@ public class App extends Application {
         //XUI.debug(true);  //开启UI框架调试日志
 
         MultiDex.install(this);
+
+        // 在 Application 中初始化
+        ToastUtils.init(this);
 
     }
 }

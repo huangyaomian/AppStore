@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
@@ -16,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.hjq.toast.ToastUtils;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.FragmentInfo;
 import com.hym.appstore.ui.adapter.MyViewPagerAdapter;
@@ -72,7 +74,7 @@ public class MainActivity extends BaseActivity {
         //Toolbar 的最左边加入一个导航按钮；引得用户滑动
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true);
-            supportActionBar.setHomeAsUpIndicator(R.drawable.ic_launcher_background);
+            supportActionBar.setHomeAsUpIndicator(new IconicsDrawable(this, Ionicons.Icon.ion_android_menu).color(getResources().getColor(R.color.TextColor)).actionBar());
         }
 
 //        navigationView.setCheckedItem(R.id.nav_call);//设置默认选择
@@ -89,6 +91,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        toolbar.setOverflowIcon(new IconicsDrawable(this, Ionicons.Icon.ion_android_more_vertical).color(getResources().getColor(R.color.TextColor)).actionBar());
         fragmentInfos.add(new FragmentInfo("推荐", RecommendFragment.class));
         fragmentInfos.add(new FragmentInfo("排行", RankingFragment.class));
         fragmentInfos.add(new FragmentInfo("游戏", GameFragment.class));
@@ -114,7 +117,9 @@ public class MainActivity extends BaseActivity {
 //        getMenuInflater().inflate(R.menu.toolbar, menu);//加载toolbar.xml 菜单文件
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar, menu);
-        menu.findItem(R.id.delete).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_android_delete).color(getResources().getColor(R.color.TextColor)).actionBar());
+        menu.getItem(2).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_trash_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
+        menu.findItem(R.id.delete).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_trash_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
+        menu.findItem(R.id.search).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_search).color(getResources().getColor(R.color.TextColor)).actionBar());
         return true;
     }
 
@@ -124,8 +129,9 @@ public class MainActivity extends BaseActivity {
             case android.R.id.home://Toolbar 的最左边加入一个导航按钮；引得用户滑动
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
-            case R.id.backup:
-                Toast.makeText(this, "you clicked backup", Toast.LENGTH_SHORT).show();
+            case R.id.search:
+                ToastUtils.show("you clicked backup");
+//                Toast.makeText(this, "you clicked backup", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.delete:
                 Toast.makeText(this, "you clicked delete", Toast.LENGTH_SHORT).show();

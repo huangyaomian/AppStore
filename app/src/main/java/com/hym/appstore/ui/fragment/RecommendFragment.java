@@ -1,32 +1,40 @@
 package com.hym.appstore.ui.fragment;
 
-import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.hym.appstore.R;
 
+import butterknife.BindView;
 
-public class RecommendFragment extends Fragment {
+
+public class RecommendFragment extends BaseFragment {
 
 
+    @BindView(R.id.recommend_rv)
+    RecyclerView mRecommendRv;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
+    protected int setLayoutResourceID() {
+        return R.layout.fragment_recommend;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recommend, container, false);
+    protected void initView() {
+        mRecommendRv.setAdapter();
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void init() {
+
+    }
+
+    @Override
+    protected void initEvent() {
+
     }
 }
