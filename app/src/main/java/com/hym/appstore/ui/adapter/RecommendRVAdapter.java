@@ -12,11 +12,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.RecommendBean;
 
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Delayed;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,19 +60,26 @@ public class RecommendRVAdapter extends RecyclerView.Adapter<RecommendRVAdapter.
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-      /*  GoodsInfoBean.GoodlistBean goodsBean = goodsList.get(position);
-//        Log.d("onBindViewHolder",goodsBean.getTitle());
-        holder.mItmeGoodsTitle.setText(goodsBean.getTitle());
-        holder.mItemGoodsShortTitle.setText(goodsList.get(position).getTitle());
-        holder.mItemGoodsPrice.setText("￥" +goodsList.get(position).getPrice());
-        holder.mItemGoodsValue.setText("￥" +goodsList.get(position).getValue());
-        holder.mItemGoodsValue.setPaintFlags(holder.mItemGoodsValue.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.mItemGoodsBought.setText("已售:" + goodsList.get(position).getBought());
-        String[] picUrl = getResources().getStringArray(R.array.pic_url);
-        Random random = new Random();
-        int i = random.nextInt(16);
-        Uri uri = Uri.parse(picUrl[i]);
-        holder.mItmeGoodsIv.setImageURI(uri);
+        RecommendBean.DataBean.ItemsBean itemsBean = gameInfoList.get(position);
+        List<String> game_type = itemsBean.getGame_type();
+        String gameType = null;
+        if (!game_type.isEmpty()){
+            if (game_type.size() > 1) {
+                for (int i = 0; i < game_type.size(); i++) {
+                        if (i == game_type.size()-1){
+                            gameType = gameType + game_type.get(i);
+                        }else{
+                            gameType = gameType + game_type.get(i) + " | ";
+                        }
+                }
+            }else {
+                gameType = game_type.get(0);
+            }
+        }
+        holder.mRecommendItemGameName.setText(itemsBean.getApp_name());
+        holder.mRecommendItemGameTag.setText(gameType);
+        holder.mRecommendItemGameReview.setText(String.valueOf(itemsBean.getReviews().getScore()));
+        holder.mRecommendItemIv.setImageURI(Uri.parse(itemsBean.getIcon_url()));
 
         // 点击事件一般都写在绑定数据这里，当然写到上边的创建布局时候也是可以的
         if (mItemClickListener != null){
@@ -81,7 +90,7 @@ public class RecommendRVAdapter extends RecyclerView.Adapter<RecommendRVAdapter.
                     mItemClickListener.onItemClick(position);
                 }
             });
-        }*/
+        }
     }
 
     @Override
@@ -92,7 +101,7 @@ public class RecommendRVAdapter extends RecyclerView.Adapter<RecommendRVAdapter.
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.recommend_item_iv)
-        ImageView mRecommendItemIv;
+        SimpleDraweeView mRecommendItemIv;
         @BindView(R.id.recommend_item_game_name)
         TextView mRecommendItemGameName;
         @BindView(R.id.recommend_item_game_tag)

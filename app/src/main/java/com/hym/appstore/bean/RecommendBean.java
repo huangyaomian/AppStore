@@ -404,15 +404,10 @@ public class RecommendBean {
                      * 5 : 0
                      */
 
-                    @com.google.gson.annotations.SerializedName("1")
                     private int _$1;
-                    @com.google.gson.annotations.SerializedName("2")
                     private int _$2;
-                    @com.google.gson.annotations.SerializedName("3")
                     private int _$3;
-                    @com.google.gson.annotations.SerializedName("4")
                     private int _$4;
-                    @com.google.gson.annotations.SerializedName("5")
                     private int _$5;
 
                     public int get_$1() {
@@ -455,6 +450,7 @@ public class RecommendBean {
                         this._$5 = _$5;
                     }
                 }
+
             }
         }
     }

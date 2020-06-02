@@ -10,10 +10,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
+import com.hym.appstore.nohttp.HttpListner;
+import com.hym.appstore.url.ContantsPool;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements ContantsPool, HttpListner<String> {
     private View mContentView;
     private Context mContext;
     private Unbinder mUnbinder;
