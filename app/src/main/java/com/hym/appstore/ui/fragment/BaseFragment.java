@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 //public abstract class BaseFragment extends Fragment implements ContantsPool, HttpListener<String> {
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements ContantsPool{
     private View mContentView;
     private Context mContext;
     private Unbinder mUnbinder;

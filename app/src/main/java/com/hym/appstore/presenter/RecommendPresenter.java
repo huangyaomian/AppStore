@@ -23,19 +23,21 @@ public class RecommendPresenter implements RecommendContract.Presenter {
     }
 
     @Override
-    public void requestRecommendData() {
+    public void requestRecommendData(boolean isLoading, String URL) {
         mView.showLoading();
-        mModel.getRecommendRequest(mActivity, this, true, true);
+        mModel.getRecommendRequest(mActivity, this, true, isLoading,URL);
     }
+
+
 
     @Override
     public void onSucceed(int what, Response<String> response) {
         Gson gson = new Gson();
         RecommendBean recommendBean = gson.fromJson(response.get(), RecommendBean.class);
-        List<RecommendBean.DataBean.ItemsBean> items = recommendBean.getData().getItems();
+//        List<RecommendBean.DataBean.ItemsBean> items = recommendBean.getData().getItems();
         switch (what) {
             case 0:
-                mView.showResult(items);
+                mView.showResult(recommendBean);
                 break;
         }
         mView.dismissLoading();
@@ -46,6 +48,7 @@ public class RecommendPresenter implements RecommendContract.Presenter {
         mView.showError(response.toString());
         mView.dismissLoading();
     }
+
 
 
 }

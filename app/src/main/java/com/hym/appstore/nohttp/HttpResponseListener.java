@@ -18,13 +18,13 @@ public class HttpResponseListener<T> implements OnResponseListener<T> {
 
     private Request<T> mRequest;
 
-    public HttpResponseListener(Context context, HttpListener<T> mListener, Request<T> mRequest, boolean isLoading, boolean canCancle) {
+    public HttpResponseListener(Context context, HttpListener<T> mListener, Request<T> mRequest, boolean isLoading, boolean canCancel) {
         this.isLoading = isLoading;
         this.mRequest = mRequest;
         this.mListener = mListener;
         if (context != null) {
             mWaitDialog = new WaitDialog(context);
-            mWaitDialog.setCancelable(canCancle);
+            mWaitDialog.setCancelable(canCancel);
             mWaitDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialogInterface) {

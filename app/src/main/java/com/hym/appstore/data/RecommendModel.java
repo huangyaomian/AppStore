@@ -12,9 +12,9 @@ import static com.hym.appstore.url.ContantsPool.recommendURL;
 
 public class RecommendModel {
 
-    public  void getRecommendRequest(Activity activity, HttpListener httpListener, boolean canCancel, boolean isLoading){
+    public  void getRecommendRequest(Activity activity, HttpListener httpListener, boolean canCancel, boolean isLoading,String URL){
         /**推薦遊戲的请求**/
-        Request<String> recommendRequest = NoHttp.createStringRequest(recommendURL, RequestMethod.GET);
+        Request<String> recommendRequest = NoHttp.createStringRequest(URL, RequestMethod.GET);
         CallServer.getInstance().add(activity, 0, recommendRequest, httpListener, canCancel, isLoading);
     }
 }

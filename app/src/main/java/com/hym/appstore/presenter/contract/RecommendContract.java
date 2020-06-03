@@ -11,7 +11,7 @@ public interface RecommendContract {
     interface View extends BaseView{
 
 
-        void showResult(List<RecommendBean.DataBean.ItemsBean> datas);
+        void showResult(RecommendBean datas);
         void showNoData();
         void showError(String msg);
 
@@ -21,6 +21,7 @@ public interface RecommendContract {
 
     interface  Presenter extends BasePresenter{
 
-        public void requestRecommendData();
+        public void requestRecommendData(boolean isLoading,String URL);
+
     }
 }

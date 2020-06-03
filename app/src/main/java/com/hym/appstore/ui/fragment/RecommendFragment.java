@@ -2,6 +2,7 @@ package com.hym.appstore.ui.fragment;
 
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +12,8 @@ import com.hym.appstore.bean.RecommendBean;
 import com.hym.appstore.presenter.RecommendPresenter;
 import com.hym.appstore.presenter.contract.RecommendContract;
 import com.hym.appstore.ui.adapter.RecommendRVAdapter;
+import com.hym.appstore.url.ContantsPool;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -37,6 +40,8 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 
     private RecommendContract.Presenter mPresenter;
 
+    private String recommendNextURL = null;
+
     @Override
     protected int setLayoutResourceID() {
         return R.layout.fragment_recommend;
@@ -44,13 +49,14 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 
     @Override
     protected void initView() {
-
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        mRecommendRv.setLayoutManager(layoutManager);
     }
 
     @Override
     protected void initData() {
       /**推薦遊戲的请求**/
-      mPresenter.requestRecommendData();
+      mPresenter.requestRecommendData(true,recommendURL);
     }
 
     @Override
@@ -65,9 +71,12 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
         recommendRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                mPresenter.requestRecommendData();
+                mPresenter.requestRecommendData(false,recommendURL);
             }
         });
+//        recommendRefreshLayout.setRefreshFooter(new RefreshFooter() {
+//        });
+
     }
 
 
@@ -91,13 +100,14 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
     }
 
     @Override
-    public void showResult(List<RecommendBean.DataBean.ItemsBean> datas) {
+    public void showResult(RecommendBean recommendBean) {
         recommendRefreshLayout.finishRefresh();//结束刷新
-        LinearLayoutManager layoutManager;
-        mGameList.clear();
-        mGameList.addAll(datas);
-        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        mRecommendRv.setLayoutManager(layoutManager);
+
+            mGameList.clear();
+
+        List<RecommendBean.DataBean.ItemsBean> items = recommendBean.getData().getItems();
+        recommendNextURL = recommendBean.getData().getPager().getNext();
+        mGameList.addAll(items);
         RecommendRVAdapter recommendRVAdapter = new RecommendRVAdapter(mGameList, getActivity());
         mRecommendRv.setAdapter(recommendRVAdapter);
         // 设置数据后就要给RecyclerView设置点击事件
@@ -110,6 +120,7 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
         });
 
     }
+
 
     @Override
     public void showNoData() {
