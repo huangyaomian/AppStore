@@ -70,40 +70,6 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
         });
     }
 
-   /* @Override
-    public void onSucceed(int what, Response<String> response) {
-        mGson = new Gson();
-        LinearLayoutManager layoutManager;
-        switch (what) {
-            case 0:
-                Log.d("onSucceed", response.get());
-                RecommendBean recommendBean = mGson.fromJson(response.get(), RecommendBean.class);
-                List<RecommendBean.DataBean.ItemsBean> items = recommendBean.getData().getItems();
-                mGamelist.clear();
-                mGamelist.addAll(items);
-                layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-                mRecommendRv.setLayoutManager(layoutManager);
-                RecommendRVAdapter recommendRVAdapter = new RecommendRVAdapter(mGamelist, getActivity());
-                mRecommendRv.setAdapter(recommendRVAdapter);
-                // 设置数据后就要给RecyclerView设置点击事件
-                recommendRVAdapter.setOnItemClickListener(new RecommendRVAdapter.ItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
-                        // 这里本来是跳转页面 ，我们就在这里直接让其弹toast来演示
-                        ToastUtils.show(mGamelist.get(position).getApp_name());
-                    }
-                });
-                break;
-
-        }
-        recommendRefreshLayout.finishRefresh();//结束刷新
-    }
-
-    @Override
-    public void onFailed(int what, Response<String> response) {
-
-    }*/
-
 
 
 
