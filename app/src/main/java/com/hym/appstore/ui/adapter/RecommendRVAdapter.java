@@ -62,7 +62,7 @@ public class RecommendRVAdapter extends RecyclerView.Adapter<RecommendRVAdapter.
 
         RecommendBean.DataBean.ItemsBean itemsBean = gameInfoList.get(position);
         List<String> game_type = itemsBean.getGame_type();
-        String gameType = null;
+        String gameType = "";
         if (!game_type.isEmpty()){
             if (game_type.size() > 1) {
                 for (int i = 0; i < game_type.size(); i++) {

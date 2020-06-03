@@ -9,23 +9,44 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hym.appstore.R;
+import com.yanzhenjie.nohttp.rest.Response;
 
 
-public class RankingFragment extends Fragment {
+public class RankingFragment extends BaseFragment {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
+    protected int setLayoutResourceID() {
+        return R.layout.fragment_ranking;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ranking, container, false);
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void init() {
+
+    }
+
+    @Override
+    protected void initEvent() {
+
+    }
+
+    @Override
+    public void onSucceed(int what, Response<String> response) {
+
+    }
+
+    @Override
+    public void onFailed(int what, Response<String> response) {
+
     }
 }

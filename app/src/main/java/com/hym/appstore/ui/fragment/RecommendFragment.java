@@ -9,14 +9,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.hjq.toast.ToastUtils;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.RecommendBean;
 import com.hym.appstore.nohttp.CallServer;
+import com.hym.appstore.ui.adapter.RecommendRVAdapter;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.Response;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +33,6 @@ public class RecommendFragment extends BaseFragment {
     RecyclerView mRecommendRv;
 
     private Request<String> recommendRequest;
-    private Request<String> filmRequest;
     /**
      * 自定义的容器
      **/
@@ -45,19 +47,19 @@ public class RecommendFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-//        mRecommendRv.setAdapter();
+//        mRecommendRv.setAdapter(new RecommendRVAdapter(mGamelist, getActivity()));
     }
 
     @Override
     protected void initData() {
         /**猜你喜欢的请求**/
-        recommendRequest = NoHttp.createStringRequest(spRecommendURL, RequestMethod.GET);
+        recommendRequest = NoHttp.createStringRequest(recommendURL, RequestMethod.GET);
         CallServer.getInstance().add(getActivity(), 0, recommendRequest, this, true, true);
     }
 
     @Override
     protected void init() {
-
+        mGamelist = new ArrayList<>();
     }
 
     @Override
@@ -71,9 +73,26 @@ public class RecommendFragment extends BaseFragment {
         LinearLayoutManager layoutManager;
         switch (what) {
             case 0:
+                Log.d("onSucceed", response.get());
+                RecommendBean recommendBean = mGson.fromJson(response.get(), RecommendBean.class);
+                List<RecommendBean.DataBean.ItemsBean> items = recommendBean.getData().getItems();
+                mGamelist.addAll(items);
+                layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                mRecommendRv.setLayoutManager(layoutManager);
+                RecommendRVAdapter recommendRVAdapter = new RecommendRVAdapter(mGamelist, getActivity());
+                mRecommendRv.setAdapter(recommendRVAdapter);
+//                mRecommendRv.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+                // 设置数据后就要给RecyclerView设置点击事件
+                recommendRVAdapter.setOnItemClickListener(new RecommendRVAdapter.ItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                        // 这里本来是跳转页面 ，我们就在这里直接让其弹toast来演示
+                        ToastUtils.show(mGamelist.get(position).getApp_name());
+                    }
+                });
                /* mHomeRecommend.setVisibility(View.VISIBLE);
                 GoodsInfoBean goodsInfo = mGson.fromJson(response.get(), GoodsInfoBean.class);
-//                Log.d("onSucceed", response.get());
+//
                 List<GoodsInfoBean.GoodlistBean> goodsList = goodsInfo.getGoodlist();
                 mGoodslist.clear();
                 mGoodslist.addAll(goodsList);
