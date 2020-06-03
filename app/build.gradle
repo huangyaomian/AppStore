@@ -81,7 +81,7 @@ dependencies {
     implementation 'com.facebook.fresco:fresco:2.2.0'
 
     //gson
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     //SmartRefreshLayout下拉刷新
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.2'  //1.0.5及以前版本的老用户升级需谨慎，API改动过大
