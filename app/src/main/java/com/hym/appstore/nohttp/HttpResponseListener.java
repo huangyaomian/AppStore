@@ -10,7 +10,7 @@ import com.yanzhenjie.nohttp.rest.Response;
 
 public class HttpResponseListener<T> implements OnResponseListener<T> {
 
-    private HttpListner<T> mListener;
+    private HttpListener<T> mListener;
 
     private WaitDialog mWaitDialog;
 
@@ -18,7 +18,7 @@ public class HttpResponseListener<T> implements OnResponseListener<T> {
 
     private Request<T> mRequest;
 
-    public HttpResponseListener(Context context, HttpListner<T> mListener, Request<T> mRequest, boolean isLoading, boolean canCancle) {
+    public HttpResponseListener(Context context, HttpListener<T> mListener, Request<T> mRequest, boolean isLoading, boolean canCancle) {
         this.isLoading = isLoading;
         this.mRequest = mRequest;
         this.mListener = mListener;

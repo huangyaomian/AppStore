@@ -40,13 +40,5 @@ public class RankingFragment extends BaseFragment {
 
     }
 
-    @Override
-    public void onSucceed(int what, Response<String> response) {
 
-    }
-
-    @Override
-    public void onFailed(int what, Response<String> response) {
-
-    }
 }
