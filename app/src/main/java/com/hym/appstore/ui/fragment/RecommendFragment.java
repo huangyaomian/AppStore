@@ -1,27 +1,19 @@
 package com.hym.appstore.ui.fragment;
 
-import android.util.Log;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.hjq.toast.ToastUtils;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.RecommendBean;
-import com.hym.appstore.nohttp.CallServer;
 import com.hym.appstore.presenter.RecommendPresenter;
 import com.hym.appstore.presenter.contract.RecommendContract;
 import com.hym.appstore.ui.adapter.RecommendRVAdapter;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.yanzhenjie.nohttp.NoHttp;
-import com.yanzhenjie.nohttp.RequestMethod;
-import com.yanzhenjie.nohttp.rest.Request;
-import com.yanzhenjie.nohttp.rest.Response;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,13 +30,10 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
     @BindView(R.id.recommend_refreshLayout)
     RefreshLayout recommendRefreshLayout;
 
-    private Request<String> recommendRequest;
     /**
      * 自定义的容器
      **/
-    private List<RecommendBean.DataBean.ItemsBean> mGamelist;
-
-    private Gson mGson;
+    private List<RecommendBean.DataBean.ItemsBean> mGameList;
 
     private RecommendContract.Presenter mPresenter;
 
@@ -55,19 +44,18 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 
     @Override
     protected void initView() {
-//        mRecommendRv.setAdapter(new RecommendRVAdapter(mGamelist, getActivity()));
+
     }
 
     @Override
     protected void initData() {
-      /*  *//**推薦遊戲的请求**//*
-        recommendRequest = NoHttp.createStringRequest(recommendURL, RequestMethod.GET);
-        CallServer.getInstance().add(getActivity(), 0, recommendRequest, this, true, true);*/
+      /**推薦遊戲的请求**/
+      mPresenter.requestRecommendData();
     }
 
     @Override
     protected void init() {
-        mGamelist = new ArrayList<>();
+        mGameList = new ArrayList<>();
         mPresenter = new RecommendPresenter(this,getActivity());
     }
 
@@ -77,7 +65,7 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
         recommendRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-//                CallServer.getInstance().add(getActivity(), 0, recommendRequest, RecommendFragment.this, true, true);
+                mPresenter.requestRecommendData();
             }
         });
     }
@@ -138,21 +126,23 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 
     @Override
     public void showResult(List<RecommendBean.DataBean.ItemsBean> datas) {
+        recommendRefreshLayout.finishRefresh();//结束刷新
         LinearLayoutManager layoutManager;
-        mGamelist.clear();
-        mGamelist.addAll(datas);
+        mGameList.clear();
+        mGameList.addAll(datas);
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecommendRv.setLayoutManager(layoutManager);
-        RecommendRVAdapter recommendRVAdapter = new RecommendRVAdapter(mGamelist, getActivity());
+        RecommendRVAdapter recommendRVAdapter = new RecommendRVAdapter(mGameList, getActivity());
         mRecommendRv.setAdapter(recommendRVAdapter);
         // 设置数据后就要给RecyclerView设置点击事件
         recommendRVAdapter.setOnItemClickListener(new RecommendRVAdapter.ItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 // 这里本来是跳转页面 ，我们就在这里直接让其弹toast来演示
-                ToastUtils.show(mGamelist.get(position).getApp_name());
+                ToastUtils.show(mGameList.get(position).getApp_name());
             }
         });
+
     }
 
     @Override
