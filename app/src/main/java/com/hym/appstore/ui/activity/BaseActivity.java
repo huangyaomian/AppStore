@@ -1,6 +1,8 @@
 package com.hym.appstore.ui.activity;
 
+import android.app.Application;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,81 +15,56 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.view.LayoutInflaterCompat;
 
 import com.hym.appstore.R;
+import com.hym.appstore.app.MyApplication;
+import com.hym.appstore.dagger2.component.AppComponent;
+import com.hym.appstore.presenter.BasePresenter;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 import com.xuexiang.xui.XUI;
 import com.xuexiang.xui.utils.StatusBarUtils;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity {
 
-//    private ToolbarHelper toolbarHelper;
     private Unbinder mUnbinder;
+    private MyApplication mMyApplication;
+
+    @Inject
+    public T mPresenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        LayoutInflaterCompat.setFactory2(getLayoutInflater(), new IconicsLayoutInflater2(getDelegate()));
+        LayoutInflaterCompat.setFactory2(getLayoutInflater(),new IconicsLayoutInflater2(getDelegate()));
         super.onCreate(savedInstanceState);
+        setContentView(setLayoutResourceID());
+        mUnbinder = ButterKnife.bind(this);
         XUI.initTheme(this);
         StatusBarUtils.initStatusBarStyle(this,false, ActivityCompat.getColor(this, R.color.theme_blue));
+        mMyApplication = (MyApplication) getApplication();
+        setupActivityComponent(mMyApplication.getAppComponent());
+        init();
+        initView();
+        initEvent();
     }
 
-    @Override
-    public void setContentView(@LayoutRes int layoutResID) {
+    protected abstract int setLayoutResourceID();
 
-        super.setContentView(layoutResID);
-
-        mUnbinder = ButterKnife.bind(this);
-
-      /*  toolbarHelper = new ToolbarHelper(layoutResID,BaseActivity.this);
-
-        Toolbar toolbar = toolbarHelper.getToolbar();
-
-        setContentView(toolbarHelper.getmContentView());
-
-        setSupportActionBar(toolbar);*/
-
-        //**//**自定义一些自己的操作**//**//
-//        onCreateCustomToolbar(toolbar);
+    protected abstract void setupActivityComponent(AppComponent appComponent);
 
 
-
-    }
-
-    @Override
-    public void setContentView(View view, ViewGroup.LayoutParams params) {
-        super.setContentView(view, params);
-        mUnbinder = ButterKnife.bind(this);
-    }
-
-    @Override
-    public void setContentView(View view) {
-        super.setContentView(view);
-        mUnbinder = ButterKnife.bind(this);
-    }
-
-    public void onCreateCustomToolbar(Toolbar toolbar) {
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
-            finish();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mUnbinder.unbind();
+        if (mUnbinder != Unbinder.EMPTY) {
+            mUnbinder.unbind();
+        }
     }
 
     public abstract void init();
     public abstract void initView();
-    public abstract void initData();
     public abstract void initEvent();
 }

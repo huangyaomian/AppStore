@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.hjq.toast.ToastUtils;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.FragmentInfo;
+import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.ui.adapter.MyViewPagerAdapter;
 import com.hym.appstore.ui.fragment.GameFragment;
 import com.hym.appstore.ui.fragment.RankingFragment;
@@ -57,11 +58,16 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         setSupportActionBar(toolbar);
-        init();
-        initView();
+    }
 
+    @Override
+    protected int setLayoutResourceID() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void setupActivityComponent(AppComponent appComponent) {
     }
 
     @Override
@@ -69,7 +75,7 @@ public class MainActivity extends BaseActivity {
         //fragmentinfo 数据集合
         fragmentInfos =  new ArrayList<>();
 
-// NavigationView 可以将滑动菜单页面的实现变得非常简单
+        // NavigationView 可以将滑动菜单页面的实现变得非常简单
         ActionBar supportActionBar = getSupportActionBar();
         //Toolbar 的最左边加入一个导航按钮；引得用户滑动
         if (supportActionBar != null) {
@@ -101,10 +107,6 @@ public class MainActivity extends BaseActivity {
         mainTabLayout.setupWithViewPager(mainViewpager);
     }
 
-    @Override
-    public void initData() {
-
-    }
 
     @Override
     public void initEvent() {

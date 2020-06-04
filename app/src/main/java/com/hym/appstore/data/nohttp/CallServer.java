@@ -8,7 +8,7 @@ import com.yanzhenjie.nohttp.rest.RequestQueue;
 
 public class CallServer {
 
-    private final RequestQueue mQueue;
+/*    private final RequestQueue mQueue;
 
     private CallServer(){
         mQueue = NoHttp.newRequestQueue();
@@ -22,7 +22,7 @@ public class CallServer {
             callServer = new CallServer();
         }
         return callServer;
-    }
+    }*/
 
 
 

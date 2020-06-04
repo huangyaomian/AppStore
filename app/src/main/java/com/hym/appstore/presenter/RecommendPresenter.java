@@ -10,29 +10,24 @@ import com.yanzhenjie.nohttp.rest.Response;
 
 import java.util.List;
 
-public class RecommendPresenter implements RecommendContract.Presenter {
+import javax.inject.Inject;
 
-    private RecommendContract.View mView;
-    private RecommendModel mModel;
-    private Activity mActivity;
+public class RecommendPresenter extends BasePresenter<RecommendModel,RecommendContract.View> {
 
+
+    @Inject
     public RecommendPresenter(RecommendContract.View mView,RecommendModel model) {
-        this.mView = mView;
-//        this.mActivity = activity;
-        mModel = model;
+        super(model,mView);
     }
 
-    @Override
     public void requestRecommendData(String URL) {
-        mView.showLoading();
-//        mModel.getRecommendRequest(mActivity, this, true, isLoading,URL);
         mModel.getRecommendRequest(this, URL);
     }
 
 
     @Override
     public void onStart(int what) {
-
+        mView.showLoading();
     }
 
     @Override

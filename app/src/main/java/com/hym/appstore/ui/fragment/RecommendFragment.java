@@ -10,9 +10,11 @@ import com.hjq.toast.ToastUtils;
 import com.hym.appstore.R;
 import com.hym.appstore.app.MyApplication;
 import com.hym.appstore.bean.RecommendBean;
+import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.dagger2.component.DaggerAppComponent;
 import com.hym.appstore.dagger2.component.DaggerRecommendComponent;
 import com.hym.appstore.dagger2.module.RecommendModule;
+import com.hym.appstore.presenter.RecommendPresenter;
 import com.hym.appstore.presenter.contract.RecommendContract;
 import com.hym.appstore.ui.adapter.RecommendRVAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -28,7 +30,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 
 
-public class RecommendFragment extends BaseFragment implements RecommendContract.View {
+public class RecommendFragment extends BaseFragment<RecommendPresenter> implements RecommendContract.View {
 
 
     @BindView(R.id.recommend_rv)
@@ -41,10 +43,13 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
      **/
     private List<RecommendBean.DataBean.ItemsBean> mGameList;
 
-    @Inject
-    RecommendContract.Presenter mPresenter;
 
     private String recommendNextURL = null;
+
+    @Override
+    protected void setupActivityComponent(AppComponent appComponent) {
+        DaggerRecommendComponent.builder().appComponent(appComponent).recommendModule(new RecommendModule(this)).build().inject(this);
+    }
 
     @Override
     protected int setLayoutResourceID() {
@@ -57,18 +62,11 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
         mRecommendRv.setLayoutManager(layoutManager);
     }
 
-    @Override
-    protected void initData() {
-      /**推薦遊戲的请求**/
-      mPresenter.requestRecommendData(recommendURL);
-    }
 
     @Override
     protected void init() {
+        mPresenter.requestRecommendData(recommendURL);
         mGameList = new ArrayList<>();
-//        mPresenter = new RecommendPresenter(this,getActivity());
-        DaggerAppComponent appComponent = ((MyApplication) getActivity().getApplication()).getAppComponent();
-        DaggerRecommendComponent.builder().appComponent(appComponent).recommendModule(new RecommendModule(this)).build().inject(this);
 
     }
 

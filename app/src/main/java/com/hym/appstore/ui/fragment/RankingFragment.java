@@ -9,11 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hym.appstore.R;
+import com.hym.appstore.dagger2.component.AppComponent;
 import com.yanzhenjie.nohttp.rest.Response;
 
 
 public class RankingFragment extends BaseFragment {
 
+
+    @Override
+    protected void setupActivityComponent(AppComponent appComponent) {
+
+    }
 
     @Override
     protected int setLayoutResourceID() {
@@ -25,10 +31,6 @@ public class RankingFragment extends BaseFragment {
 
     }
 
-    @Override
-    protected void initData() {
-
-    }
 
     @Override
     protected void init() {

@@ -10,29 +10,51 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
+import com.hym.appstore.app.MyApplication;
 import com.hym.appstore.common.ContantsPool;
+import com.hym.appstore.dagger2.component.AppComponent;
+import com.hym.appstore.presenter.BasePresenter;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 //public abstract class BaseFragment extends Fragment implements ContantsPool, HttpListener<String> {
-public abstract class BaseFragment extends Fragment implements ContantsPool {
+public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements ContantsPool {
     private View mContentView;
     private Context mContext;
     private Unbinder mUnbinder;
+
+    private MyApplication mMyApplication;
+
+    @Inject
+    public T mPresenter;
+
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContentView = inflater.inflate(setLayoutResourceID(), container, false);
         mUnbinder = ButterKnife.bind(this, mContentView);
-        mContext = getContext();
-        init();
-        initData();
+
         initView();
         initEvent();
         return mContentView;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mMyApplication = (MyApplication) getActivity().getApplication();
+        setupActivityComponent(mMyApplication.getAppComponent());
+        mContext = getContext();
+        init();
+
+    }
+
+    protected abstract void setupActivityComponent(AppComponent appComponent);
 
     /**
      * 此方法用于返回Fragment设置ContentView的布局文件资源ID * * @return 布局文件资源ID
@@ -44,10 +66,6 @@ public abstract class BaseFragment extends Fragment implements ContantsPool {
      */
     protected abstract void initView();
 
-    /**
-     * 一些Data的相关操作
-     */
-    protected abstract void initData();
 
     /**
      * 做一些初始化的操作
@@ -76,7 +94,9 @@ public abstract class BaseFragment extends Fragment implements ContantsPool {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
+        if (mUnbinder != Unbinder.EMPTY) {
+            mUnbinder.unbind();
+        }
     }
 
 }

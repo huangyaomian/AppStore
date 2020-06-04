@@ -16,4 +16,5 @@ public class QueueModule {
     public RequestQueue provideRequestQueue(){
         return NoHttp.newRequestQueue();
     }
+
 }

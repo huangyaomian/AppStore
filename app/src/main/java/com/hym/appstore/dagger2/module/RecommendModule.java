@@ -16,26 +16,15 @@ import dagger.multibindings.Multibinds;
 public class RecommendModule {
 
     private RecommendContract.View mView;
-    private Activity mActivity;
 
     public RecommendModule(RecommendContract.View mView) {
         this.mView = mView;
-//        this.mActivity = mActivity;
     }
 
-    @Provides
-    public RecommendContract.Presenter providePresenter(RecommendContract.View view, RecommendModel model){
-        return  new RecommendPresenter(view,model);
-    }
 
     @Provides
     public RecommendContract.View provideView(){
         return mView;
-    }
-
-    @Provides
-    public Activity provideActivity(){
-        return mActivity;
     }
 
     @Provides
