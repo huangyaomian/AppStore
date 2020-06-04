@@ -1,4 +1,4 @@
-package com.hym.appstore.nohttp;
+package com.hym.appstore.data.nohttp;
 
 import com.yanzhenjie.nohttp.rest.Response;
 

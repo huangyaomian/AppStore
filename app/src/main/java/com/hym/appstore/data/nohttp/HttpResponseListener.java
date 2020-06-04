@@ -1,4 +1,4 @@
-package com.hym.appstore.nohttp;
+package com.hym.appstore.data.nohttp;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import com.hym.appstore.ui.widget.WaitDialog;
 import com.yanzhenjie.nohttp.rest.OnResponseListener;
 import com.yanzhenjie.nohttp.rest.Request;
+import com.yanzhenjie.nohttp.rest.RequestQueue;
 import com.yanzhenjie.nohttp.rest.Response;
 
 public class HttpResponseListener<T> implements OnResponseListener<T> {
@@ -60,5 +61,12 @@ public class HttpResponseListener<T> implements OnResponseListener<T> {
         if (isLoading && mWaitDialog != null && mWaitDialog.isShowing()) {
             mWaitDialog.cancel();
         }
+    }
+
+    /***
+     * 添加一个请求到队列中的
+     */
+    public <T> void add(RequestQueue mQueue, Context context, int what, Request<T> request, HttpListener<T> httpListener, boolean canCancel, boolean isLoading){
+        mQueue.add(what,request,new HttpResponseListener<T>(context,httpListener,request,isLoading,canCancel));
     }
 }

@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hjq.toast.ToastUtils;
 import com.hym.appstore.R;
+import com.hym.appstore.app.MyApplication;
 import com.hym.appstore.bean.RecommendBean;
+import com.hym.appstore.dagger2.component.DaggerAppComponent;
 import com.hym.appstore.dagger2.component.DaggerRecommendComponent;
 import com.hym.appstore.dagger2.module.RecommendModule;
 import com.hym.appstore.presenter.contract.RecommendContract;
@@ -27,7 +29,6 @@ import butterknife.BindView;
 
 
 public class RecommendFragment extends BaseFragment implements RecommendContract.View {
-
 
 
     @BindView(R.id.recommend_rv)
@@ -59,15 +60,16 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
     @Override
     protected void initData() {
       /**推薦遊戲的请求**/
-      mPresenter.requestRecommendData(true,recommendURL);
+      mPresenter.requestRecommendData(recommendURL);
     }
 
     @Override
     protected void init() {
         mGameList = new ArrayList<>();
 //        mPresenter = new RecommendPresenter(this,getActivity());
-        DaggerRecommendComponent.builder()
-                .recommendModule(new RecommendModule(this,getActivity())).build().inject(this);
+        DaggerAppComponent appComponent = ((MyApplication) getActivity().getApplication()).getAppComponent();
+        DaggerRecommendComponent.builder().appComponent(appComponent).recommendModule(new RecommendModule(this)).build().inject(this);
+
     }
 
     @Override
@@ -76,7 +78,7 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
         recommendRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                mPresenter.requestRecommendData(false,recommendURL);
+                mPresenter.requestRecommendData(recommendURL);
             }
         });
 //        recommendRefreshLayout.setRefreshFooter(new RefreshFooter() {

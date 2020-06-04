@@ -21,7 +21,7 @@ public interface RecommendContract {
 
     interface  Presenter extends BasePresenter{
 
-        public void requestRecommendData(boolean isLoading,String URL);
+        public void requestRecommendData(String URL);
 
     }
 }

@@ -6,6 +6,7 @@ import com.hym.appstore.data.RecommendModel;
 import com.hym.appstore.presenter.RecommendPresenter;
 import com.hym.appstore.presenter.contract.RecommendContract;
 import com.hym.appstore.ui.adapter.RecommendRVAdapter;
+import com.yanzhenjie.nohttp.rest.RequestQueue;
 
 import dagger.Module;
 import dagger.Provides;
@@ -17,14 +18,14 @@ public class RecommendModule {
     private RecommendContract.View mView;
     private Activity mActivity;
 
-    public RecommendModule(RecommendContract.View mView, Activity mActivity) {
+    public RecommendModule(RecommendContract.View mView) {
         this.mView = mView;
-        this.mActivity = mActivity;
+//        this.mActivity = mActivity;
     }
 
     @Provides
-    public RecommendContract.Presenter providePresenter(RecommendContract.View view, Activity activity, RecommendModel model){
-        return  new RecommendPresenter(view,activity,model);
+    public RecommendContract.Presenter providePresenter(RecommendContract.View view, RecommendModel model){
+        return  new RecommendPresenter(view,model);
     }
 
     @Provides
@@ -38,8 +39,8 @@ public class RecommendModule {
     }
 
     @Provides
-    public RecommendModel provideRecommendModel(){
-        return new RecommendModel();
+    public RecommendModel provideRecommendModel(RequestQueue mRequestQueue){
+        return new RecommendModel(mRequestQueue);
     }
 
     public RecommendRVAdapter provideAdapter(){

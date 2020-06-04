@@ -16,19 +16,24 @@ public class RecommendPresenter implements RecommendContract.Presenter {
     private RecommendModel mModel;
     private Activity mActivity;
 
-    public RecommendPresenter(RecommendContract.View mView ,Activity activity,RecommendModel model) {
+    public RecommendPresenter(RecommendContract.View mView,RecommendModel model) {
         this.mView = mView;
-        this.mActivity = activity;
+//        this.mActivity = activity;
         mModel = model;
     }
 
     @Override
-    public void requestRecommendData(boolean isLoading, String URL) {
+    public void requestRecommendData(String URL) {
         mView.showLoading();
-        mModel.getRecommendRequest(mActivity, this, true, isLoading,URL);
+//        mModel.getRecommendRequest(mActivity, this, true, isLoading,URL);
+        mModel.getRecommendRequest(this, URL);
     }
 
 
+    @Override
+    public void onStart(int what) {
+
+    }
 
     @Override
     public void onSucceed(int what, Response<String> response) {
@@ -49,6 +54,10 @@ public class RecommendPresenter implements RecommendContract.Presenter {
         mView.dismissLoading();
     }
 
+    @Override
+    public void onFinish(int what) {
+
+    }
 
 
 }

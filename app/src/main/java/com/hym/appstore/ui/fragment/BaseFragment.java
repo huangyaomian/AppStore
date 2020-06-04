@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 
 
 import com.hym.appstore.common.ContantsPool;
-import com.hym.appstore.nohttp.HttpListener;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

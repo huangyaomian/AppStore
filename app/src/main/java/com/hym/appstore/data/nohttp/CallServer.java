@@ -1,6 +1,5 @@
-package com.hym.appstore.nohttp;
+package com.hym.appstore.data.nohttp;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.yanzhenjie.nohttp.NoHttp;
@@ -25,12 +24,6 @@ public class CallServer {
         return callServer;
     }
 
-    /***
-     * 添加一个请求到队列中的
-     */
-    public <T> void add(Context context, int what, Request<T> request
-            , HttpListener<T> httpListener, boolean canCancel, boolean isLoading){
-        mQueue.add(what,request,new HttpResponseListener<T>(context,httpListener,request,isLoading,canCancel));
-    }
+
 
 }

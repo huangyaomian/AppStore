@@ -1,23 +1,51 @@
 package com.hym.appstore.app;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.multidex.MultiDex;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.hjq.toast.ToastUtils;
+import com.hym.appstore.dagger2.component.DaggerAppComponent;
+import com.hym.appstore.dagger2.module.AppModule;
 import com.xuexiang.xui.XUI;
 import com.yanzhenjie.nohttp.InitializationConfig;
 import com.yanzhenjie.nohttp.Logger;
 import com.yanzhenjie.nohttp.NoHttp;
+import com.yanzhenjie.nohttp.rest.RequestQueue;
+
+import javax.inject.Inject;
 
 
-public class App extends Application {
+public class MyApplication extends Application {
+
+
+    private DaggerAppComponent mAppComponent;
+
+//    @Inject
+    RequestQueue mRequestQueue;
+
+
+    public static MyApplication get(Context context){
+        return (MyApplication) context.getApplicationContext();
+    }
+
+    public DaggerAppComponent getAppComponent(){
+        return mAppComponent;
+    }
+
+    public RequestQueue getRequestQueue(){
+        return mRequestQueue;
+    }
 
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        mAppComponent = (DaggerAppComponent) DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+
         XUI.init(this); //初始化UI框架
         //XUI.debug(true);  //开启UI框架调试日志
 
@@ -26,31 +54,6 @@ public class App extends Application {
         // 在 Application 中初始化
         ToastUtils.init(this);
 
-
-       /* X-Os-Version-Name: 9
-        X-Locale: zh_HK
-        X-Patch-Code: 48
-        X-Version-Code: 307
-        X-Version-Name: 8.0.7
-        X-Device-Id: c2306fac-1064-4304-bc07-a44ee9478072
-        X-Device-OS: 9
-        X-ADID: 8c8aaebb-f25a-4a7a-9c94-f7691fbe0c24
-        X-SDK-Version: 28
-        X-System-Locale: zh_HK
-        X-Device-Rooted: 0
-        X-Device-Model: SM-G950U
-        X-SA-Distinct-Id:
-        X-Device-ABIs: arm64-v8a,armeabi-v7a,armeabi
-        X-Device-UUID: c2306fac-1064-4304-bc07-a44ee9478072
-        X-User-Token: 6d37a4e107faa97d5b966e6f6d4464ec5fcc1a1d
-        X-Android-Id: c8c79909485d075e
-        Accept: application/json
-        Content-Type: application/json; charset=utf-8
-        Host: testing-api.qoo-app.com
-        Connection: Keep-Alive
-        Accept-Encoding: gzip
-        User-Agent: okhttp/3.12.0
-        If-Modified-Since: Tue, 02 Jun 2020 11:25:34 GMT*/
 
         //nohttp
         InitializationConfig initializationConfig = InitializationConfig.newBuilder(this)
@@ -77,6 +80,9 @@ public class App extends Application {
 
         //初始化fresco
         Fresco.initialize(this);
+
+
+
 
     }
 }
