@@ -1,4 +1,4 @@
-package com.hym.appstore.url;
+package com.hym.appstore.common;
 
 /**
  * Created by Android on 2016/6/22.

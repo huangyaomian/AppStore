@@ -16,10 +16,10 @@ public class RecommendPresenter implements RecommendContract.Presenter {
     private RecommendModel mModel;
     private Activity mActivity;
 
-    public RecommendPresenter(RecommendContract.View mView ,Activity activity) {
+    public RecommendPresenter(RecommendContract.View mView ,Activity activity,RecommendModel model) {
         this.mView = mView;
         this.mActivity = activity;
-        mModel = new RecommendModel();
+        mModel = model;
     }
 
     @Override

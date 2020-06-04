@@ -1,4 +1,4 @@
-package com.hym.appstore.utils;
+package com.hym.appstore.common.utils;
 
 import android.Manifest;
 import android.app.Activity;

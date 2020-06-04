@@ -8,7 +8,6 @@ import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
 import com.yanzhenjie.nohttp.rest.Request;
 
-import static com.hym.appstore.url.ContantsPool.recommendURL;
 
 public class RecommendModel {
 

@@ -9,11 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hjq.toast.ToastUtils;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.RecommendBean;
-import com.hym.appstore.presenter.RecommendPresenter;
+import com.hym.appstore.dagger2.component.DaggerRecommendComponent;
+import com.hym.appstore.dagger2.module.RecommendModule;
 import com.hym.appstore.presenter.contract.RecommendContract;
 import com.hym.appstore.ui.adapter.RecommendRVAdapter;
-import com.hym.appstore.url.ContantsPool;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -22,10 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 
 
 public class RecommendFragment extends BaseFragment implements RecommendContract.View {
+
 
 
     @BindView(R.id.recommend_rv)
@@ -38,7 +40,8 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
      **/
     private List<RecommendBean.DataBean.ItemsBean> mGameList;
 
-    private RecommendContract.Presenter mPresenter;
+    @Inject
+    RecommendContract.Presenter mPresenter;
 
     private String recommendNextURL = null;
 
@@ -62,7 +65,9 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
     @Override
     protected void init() {
         mGameList = new ArrayList<>();
-        mPresenter = new RecommendPresenter(this,getActivity());
+//        mPresenter = new RecommendPresenter(this,getActivity());
+        DaggerRecommendComponent.builder()
+                .recommendModule(new RecommendModule(this,getActivity())).build().inject(this);
     }
 
     @Override
@@ -102,9 +107,7 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
     @Override
     public void showResult(RecommendBean recommendBean) {
         recommendRefreshLayout.finishRefresh();//结束刷新
-
-            mGameList.clear();
-
+        mGameList.clear();
         List<RecommendBean.DataBean.ItemsBean> items = recommendBean.getData().getItems();
         recommendNextURL = recommendBean.getData().getPager().getNext();
         mGameList.addAll(items);
