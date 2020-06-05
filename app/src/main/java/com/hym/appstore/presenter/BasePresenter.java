@@ -7,7 +7,7 @@ import com.hym.appstore.ui.BaseView;
 import com.yanzhenjie.nohttp.rest.OnResponseListener;
 import com.yanzhenjie.nohttp.rest.Response;
 
-public class BasePresenter<M,V extends BaseView> implements OnResponseListener<String> {
+public class BasePresenter<M,V extends BaseView>  {
 
     protected M mModel;
     protected V mView;
@@ -17,23 +17,4 @@ public class BasePresenter<M,V extends BaseView> implements OnResponseListener<S
         this.mView = mView;
     }
 
-    @Override
-    public void onStart(int what) {
-
-    }
-
-    @Override
-    public void onSucceed(int what, Response<String> response) {
-
-    }
-
-    @Override
-    public void onFailed(int what, Response<String> response) {
-
-    }
-
-    @Override
-    public void onFinish(int what) {
-
-    }
 }

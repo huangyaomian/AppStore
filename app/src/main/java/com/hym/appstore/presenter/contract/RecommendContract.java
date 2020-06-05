@@ -12,6 +12,7 @@ public interface RecommendContract {
 
 
         void showResult(RecommendBean datas);
+        void showMoreResult(RecommendBean datas);
         void showNoData();
         void showError(String msg);
 

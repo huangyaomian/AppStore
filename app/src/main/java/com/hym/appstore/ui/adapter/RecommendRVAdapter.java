@@ -1,12 +1,10 @@
 package com.hym.appstore.ui.adapter;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,14 +14,11 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.RecommendBean;
 
+import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.Delayed;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.xuexiang.xui.utils.ResUtils.getResources;
 
 public class RecommendRVAdapter extends RecyclerView.Adapter<RecommendRVAdapter.MyViewHolder> {
 
@@ -63,7 +58,7 @@ public class RecommendRVAdapter extends RecyclerView.Adapter<RecommendRVAdapter.
         RecommendBean.DataBean.ItemsBean itemsBean = gameInfoList.get(position);
         List<String> game_type = itemsBean.getGame_type();
         String gameType = "";
-        if (!game_type.isEmpty()){
+        if (game_type != null && !game_type.isEmpty()){
             if (game_type.size() > 1) {
                 for (int i = 0; i < game_type.size(); i++) {
                         if (i == game_type.size()-1){
@@ -78,7 +73,8 @@ public class RecommendRVAdapter extends RecyclerView.Adapter<RecommendRVAdapter.
         }
         holder.mRecommendItemGameName.setText(itemsBean.getApp_name());
         holder.mRecommendItemGameTag.setText(gameType);
-        holder.mRecommendItemGameReview.setText(String.valueOf(itemsBean.getReviews().getScore()));
+        DecimalFormat decimalFormat=new DecimalFormat(".0");//构造方法的字符格式这里如果小数不足1位,会以0补足.
+        holder.mRecommendItemGameReview.setText(decimalFormat.format(itemsBean.getReviews().getScore()));
         holder.mRecommendItemIv.setImageURI(Uri.parse(itemsBean.getIcon_url()));
 
         // 点击事件一般都写在绑定数据这里，当然写到上边的创建布局时候也是可以的
