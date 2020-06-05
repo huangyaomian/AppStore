@@ -15,10 +15,8 @@
         <item name="colorPrimary">@color/theme_while</item>
         <item name="colorPrimaryDark">@color/theme_while</item>
         <item name="colorAccent">@color/theme_while</item>
-        <item name="android:background">@color/theme_while</item>
         <item name="android:textColor">@color/TextColor</item>
         <item name="android:textColorPrimary">@color/TextColor</item>
-        <item name="android:fitsSystemWindows">true</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 

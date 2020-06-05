@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/theme_while">
 
     <!--Coordinatorlayout 本身就是一个加强版的FrameLayout-->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,13 +46,20 @@
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
         </com.google.android.material.tabs.TabLayout>
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5px"
+            android:background="@color/theme_grey"
+            app:layout_constraintTop_toBottomOf="@+id/main_tab_layout"/>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/main_viewpager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:layout_constraintTop_toBottomOf="@+id/main_tab_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/line"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
