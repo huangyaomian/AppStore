@@ -8,5 +8,6 @@
     <color name="theme_while">#ffffff</color>
     <color name="theme_black">#000000</color>
     <color name="theme_grey">#999999</color>
+    <color name="line">#ebebeb</color>
     <color name="skip_btn">#80000000</color>
 </resources>

@@ -14,7 +14,7 @@
         android:id="@+id/recommend_item_iv"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        fresco:placeholderImage="@drawable/ic_launcher_background"
+        fresco:placeholderImage="@drawable/vector_drawable_init_pic"
         fresco:placeholderImageScaleType="centerCrop"
         fresco:roundedCornerRadius="4dp"
         fresco:roundTopLeft="true"

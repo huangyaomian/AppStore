@@ -100,5 +100,4 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.24'
 
 
-
 }

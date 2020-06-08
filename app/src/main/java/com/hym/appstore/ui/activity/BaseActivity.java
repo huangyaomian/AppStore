@@ -18,6 +18,7 @@ import com.hym.appstore.R;
 import com.hym.appstore.app.MyApplication;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.presenter.BasePresenter;
+import com.hym.appstore.ui.widget.WaitDialog;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 import com.xuexiang.xui.XUI;
 import com.xuexiang.xui.utils.StatusBarUtils;
@@ -34,6 +35,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     @Inject
     public T mPresenter;
+
+    @Inject
+    public WaitDialog mWaitDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

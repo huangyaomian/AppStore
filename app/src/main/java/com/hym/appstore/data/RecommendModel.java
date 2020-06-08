@@ -28,8 +28,8 @@ public class RecommendModel {
     }*/
 
 
-     public  void getRecommendRequest( OnResponseListener responseListener, String URL){
+     public  void getRecommendRequest( int what,OnResponseListener responseListener, String URL){
         Request<String> recommendRequest = NoHttp.createStringRequest(URL, RequestMethod.GET);
-        mQueue.add(0, recommendRequest, responseListener);
+        mQueue.add(what, recommendRequest, responseListener);
     }
 }

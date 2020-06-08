@@ -17,6 +17,9 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipToPadding="true"
+            app:elevation="0dp"
+            android:fitsSystemWindows="true"
             app:layout_constraintTop_toTopOf="parent">
             <!--AppBarLayout 搭配使用 否则会被水果列表遮住 -->
 
@@ -26,9 +29,18 @@
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:popupTheme="@style/Widget.AppCompat.PopupMenu.Overflow"
                 app:title="@string/app_name" />
+
+
         </com.google.android.material.appbar.AppBarLayout>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"/>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/main_tab_layout"
@@ -41,14 +53,14 @@
             app:tabMode="fixed"
             app:tabSelectedTextColor="@color/theme_blue"
             app:theme="@style/Widget.Design.TabLayout"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+            app:layout_constraintTop_toBottomOf="@+id/line">
 
         </com.google.android.material.tabs.TabLayout>
         <View
-            android:id="@+id/line"
+            android:id="@+id/line2"
             android:layout_width="match_parent"
-            android:layout_height="0.5px"
-            android:background="@color/theme_grey"
+            android:layout_height="1px"
+            android:background="@color/line"
             app:layout_constraintTop_toBottomOf="@+id/main_tab_layout"/>
 
         <androidx.viewpager.widget.ViewPager
@@ -56,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:layout_constraintTop_toBottomOf="@+id/line"
+            app:layout_constraintTop_toBottomOf="@+id/line2"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

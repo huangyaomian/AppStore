@@ -325,52 +325,52 @@ public class RecommendBean {
                  * useless_score_count : {"1":0,"2":0,"3":0,"4":0,"5":0}
                  */
 
-                private String score_1;
-                private String score_2;
-                private String score_3;
-                private String score_4;
-                private String score_5;
+                private float score_1;
+                private float score_2;
+                private float score_3;
+                private float score_4;
+                private float score_5;
                 private int review_count;
-                private String score;
+                private float score;
                 private UselessScoreCountBean useless_score_count;
 
-                public String getScore_1() {
+                public float getScore_1() {
                     return score_1;
                 }
 
-                public void setScore_1(String score_1) {
+                public void setScore_1(float score_1) {
                     this.score_1 = score_1;
                 }
 
-                public String getScore_2() {
+                public float getScore_2() {
                     return score_2;
                 }
 
-                public void setScore_2(String score_2) {
+                public void setScore_2(float score_2) {
                     this.score_2 = score_2;
                 }
 
-                public String getScore_3() {
+                public float getScore_3() {
                     return score_3;
                 }
 
-                public void setScore_3(String score_3) {
+                public void setScore_3(float score_3) {
                     this.score_3 = score_3;
                 }
 
-                public String getScore_4() {
+                public float getScore_4() {
                     return score_4;
                 }
 
-                public void setScore_4(String score_4) {
+                public void setScore_4(float score_4) {
                     this.score_4 = score_4;
                 }
 
-                public String getScore_5() {
+                public float getScore_5() {
                     return score_5;
                 }
 
-                public void setScore_5(String score_5) {
+                public void setScore_5(float score_5) {
                     this.score_5 = score_5;
                 }
 
@@ -382,11 +382,11 @@ public class RecommendBean {
                     this.review_count = review_count;
                 }
 
-                public String getScore() {
+                public float getScore() {
                     return score;
                 }
 
-                public void setScore(String score) {
+                public void setScore(float score) {
                     this.score = score;
                 }
 
