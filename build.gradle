@@ -28,6 +28,9 @@ allprojects {
         jcenter()
         //xui
         maven { url "https://jitpack.io" }
+        //rx-android
+        maven { url "https://oss.jfrog.org/libs-snapshot" }
+
     }
 }
 

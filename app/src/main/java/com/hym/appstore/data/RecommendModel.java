@@ -12,8 +12,8 @@ import com.yanzhenjie.nohttp.rest.OnResponseListener;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
 
+import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Callback;
-import rx.Observable;
 
 
 public class RecommendModel {

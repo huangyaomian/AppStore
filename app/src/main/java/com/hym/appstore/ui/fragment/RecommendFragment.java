@@ -71,7 +71,7 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
 
     @Override
     protected void init() {
-        mPresenter.requestRecommendData(recommendURL);
+        mPresenter.requestRecommendData();
         mGameList = new ArrayList<>();
 
     }
@@ -82,7 +82,7 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
         recommendRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                mPresenter.requestRecommendData(recommendURL);
+                mPresenter.requestRecommendData();
             }
         });
         recommendRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {

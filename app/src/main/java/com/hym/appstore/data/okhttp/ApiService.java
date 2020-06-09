@@ -2,10 +2,10 @@ package com.hym.appstore.data.okhttp;
 
 import com.hym.appstore.bean.RecommendBean2;
 
+import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import rx.Observable;
 
 public interface ApiService {
 //    http://112.124.22.238:8081/course_api/cniaoplay/featured?p={%22page%22:0}
