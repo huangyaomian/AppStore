@@ -128,7 +128,7 @@ public class RecommendBean2 {
         private int diffFileSize;
         private HdIconBean hdIcon;
         private String source;
-        private List<?> appTags;
+        private List<Tag> appTags;
 
         public int getAddTime() {
             return addTime;
@@ -426,12 +426,52 @@ public class RecommendBean2 {
             this.source = source;
         }
 
-        public List<?> getAppTags() {
+        public List<Tag> getAppTags() {
             return appTags;
         }
 
-        public void setAppTags(List<?> appTags) {
+        public void setAppTags(List<Tag> appTags) {
             this.appTags = appTags;
+        }
+
+        public static class Tag {
+            /**
+             * "tagId": 159,
+             * "link": "sametag/159",
+             * "tagName": "占卜"
+             *
+             */
+
+            private int tagId;
+            private String link;
+            private String tagName;
+
+            public int getTagId() {
+                return tagId;
+            }
+
+            public void setTagId(int tagId) {
+                this.tagId = tagId;
+            }
+
+            public String getLink() {
+                return link;
+            }
+
+            public void setLink(String link) {
+                this.link = link;
+            }
+
+            public String getTagName() {
+                return tagName;
+            }
+
+            public void setTagName(String tagName) {
+                this.tagName = tagName;
+            }
+
+
+
         }
 
         public static class HdIconBean {

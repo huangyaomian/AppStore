@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.RecommendBean;
+import com.hym.appstore.bean.RecommendBean2;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -22,14 +23,20 @@ import butterknife.ButterKnife;
 
 public class RecommendRVAdapter extends RecyclerView.Adapter<RecommendRVAdapter.MyViewHolder> {
 
-    List<RecommendBean.DataBean.ItemsBean> gameInfoList;
+    List<RecommendBean2.DatasBean> gameInfoList;
+//    List<RecommendBean.DataBean.ItemsBean> gameInfoList;
 
     private Context mContext;
 
-    public RecommendRVAdapter(List<RecommendBean.DataBean.ItemsBean> gameInfoList, Context context) {
+/*    public RecommendRVAdapter(List<RecommendBean.DataBean.ItemsBean> gameInfoList, Context context) {
+        this.gameInfoList = gameInfoList;
+        this.mContext = context;
+    }*/
+    public RecommendRVAdapter(List<RecommendBean2.DatasBean> gameInfoList, Context context) {
         this.gameInfoList = gameInfoList;
         this.mContext = context;
     }
+
 
     // 利用接口 -> 给RecyclerView设置点击事件
     private ItemClickListener mItemClickListener;
@@ -55,7 +62,7 @@ public class RecommendRVAdapter extends RecyclerView.Adapter<RecommendRVAdapter.
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        RecommendBean.DataBean.ItemsBean itemsBean = gameInfoList.get(position);
+        /*RecommendBean.DataBean.ItemsBean itemsBean = gameInfoList.get(position);
         List<String> game_type = itemsBean.getGame_type();
         String gameType = "";
         if (game_type != null && !game_type.isEmpty()){
@@ -75,7 +82,29 @@ public class RecommendRVAdapter extends RecyclerView.Adapter<RecommendRVAdapter.
         holder.mRecommendItemGameTag.setText(gameType);
         DecimalFormat decimalFormat=new DecimalFormat(".0");//构造方法的字符格式这里如果小数不足1位,会以0补足.
         holder.mRecommendItemGameReview.setText(decimalFormat.format(itemsBean.getReviews().getScore()));
-        holder.mRecommendItemIv.setImageURI(Uri.parse(itemsBean.getIcon_url()));
+        holder.mRecommendItemIv.setImageURI(Uri.parse(itemsBean.getIcon_url()));*/
+
+        RecommendBean2.DatasBean datasBean = gameInfoList.get(position);
+        List<RecommendBean2.DatasBean.Tag> gameTags = datasBean.getAppTags();
+        String gameTagsString = "";
+        if (gameTags != null && !gameTags.isEmpty()){
+            if (gameTags.size() > 1) {
+                for (int i = 0; i < gameTags.size(); i++) {
+                    if (i == gameTags.size()-1){
+                        gameTagsString = gameTagsString + gameTags.get(i).getTagName();
+                    }else{
+                        gameTagsString = gameTagsString + gameTags.get(i).getTagName() + " | ";
+                    }
+                }
+            }else {
+                gameTagsString = gameTags.get(0).getTagName();
+            }
+        }
+        holder.mRecommendItemGameName.setText(datasBean.getDisplayName());
+        holder.mRecommendItemGameReview.setText(String.valueOf(datasBean.getRatingScore()));
+        holder.mRecommendItemGameTag.setText(gameTagsString);
+        String baseImgUrl = "http://file.market.xiaomi.com/mfc/thumbnail/png/w150q80/";
+        holder.mRecommendItemIv.setImageURI(Uri.parse(baseImgUrl + datasBean.getIcon()));
 
         // 点击事件一般都写在绑定数据这里，当然写到上边的创建布局时候也是可以的
         if (mItemClickListener != null){
