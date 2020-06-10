@@ -1,6 +1,7 @@
 package com.hym.appstore.common.rx;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.JsonParseException;
@@ -42,6 +43,7 @@ public class RxErrorHandler {
     }
 
     public void showErrorMsg(BaseException e){
+        Log.d("showErrorMsg","縂的錯誤捕捉");
         Toast.makeText(mContext,e.getDisplayMessage(),Toast.LENGTH_SHORT).show();
     }
 }

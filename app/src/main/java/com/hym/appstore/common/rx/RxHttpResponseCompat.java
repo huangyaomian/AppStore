@@ -1,8 +1,12 @@
 package com.hym.appstore.common.rx;
 
 
+import android.util.Log;
+
 import com.hym.appstore.bean.BaseBean;
 import com.hym.appstore.common.exception.ApiException;
+
+import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -24,11 +28,19 @@ public class RxHttpResponseCompat {
                     @Override
                     public ObservableSource<T> apply(BaseBean<T> tBaseBean) throws Throwable {
                         if (tBaseBean.success()) {
+
                            return Observable.create(new ObservableOnSubscribe<T>() {
                                 @Override
                                 public void subscribe(@NonNull ObservableEmitter<T> emitter) throws Throwable {
                                     try {
+
+                                        Log.d("ObservableTransformer","请求成功返回给下级的next");
+                                        if (tBaseBean.getData() == null){
+                                            Log.d("ObservableTransformer","getData為null");
+                                        }
+//                                        Log.d("ObservableTransformer",tBaseBean.getData().toString());
                                         emitter.onNext(tBaseBean.getData());
+                                        Log.d("ObservableTransformer","请求成功返回给下级的onComplete");
                                         emitter.onComplete();
                                     }catch (Exception e){
                                         emitter.onError(e);
@@ -40,7 +52,7 @@ public class RxHttpResponseCompat {
                             return Observable.error(new ApiException(tBaseBean.getStatus(),tBaseBean.getMessage()));
                         }
                     }
-                }).observeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread());
+                }).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
             }
         };
 

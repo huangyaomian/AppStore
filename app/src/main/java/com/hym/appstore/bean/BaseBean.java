@@ -1,6 +1,7 @@
 package com.hym.appstore.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 import retrofit2.http.PUT;
 
@@ -9,7 +10,7 @@ public class BaseBean<T> implements Serializable {
     public static final int  SUCCESS = 1;
     private int status;
     private String message;
-    private T data;
+    private T datas;
 
 
     public boolean success(){
@@ -33,10 +34,10 @@ public class BaseBean<T> implements Serializable {
     }
 
     public T getData() {
-        return data;
+        return datas;
     }
 
-    public void setData(T data) {
-        this.data = data;
+    public void setData(T datas) {
+        this.datas = datas;
     }
 }

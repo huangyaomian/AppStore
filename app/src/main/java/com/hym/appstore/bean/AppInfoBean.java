@@ -1,8 +1,9 @@
 package com.hym.appstore.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AppInfoBean {
+public class AppInfoBean  implements Serializable {
 
 
     /**

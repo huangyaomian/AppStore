@@ -5,6 +5,8 @@ import com.hym.appstore.bean.BaseBean;
 import com.hym.appstore.bean.PageBean;
 import com.hym.appstore.data.okhttp.ApiService;
 
+import java.util.List;
+
 import io.reactivex.rxjava3.core.Observable;
 
 
@@ -41,7 +43,7 @@ public class RecommendModel {
 
 
 
-    public Observable<BaseBean<PageBean<AppInfoBean>>> getRecommendRequest(){
+    public Observable<BaseBean<List<AppInfoBean>>> getRecommendRequest(){
 //        mApiService.getApps("{'page':0}").enqueue(callback);
         return  mApiService.getApps("{'page':0}");
     }

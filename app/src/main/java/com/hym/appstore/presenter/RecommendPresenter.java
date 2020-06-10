@@ -10,6 +10,8 @@ import com.hym.appstore.common.rx.subscriber.ErrorHandlerSubscriber;
 import com.hym.appstore.data.RecommendModel;
 import com.hym.appstore.presenter.contract.RecommendContract;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -71,8 +73,8 @@ public class RecommendPresenter extends BasePresenter<RecommendModel,RecommendCo
      mModel.getRecommendRequest()
              .subscribeOn(Schedulers.io())//把請求放到子綫程中去做(被观察者设置为子线程(发消息))
              .observeOn(AndroidSchedulers.mainThread(), false, 100)//观察者设置为主线程(接收消息）
-             .compose(RxHttpResponseCompat.<PageBean<AppInfoBean>>compatResult())
-             .subscribe(new ErrorHandlerSubscriber<PageBean<AppInfoBean>>(mRxErrorHandler) {
+             .compose(RxHttpResponseCompat.<List<AppInfoBean>>compatResult())
+             .subscribe(new ErrorHandlerSubscriber<List<AppInfoBean>>(mRxErrorHandler) {
 
                  @Override
                  public void onStart() {
@@ -82,10 +84,10 @@ public class RecommendPresenter extends BasePresenter<RecommendModel,RecommendCo
 
 
                  @Override
-                 public void onNext(@NonNull PageBean<AppInfoBean> appiInfoBeanPageBean) {
+                 public void onNext(@NonNull List<AppInfoBean> appiInfoBeanPageBean) {
 
                      Log.d("requestRecommendData","请求成功");
-                     if (appiInfoBeanPageBean.getDatas() != null){
+                     if (appiInfoBeanPageBean != null){
                          mView.showResult(appiInfoBeanPageBean);
                      }else {
                          mView.showNoData();

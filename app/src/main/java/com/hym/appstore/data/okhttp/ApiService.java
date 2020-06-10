@@ -4,6 +4,8 @@ import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.BaseBean;
 import com.hym.appstore.bean.PageBean;
 
+import java.util.List;
+
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -16,5 +18,5 @@ public interface ApiService {
     public Call<RecommendBean2> getApps(@Query("p") String jsonParam);*/
 
     @GET("featured")
-    public Observable<BaseBean<PageBean<AppInfoBean>>> getApps(@Query("p") String jsonParam);
+    public Observable<BaseBean<List<AppInfoBean>>> getApps(@Query("p") String jsonParam);
 }
