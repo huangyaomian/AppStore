@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hjq.toast.ToastUtils;
 import com.hym.appstore.R;
 import com.hym.appstore.app.MyApplication;
+import com.hym.appstore.bean.AppiInfoBean;
+import com.hym.appstore.bean.PageBean;
 import com.hym.appstore.bean.RecommendBean;
 import com.hym.appstore.bean.RecommendBean2;
 import com.hym.appstore.dagger2.component.AppComponent;
@@ -45,7 +47,7 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
      * 自定义的容器
      **/
 //    private List<RecommendBean.DataBean.ItemsBean> mGameList;
-    private List<RecommendBean2.DatasBean> mGameList;
+    private List<AppiInfoBean> mGameList;
 
 
     private String recommendNextURL = null;
@@ -116,7 +118,7 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
     }
 
     @Override
-    public void showResult(RecommendBean2.DatasBean recommendBean) {
+    public void showResult(PageBean<AppiInfoBean> recommendBean) {
        /* recommendRefreshLayout.finishRefresh();//结束刷新
         mGameList.clear();
         List<RecommendBean.DataBean.ItemsBean> items = recommendBean.getData().getItems();
@@ -139,8 +141,8 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
 
        recommendRefreshLayout.finishRefresh();//结束刷新
         mGameList.clear();
-//        List<RecommendBean2.DatasBean> items = recommendBean.getDatas();
-        mGameList.addAll(recommendBean);
+        List<AppiInfoBean> items = recommendBean.getDatas();
+        mGameList.addAll(items);
         if (mRecommendRVAdapter == null){
             mRecommendRVAdapter = new RecommendRVAdapter(mGameList, getActivity());
             mRecommendRv.setAdapter(mRecommendRVAdapter);
@@ -159,6 +161,7 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
 
 
     }
+
 
     @Override
     public void showMoreResult(RecommendBean recommendBean) {

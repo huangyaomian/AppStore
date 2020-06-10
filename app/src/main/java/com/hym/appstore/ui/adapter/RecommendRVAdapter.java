@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.hym.appstore.R;
+import com.hym.appstore.bean.AppiInfoBean;
 import com.hym.appstore.bean.RecommendBean;
 import com.hym.appstore.bean.RecommendBean2;
 
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
 
 public class RecommendRVAdapter extends RecyclerView.Adapter<RecommendRVAdapter.MyViewHolder> {
 
-    List<RecommendBean2.DatasBean> gameInfoList;
+    List<AppiInfoBean> gameInfoList;
 //    List<RecommendBean.DataBean.ItemsBean> gameInfoList;
 
     private Context mContext;
@@ -32,7 +33,7 @@ public class RecommendRVAdapter extends RecyclerView.Adapter<RecommendRVAdapter.
         this.gameInfoList = gameInfoList;
         this.mContext = context;
     }*/
-    public RecommendRVAdapter(List<RecommendBean2.DatasBean> gameInfoList, Context context) {
+    public RecommendRVAdapter(List<AppiInfoBean> gameInfoList, Context context) {
         this.gameInfoList = gameInfoList;
         this.mContext = context;
     }
@@ -84,8 +85,8 @@ public class RecommendRVAdapter extends RecyclerView.Adapter<RecommendRVAdapter.
         holder.mRecommendItemGameReview.setText(decimalFormat.format(itemsBean.getReviews().getScore()));
         holder.mRecommendItemIv.setImageURI(Uri.parse(itemsBean.getIcon_url()));*/
 
-        RecommendBean2.DatasBean datasBean = gameInfoList.get(position);
-        List<RecommendBean2.DatasBean.Tag> gameTags = datasBean.getAppTags();
+        AppiInfoBean datasBean = gameInfoList.get(position);
+        List<AppiInfoBean.Tag> gameTags = datasBean.getAppTags();
         String gameTagsString = "";
         if (gameTags != null && !gameTags.isEmpty()){
             if (gameTags.size() > 1) {
