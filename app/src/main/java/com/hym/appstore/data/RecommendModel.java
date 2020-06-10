@@ -2,6 +2,7 @@ package com.hym.appstore.data;
 
 import android.app.Activity;
 
+import com.hym.appstore.bean.BaseBean;
 import com.hym.appstore.bean.RecommendBean2;
 import com.hym.appstore.data.nohttp.CallServer;
 import com.hym.appstore.data.nohttp.HttpListener;
@@ -49,7 +50,7 @@ public class RecommendModel {
 
 
 
-    public Observable<RecommendBean2> getRecommendRequest(){
+    public Observable<BaseBean<RecommendBean2.DatasBean>> getRecommendRequest(){
 //        mApiService.getApps("{'page':0}").enqueue(callback);
         return  mApiService.getApps("{'page':0}");
     }

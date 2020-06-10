@@ -2,7 +2,7 @@ package com.hym.appstore.bean;
 
 import java.util.List;
 
-public class RecommendBean2 {
+public class RecommendBean2<D> {
 
 
     /**

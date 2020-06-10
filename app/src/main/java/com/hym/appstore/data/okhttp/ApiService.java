@@ -1,5 +1,6 @@
 package com.hym.appstore.data.okhttp;
 
+import com.hym.appstore.bean.BaseBean;
 import com.hym.appstore.bean.RecommendBean2;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -15,5 +16,5 @@ public interface ApiService {
     public Call<RecommendBean2> getApps(@Query("p") String jsonParam);*/
 
     @GET("featured")
-    public Observable<RecommendBean2> getApps(@Query("p") String jsonParam);
+    public Observable<BaseBean<RecommendBean2.DatasBean>> getApps(@Query("p") String jsonParam);
 }

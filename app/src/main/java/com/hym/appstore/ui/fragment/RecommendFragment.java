@@ -116,7 +116,7 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
     }
 
     @Override
-    public void showResult(RecommendBean2 recommendBean) {
+    public void showResult(RecommendBean2.DatasBean recommendBean) {
        /* recommendRefreshLayout.finishRefresh();//结束刷新
         mGameList.clear();
         List<RecommendBean.DataBean.ItemsBean> items = recommendBean.getData().getItems();
@@ -139,8 +139,8 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
 
        recommendRefreshLayout.finishRefresh();//结束刷新
         mGameList.clear();
-        List<RecommendBean2.DatasBean> items = recommendBean.getDatas();
-        mGameList.addAll(items);
+//        List<RecommendBean2.DatasBean> items = recommendBean.getDatas();
+        mGameList.addAll(recommendBean);
         if (mRecommendRVAdapter == null){
             mRecommendRVAdapter = new RecommendRVAdapter(mGameList, getActivity());
             mRecommendRv.setAdapter(mRecommendRVAdapter);
