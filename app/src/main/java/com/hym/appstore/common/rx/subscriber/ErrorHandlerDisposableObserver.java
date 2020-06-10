@@ -3,12 +3,12 @@ package com.hym.appstore.common.rx.subscriber;
 import com.hym.appstore.common.exception.BaseException;
 import com.hym.appstore.common.rx.RxErrorHandler;
 
-public abstract class ErrorHandlerSubscriber<T> extends DefaultSubscriber<T> {
+public abstract class ErrorHandlerDisposableObserver<T> extends DefaultDisposableObserver<T> {
 
 
     private RxErrorHandler mRxErrorHandler;
 
-    public ErrorHandlerSubscriber(RxErrorHandler mRxErrorHandler) {
+    public ErrorHandlerDisposableObserver(RxErrorHandler mRxErrorHandler) {
         this.mRxErrorHandler = mRxErrorHandler;
     }
 

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.view.menu.ShowableListMenu;
 import androidx.fragment.app.Fragment;
 
 
@@ -14,6 +15,9 @@ import com.hym.appstore.app.MyApplication;
 import com.hym.appstore.common.ContantsPool;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.presenter.BasePresenter;
+import com.hym.appstore.ui.BaseView;
+import com.hym.appstore.ui.widget.WaitDialog;
+import com.xuexiang.xui.widget.dialog.LoadingDialog;
 
 import javax.inject.Inject;
 
@@ -21,10 +25,11 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 //public abstract class BaseFragment extends Fragment implements ContantsPool, HttpListener<String> {
-public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements ContantsPool {
+public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseView {
     private View mContentView;
     private Context mContext;
     private Unbinder mUnbinder;
+    private WaitDialog mLoadingDialog;
 
     private MyApplication mMyApplication;
 
@@ -99,4 +104,14 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         }
     }
 
+    @Override
+    public void showLoading() {
+        mLoadingDialog = new WaitDialog(this.getActivity());
+        mLoadingDialog.show();
+    }
+
+    @Override
+    public void dismissLoading() {
+        mLoadingDialog.dismiss();
+    }
 }
