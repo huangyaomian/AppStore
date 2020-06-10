@@ -2,7 +2,7 @@ package com.hym.appstore.dagger2.component;
 
 import android.app.Application;
 
-import com.hym.appstore.common.rx.RxErrorhandler;
+import com.hym.appstore.common.rx.RxErrorHandler;
 import com.hym.appstore.dagger2.module.AppModule;
 import com.hym.appstore.dagger2.module.HttpModule;
 import com.hym.appstore.dagger2.module.QueueModule;
@@ -24,7 +24,7 @@ public interface AppComponent {
 
     public Application getApplication();
 
-    public RxErrorhandler getRxErrorhandler();
+    public RxErrorHandler getRxErrorHandler();
 
 
 }

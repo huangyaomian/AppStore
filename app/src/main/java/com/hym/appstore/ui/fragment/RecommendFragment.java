@@ -3,19 +3,15 @@ package com.hym.appstore.ui.fragment;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hjq.toast.ToastUtils;
 import com.hym.appstore.R;
-import com.hym.appstore.app.MyApplication;
-import com.hym.appstore.bean.AppiInfoBean;
+import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.PageBean;
 import com.hym.appstore.bean.RecommendBean;
-import com.hym.appstore.bean.RecommendBean2;
 import com.hym.appstore.dagger2.component.AppComponent;
-import com.hym.appstore.dagger2.component.DaggerAppComponent;
 import com.hym.appstore.dagger2.component.DaggerRecommendComponent;
 import com.hym.appstore.dagger2.module.RecommendModule;
 import com.hym.appstore.presenter.RecommendPresenter;
@@ -29,8 +25,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -47,7 +41,7 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
      * 自定义的容器
      **/
 //    private List<RecommendBean.DataBean.ItemsBean> mGameList;
-    private List<AppiInfoBean> mGameList;
+    private List<AppInfoBean> mGameList;
 
 
     private String recommendNextURL = null;
@@ -118,7 +112,7 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
     }
 
     @Override
-    public void showResult(PageBean<AppiInfoBean> recommendBean) {
+    public void showResult(PageBean<AppInfoBean> recommendBean) {
        /* recommendRefreshLayout.finishRefresh();//结束刷新
         mGameList.clear();
         List<RecommendBean.DataBean.ItemsBean> items = recommendBean.getData().getItems();
@@ -141,7 +135,7 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
 
        recommendRefreshLayout.finishRefresh();//结束刷新
         mGameList.clear();
-        List<AppiInfoBean> items = recommendBean.getDatas();
+        List<AppInfoBean> items = recommendBean.getDatas();
         mGameList.addAll(items);
         if (mRecommendRVAdapter == null){
             mRecommendRVAdapter = new RecommendRVAdapter(mGameList, getActivity());

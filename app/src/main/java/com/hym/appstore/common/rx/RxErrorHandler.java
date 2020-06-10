@@ -7,19 +7,16 @@ import com.google.gson.JsonParseException;
 import com.hym.appstore.common.exception.ApiException;
 import com.hym.appstore.common.exception.BaseException;
 import com.hym.appstore.common.exception.ErrorMessageFactory;
-import com.xuexiang.xui.widget.imageview.crop.Handle;
 
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
-import java.util.ConcurrentModificationException;
 
 import retrofit2.HttpException;
 
-public class RxErrorhandler {
-
+public class RxErrorHandler {
     private Context mContext;
 
-    public RxErrorhandler(Context mContext) {
+    public RxErrorHandler(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -47,5 +44,4 @@ public class RxErrorhandler {
     public void showErrorMsg(BaseException e){
         Toast.makeText(mContext,e.getDisplayMessage(),Toast.LENGTH_SHORT).show();
     }
-
 }

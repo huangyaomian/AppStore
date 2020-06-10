@@ -2,7 +2,7 @@ package com.hym.appstore.bean;
 
 import java.util.List;
 
-public class AppiInfoBean {
+public class AppInfoBean {
 
 
     /**

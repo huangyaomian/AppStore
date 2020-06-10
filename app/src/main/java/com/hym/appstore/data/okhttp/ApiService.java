@@ -1,12 +1,10 @@
 package com.hym.appstore.data.okhttp;
 
-import com.hym.appstore.bean.AppiInfoBean;
+import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.BaseBean;
 import com.hym.appstore.bean.PageBean;
-import com.hym.appstore.bean.RecommendBean2;
 
 import io.reactivex.rxjava3.core.Observable;
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -18,5 +16,5 @@ public interface ApiService {
     public Call<RecommendBean2> getApps(@Query("p") String jsonParam);*/
 
     @GET("featured")
-    public Observable<PageBean<AppiInfoBean>> getApps(@Query("p") String jsonParam);
+    public Observable<BaseBean<PageBean<AppInfoBean>>> getApps(@Query("p") String jsonParam);
 }

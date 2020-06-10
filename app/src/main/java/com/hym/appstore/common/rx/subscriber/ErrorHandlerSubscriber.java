@@ -1,30 +1,20 @@
 package com.hym.appstore.common.rx.subscriber;
 
-import com.google.gson.JsonParseException;
-import com.hym.appstore.common.exception.ApiException;
 import com.hym.appstore.common.exception.BaseException;
-import com.hym.appstore.common.exception.ErrorMessageFactory;
-import com.hym.appstore.common.rx.RxErrorhandler;
-
-import org.json.JSONException;
-
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
-
-import retrofit2.HttpException;
+import com.hym.appstore.common.rx.RxErrorHandler;
 
 public abstract class ErrorHandlerSubscriber<T> extends DefaultSubscriber<T> {
 
 
-    private RxErrorhandler mRxErrorhandler;
+    private RxErrorHandler mRxErrorHandler;
 
-    public ErrorHandlerSubscriber(RxErrorhandler mRxErrorhandler) {
-        this.mRxErrorhandler = mRxErrorhandler;
+    public ErrorHandlerSubscriber(RxErrorHandler mRxErrorHandler) {
+        this.mRxErrorHandler = mRxErrorHandler;
     }
 
     @Override
     public void onError(Throwable t) {
-        BaseException exception = mRxErrorhandler.handleError(t);
-        mRxErrorhandler.showErrorMsg(exception);
+        BaseException exception = mRxErrorHandler.handleError(t);
+        mRxErrorHandler.showErrorMsg(exception);
     }
 }

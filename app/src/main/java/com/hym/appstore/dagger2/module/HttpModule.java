@@ -1,9 +1,8 @@
 package com.hym.appstore.dagger2.module;
 
 import android.app.Application;
-import android.content.Context;
 
-import com.hym.appstore.common.rx.RxErrorhandler;
+import com.hym.appstore.common.rx.RxErrorHandler;
 import com.hym.appstore.data.okhttp.ApiService;
 
 import java.util.concurrent.TimeUnit;
@@ -59,7 +58,7 @@ public class HttpModule {
 
     @Provides
     @Singleton
-    public RxErrorhandler provideErrorHandler(Application application){
-        return new RxErrorhandler(application);
+    public RxErrorHandler provideErrorHandler(Application application){
+        return new RxErrorHandler(application);
     }
 }

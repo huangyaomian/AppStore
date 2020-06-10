@@ -1,7 +1,8 @@
 package com.hym.appstore.common.rx.subscriber;
 
-import org.reactivestreams.Subscriber;
 
-public abstract class DefaultSubscriber<T> implements Subscriber<T> {
+import io.reactivex.rxjava3.observers.DisposableObserver;
+
+public abstract class DefaultSubscriber<T> extends DisposableObserver<T> {
 
 }

@@ -1,22 +1,11 @@
 package com.hym.appstore.data;
 
-import android.app.Activity;
-
-import com.hym.appstore.bean.AppiInfoBean;
+import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.BaseBean;
 import com.hym.appstore.bean.PageBean;
-import com.hym.appstore.bean.RecommendBean2;
-import com.hym.appstore.data.nohttp.CallServer;
-import com.hym.appstore.data.nohttp.HttpListener;
 import com.hym.appstore.data.okhttp.ApiService;
-import com.yanzhenjie.nohttp.NoHttp;
-import com.yanzhenjie.nohttp.RequestMethod;
-import com.yanzhenjie.nohttp.rest.OnResponseListener;
-import com.yanzhenjie.nohttp.rest.Request;
-import com.yanzhenjie.nohttp.rest.RequestQueue;
 
 import io.reactivex.rxjava3.core.Observable;
-import retrofit2.Callback;
 
 
 public class RecommendModel {
@@ -52,7 +41,7 @@ public class RecommendModel {
 
 
 
-    public Observable<PageBean<AppiInfoBean>> getRecommendRequest(){
+    public Observable<BaseBean<PageBean<AppInfoBean>>> getRecommendRequest(){
 //        mApiService.getApps("{'page':0}").enqueue(callback);
         return  mApiService.getApps("{'page':0}");
     }
