@@ -25,11 +25,10 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 //public abstract class BaseFragment extends Fragment implements ContantsPool, HttpListener<String> {
-public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseView {
+public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     private View mContentView;
     private Context mContext;
     private Unbinder mUnbinder;
-    private WaitDialog mLoadingDialog;
 
     private MyApplication mMyApplication;
 
@@ -104,14 +103,4 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         }
     }
 
-    @Override
-    public void showLoading() {
-        mLoadingDialog = new WaitDialog(this.getActivity());
-        mLoadingDialog.show();
-    }
-
-    @Override
-    public void dismissLoading() {
-        mLoadingDialog.dismiss();
-    }
 }

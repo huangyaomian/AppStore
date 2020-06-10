@@ -3,13 +3,10 @@ package com.hym.appstore.presenter;
 import android.app.Activity;
 import android.util.Log;
 
-import androidx.fragment.app.Fragment;
-
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.common.rx.RxErrorHandler;
 import com.hym.appstore.common.rx.RxHttpResponseCompat;
-import com.hym.appstore.common.rx.subscriber.ErrorHandlerDisposableObserver;
-import com.hym.appstore.common.rx.subscriber.progressDialogDisposableObserver;
+import com.hym.appstore.common.rx.subscriber.ProgressDialogDisposableObserver;
 import com.hym.appstore.data.RecommendModel;
 import com.hym.appstore.presenter.contract.RecommendContract;
 
@@ -25,18 +22,16 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class RecommendPresenter extends BasePresenter<RecommendModel,RecommendContract.View> {
 
 
-    private RxErrorHandler mRxErrorHandler;
     private Activity mActivity;
 
     @Inject
-    public RecommendPresenter(RecommendContract.View mView, RecommendModel model, RxErrorHandler mRxErrorHandler) {
+    public RecommendPresenter(RecommendContract.View mView, RecommendModel model) {
         super(model,mView);
        /* if (mView instanceof Fragment){
             mActivity = ((Fragment)mView).getActivity();
         }else {
             mActivity = (Activity)mView;
         }*/
-        this.mRxErrorHandler = mRxErrorHandler;
     }
 
 
@@ -46,9 +41,7 @@ public class RecommendPresenter extends BasePresenter<RecommendModel,RecommendCo
                 .subscribeOn(Schedulers.io())//把請求放到子綫程中去做(被观察者设置为子线程(发消息))
                 .observeOn(AndroidSchedulers.mainThread(), false, 100)//观察者设置为主线程(接收消息）
                 .compose(RxHttpResponseCompat.<List<AppInfoBean>>compatResult())
-                .subscribe(new progressDialogDisposableObserver<List<AppInfoBean>>(mView,mRxErrorHandler) {
-
-
+                .subscribe(new ProgressDialogDisposableObserver<List<AppInfoBean>>(mContext) {
 
                     @Override
                     public void onNext(@NonNull List<AppInfoBean> appiInfoBeanPageBean) {
