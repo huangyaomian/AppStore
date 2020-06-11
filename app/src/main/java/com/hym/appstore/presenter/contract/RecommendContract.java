@@ -11,14 +11,10 @@ public interface RecommendContract {
 
     interface View extends BaseView{
 
-
-//        void showResult(RecommendBean datas);
         void showResult(List<AppInfoBean> datas);
         void showMoreResult(RecommendBean datas);
         void showNoData();
         void showError(String msg);
-
-
 
     }
 

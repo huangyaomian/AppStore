@@ -2,12 +2,6 @@ package com.hym.appstore.common.rx.subscriber;
 
 import android.content.Context;
 
-import com.hym.appstore.common.rx.RxErrorHandler;
-import com.hym.appstore.ui.BaseView;
-import com.hym.appstore.ui.widget.WaitDialog;
-
-import java.util.ConcurrentModificationException;
-
 public abstract class ProgressDialogDisposableObserver<T> extends ErrorHandlerDisposableObserver<T> implements ProgressDialogHandler.OnProgressCancelListener {
 
 
@@ -24,7 +18,7 @@ public abstract class ProgressDialogDisposableObserver<T> extends ErrorHandlerDi
 
     @Override
     public void onCancelProgress() {
-//        unsubscribe();
+//        unsubscribe();//這個是取消訂閲的但是暫時不知道怎麽弄
     }
 
 //    protected abstract void unsubscribe();

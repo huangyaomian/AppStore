@@ -36,13 +36,10 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
     private FrameLayout mViewContent;
     private TextView mTextError;
 
-
     private MyApplication mMyApplication;
 
     @Inject
     public T mPresenter;
-
-
 
     private Unbinder mUnbinder;
 
@@ -61,7 +58,6 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
             }
         });
 
-
         return mRootView;
     }
 
@@ -72,6 +68,8 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
         setupActivityComponent(mMyApplication.getAppComponent());
         setRealContentView();
         init();
+        initView();
+        initEvent();
     }
 
     //子类实现此方法使其点击重新刷新页面
@@ -85,7 +83,7 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
     }
 
     public void showProgressView(){
-        showView(R.id.progress);
+        showView(R.id.view_progress);
     }
 
     public void showContentView(){
@@ -131,16 +129,28 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
         showEmptyView(msg);
     }
 
+
     /**
      * 此方法用于返回Fragment设置ContentView的布局文件资源ID * * @return 布局文件资源ID
      */
     protected abstract int setLayoutResourceID();
 
     protected abstract void setupActivityComponent(AppComponent appComponent);
+
     /**
      * 做一些初始化的操作
      */
     protected abstract void init();
+
+    /**
+     * 一些View的相关操作
+     */
+    protected abstract void initView();
+
+    /**
+     * 一些事件相關的監聽
+     */
+    protected abstract void initEvent();
 
 
 

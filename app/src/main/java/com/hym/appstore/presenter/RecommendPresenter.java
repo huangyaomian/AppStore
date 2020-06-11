@@ -30,13 +30,12 @@ public class RecommendPresenter extends BasePresenter<RecommendModel,RecommendCo
     }
 
 
-    public void requestRecommendData() {
-
+    public void requestRecommendData(boolean isShowProgress) {
 
         mModel.getRecommendRequest()
                 .compose(RxHttpResponseCompat.<List<AppInfoBean>>compatResult())
-                .subscribe(new ProgressDialogDisposableObserver<List<AppInfoBean>>(mContext) {
-//                .subscribe(new ProgressDisposableObserver<List<AppInfoBean>>(mContext,mView) {
+//                .subscribe(new ProgressDialogDisposableObserver<List<AppInfoBean>>(mContext) {
+                .subscribe(new ProgressDisposableObserver<List<AppInfoBean>>(mContext,mView) {
 
                     @Override
                     public void onNext(@NonNull List<AppInfoBean> appiInfoBeanPageBean) {
@@ -49,7 +48,10 @@ public class RecommendPresenter extends BasePresenter<RecommendModel,RecommendCo
                         }
                     }
 
-
+                    @Override
+                    protected boolean isShowProgress() {
+                        return isShowProgress;
+                    }
                 });
 
     }

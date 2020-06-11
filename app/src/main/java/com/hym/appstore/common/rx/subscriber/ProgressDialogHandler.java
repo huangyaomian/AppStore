@@ -6,7 +6,9 @@ import android.os.Message;
 
 import androidx.annotation.NonNull;
 
+import com.hym.appstore.R;
 import com.xuexiang.xui.widget.dialog.LoadingDialog;
+import com.xuexiang.xui.widget.dialog.MiniLoadingDialog;
 import com.xuexiang.xui.widget.progress.loading.LoadingCancelListener;
 
 
@@ -16,7 +18,7 @@ public class ProgressDialogHandler extends Handler {
     public static final int SHOW_PROGRESS_DIALOG = 1;
     public static final int DISMISS_PROGRESS_DIALOG = 0;
 
-    private LoadingDialog mProgressDialog;
+    private MiniLoadingDialog mProgressDialog;
 
     private Context mContext;
     private boolean cancelable;
@@ -36,7 +38,7 @@ public class ProgressDialogHandler extends Handler {
 
     private void initProgressDialog() {
         if (mProgressDialog == null){
-            mProgressDialog = new LoadingDialog(mContext,"loading...");
+            mProgressDialog = new MiniLoadingDialog(mContext,"loading...");
             if (cancelable){
 //                mProgressDialog.setCancelMessage(new );
 //                mProgressDialog.setCanceledOnTouchOutside(cancelable);

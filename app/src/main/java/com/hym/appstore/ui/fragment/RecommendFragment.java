@@ -29,7 +29,7 @@ import java.util.Map;
 import butterknife.BindView;
 
 
-public class RecommendFragment extends BaseFragment<RecommendPresenter> implements RecommendContract.View {
+public class RecommendFragment extends ProgressFragment<RecommendPresenter> implements RecommendContract.View {
 
 
     @BindView(R.id.recommend_rv)
@@ -40,11 +40,7 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
     /**
      * 自定义的容器
      **/
-//    private List<RecommendBean.DataBean.ItemsBean> mGameList;
     private List<AppInfoBean> mGameList;
-
-
-    private String recommendNextURL = null;
 
     private RecommendRVAdapter mRecommendRVAdapter;
 
@@ -67,7 +63,7 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
 
     @Override
     protected void init() {
-        mPresenter.requestRecommendData();
+        mPresenter.requestRecommendData(true);
         mGameList = new ArrayList<>();
 
     }
@@ -78,16 +74,17 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
         recommendRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                mPresenter.requestRecommendData();
+                mPresenter.requestRecommendData(false);
             }
         });
+
+        /*先注釋掉這裏暫時不知道怎麽翻頁
         recommendRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-//                mPresenter.requestRecommendMoreData(recommendNextURL);
-//                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+
             }
-        });
+        });*/
 
     }
 
@@ -113,29 +110,8 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
 
     @Override
     public void showResult(List<AppInfoBean> recommendBean) {
-       /* recommendRefreshLayout.finishRefresh();//结束刷新
-        mGameList.clear();
-        List<RecommendBean.DataBean.ItemsBean> items = recommendBean.getData().getItems();
-        recommendNextURL = recommendBean.getData().getPager().getNext();
-        mGameList.addAll(items);
-        if (mRecommendRVAdapter == null){
-            mRecommendRVAdapter = new RecommendRVAdapter(mGameList, getActivity());
-            mRecommendRv.setAdapter(mRecommendRVAdapter);
-            // 设置数据后就要给RecyclerView设置点击事件
-            mRecommendRVAdapter.setOnItemClickListener(new RecommendRVAdapter.ItemClickListener() {
-                @Override
-                public void onItemClick(int position) {
-                    // 这里本来是跳转页面 ，我们就在这里直接让其弹toast来演示
-                    ToastUtils.show(mGameList.get(position).getApp_name());
-                }
-            });
-        }else {
-            mRecommendRVAdapter.notifyDataSetChanged();
-        }*/
-
        recommendRefreshLayout.finishRefresh();//结束刷新
         mGameList.clear();
-//        List<AppInfoBean> items = recommendBean.getDatas();
         mGameList.addAll(recommendBean);
         if (mRecommendRVAdapter == null){
             mRecommendRVAdapter = new RecommendRVAdapter(mGameList, getActivity());
@@ -166,24 +142,10 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
         mRecommendRVAdapter.notifyDataSetChanged();*/
     }
 
-
     @Override
     public void showNoData() {
 
     }
 
-    @Override
-    public void showError(String msg) {
 
-    }
-
-    @Override
-    public void showLoading() {
-        Toast.makeText(getMContext(),"showLoading",Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void dismissLoading() {
-
-    }
 }
