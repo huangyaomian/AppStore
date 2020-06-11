@@ -15,9 +15,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class RecommendPresenter extends BasePresenter<RecommendModel,RecommendContract.View> {

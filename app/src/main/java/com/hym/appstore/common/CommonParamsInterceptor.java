@@ -10,6 +10,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -43,13 +45,40 @@ public class CommonParamsInterceptor implements Interceptor {
         String method = request.method();
 
         if (method.equals("GET")) {
-            HttpUrl url = request.url();
-            String oldParamJson = url.queryParameter(Constant.PARAM);
-            HashMap<String,Object> hashMap = mGson.fromJson(oldParamJson, HashMap.class);
+            HttpUrl httpUrl = request.url();
+            HashMap<String,Object> rootMap = new HashMap<>();
+            Set<String> paramNames = httpUrl.queryParameterNames();
+            for (String key : paramNames){
+                if (Constant.PARAM.equals(key)) {
+                    String oldParamJson = httpUrl.queryParameter(Constant.PARAM);
+                    if (oldParamJson != null) {
+                        HashMap<String,Object> p = mGson.fromJson(oldParamJson, HashMap.class);//原始参数
+                        if (p != null) {
+                            for (Map.Entry<String,Object> entry : p.entrySet()){
+                                rootMap.put(entry.getKey(),entry.getValue());
+                            }
+                        }
+                    }
+                }else {
+                    rootMap.put(key,httpUrl.queryParameter(key));
+                }
+            }
+
+            rootMap.put("publicParams",commonParamsMap);//重新组装
+            String newJsonParams = mGson.toJson(rootMap);//组装好的参数
+
+            String url = httpUrl.toString();
+            int index = url.indexOf("?");
+            if (index > 0) {
+                url = url.substring(0,index);
+            }
+            url = url + "?" + Constant.PARAM + "=" + newJsonParams;
+            request = request.newBuilder().url(url).build();
+
         }else if (method.equals("POST")){
 
         }
 
-        return null;
+        return chain.proceed(request);
     }
 }
