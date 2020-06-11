@@ -35,7 +35,8 @@ public class RecommendPresenter extends BasePresenter<RecommendModel,RecommendCo
 
         mModel.getRecommendRequest()
                 .compose(RxHttpResponseCompat.<List<AppInfoBean>>compatResult())
-                .subscribe(new ProgressDisposableObserver<List<AppInfoBean>>(mContext,mView) {
+                .subscribe(new ProgressDialogDisposableObserver<List<AppInfoBean>>(mContext) {
+//                .subscribe(new ProgressDisposableObserver<List<AppInfoBean>>(mContext,mView) {
 
                     @Override
                     public void onNext(@NonNull List<AppInfoBean> appiInfoBeanPageBean) {
