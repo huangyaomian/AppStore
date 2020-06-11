@@ -2,6 +2,7 @@ package com.hym.appstore.dagger2.module;
 
 import android.app.Application;
 
+import com.hym.appstore.common.CommonParamsInterceptor;
 import com.hym.appstore.common.rx.RxErrorHandler;
 import com.hym.appstore.data.okhttp.ApiService;
 
@@ -32,6 +33,7 @@ public class HttpModule {
         return new OkHttpClient.Builder()
                 //headinterceptor实现了interceptor，用来往request header 添加一些业务相关的数据，如app版本等，token信息
                 .addInterceptor(httpLoggingInterceptor)
+                .addInterceptor(new CommonParamsInterceptor())
                 .connectTimeout(10, TimeUnit.SECONDS)//连接超时时间
                 .readTimeout(10,TimeUnit.SECONDS)//读取超时时间
                 .build();
