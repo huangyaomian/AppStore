@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 //public abstract class BaseFragment extends Fragment implements ContantsPool, HttpListener<String> {
-public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
+public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseView {
     private View mContentView;
     private Context mContext;
     private Unbinder mUnbinder;
@@ -101,6 +101,18 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         if (mUnbinder != Unbinder.EMPTY) {
             mUnbinder.unbind();
         }
+    }
+
+    @Override
+    public void showLoading() {
+    }
+
+    @Override
+    public void dismissLoading() {
+    }
+
+    @Override
+    public void showError(String msg) {
     }
 
 }

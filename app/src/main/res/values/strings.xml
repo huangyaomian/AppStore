@@ -6,7 +6,6 @@
     <string name="skip">跳過</string>
 
 
-
     <string name="error_unkown">未知错误</string>
     <string name="error_http">网络连接错误</string>
     <string name="error_system">服务器出错</string>
