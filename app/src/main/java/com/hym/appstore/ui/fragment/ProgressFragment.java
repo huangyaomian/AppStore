@@ -2,11 +2,13 @@ package com.hym.appstore.ui.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.LongDef;
 import androidx.annotation.Nullable;
 import androidx.appcompat.view.menu.ShowableListMenu;
 import androidx.fragment.app.Fragment;
 
 import android.os.strictmode.Violation;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,10 +85,12 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
     }
 
     public void showProgressView(){
+        Log.d("ProgressFragment","showProgressView");
         showView(R.id.view_progress);
     }
 
     public void showContentView(){
+        Log.d("ProgressFragment","showContentView");
         showView(R.id.view_contern);
     }
 
@@ -126,6 +130,7 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
 
     @Override
     public void showError(String msg) {
+        Log.d("ProgressFragment","showError");
         showEmptyView(msg);
     }
 

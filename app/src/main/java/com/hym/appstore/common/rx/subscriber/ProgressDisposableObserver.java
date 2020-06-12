@@ -1,8 +1,10 @@
 package com.hym.appstore.common.rx.subscriber;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.hym.appstore.common.exception.BaseException;
+import com.hym.appstore.common.utils.ProgressDialogHandler;
 import com.hym.appstore.ui.BaseView;
 
 public abstract class ProgressDisposableObserver<T> extends ErrorHandlerDisposableObserver<T> implements ProgressDialogHandler.OnProgressCancelListener {
@@ -28,6 +30,7 @@ public abstract class ProgressDisposableObserver<T> extends ErrorHandlerDisposab
 
     @Override
     protected void onStart() {
+        Log.d("requestRecommendData","onStart");
         if (isShowProgress()) {
             mBaseView.showLoading();
         }
@@ -35,7 +38,8 @@ public abstract class ProgressDisposableObserver<T> extends ErrorHandlerDisposab
 
     @Override
     public void onComplete() {
-           mBaseView.dismissLoading();
+        Log.d("requestRecommendData","onComplete");
+        mBaseView.dismissLoading();
     }
 
     @Override

@@ -1,8 +1,7 @@
-package com.hym.appstore.bean.requestbean;
+package com.hym.appstore.common;
 
 public class Constant {
     public static final String IS_SHOW_GUIDE = "is_show_guide";
-
 
     public static final String MODEL = "model";
     public static final String IMEI = "imei";

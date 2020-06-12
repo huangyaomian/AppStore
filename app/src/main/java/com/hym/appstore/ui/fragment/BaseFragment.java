@@ -7,17 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.view.menu.ShowableListMenu;
 import androidx.fragment.app.Fragment;
 
 
 import com.hym.appstore.app.MyApplication;
-import com.hym.appstore.common.ContantsPool;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.presenter.BasePresenter;
 import com.hym.appstore.ui.BaseView;
-import com.hym.appstore.ui.widget.WaitDialog;
-import com.xuexiang.xui.widget.dialog.LoadingDialog;
 
 import javax.inject.Inject;
 

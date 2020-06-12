@@ -1,4 +1,4 @@
-package com.hym.appstore.common.rx.subscriber;
+package com.hym.appstore.common.utils;
 
 import android.content.Context;
 import android.os.Handler;
@@ -40,8 +40,6 @@ public class ProgressDialogHandler extends Handler {
         if (mProgressDialog == null){
             mProgressDialog = new MiniLoadingDialog(mContext,"loading...");
             if (cancelable){
-//                mProgressDialog.setCancelMessage(new );
-//                mProgressDialog.setCanceledOnTouchOutside(cancelable);
                 mProgressDialog.setLoadingCancelListener(new LoadingCancelListener() {
                     @Override
                     public void onCancelLoading() {
@@ -56,13 +54,13 @@ public class ProgressDialogHandler extends Handler {
     }
 
 
-    protected void showProgressDialog(){
+    public void showProgressDialog(){
         if (mProgressDialog != null && !mProgressDialog.isShowing()) {
             mProgressDialog.show();
         }
     }
 
-    protected void dismissProgressDialog(){
+    public void dismissProgressDialog(){
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
             mProgressDialog = null;

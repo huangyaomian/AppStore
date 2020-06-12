@@ -1,5 +1,6 @@
 package com.hym.appstore.ui.fragment;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -63,9 +64,8 @@ public class RecommendFragment extends ProgressFragment<RecommendPresenter> impl
 
     @Override
     protected void init() {
-        mPresenter.requestRecommendData(true);
         mGameList = new ArrayList<>();
-
+        mPresenter.requestRecommendData(true);
     }
 
     @Override
@@ -112,6 +112,7 @@ public class RecommendFragment extends ProgressFragment<RecommendPresenter> impl
     public void showResult(List<AppInfoBean> recommendBean) {
        recommendRefreshLayout.finishRefresh();//结束刷新
         mGameList.clear();
+        Log.d("showResult","開始showResult");
         mGameList.addAll(recommendBean);
         if (mRecommendRVAdapter == null){
             mRecommendRVAdapter = new RecommendRVAdapter(mGameList, getActivity());
@@ -145,6 +146,15 @@ public class RecommendFragment extends ProgressFragment<RecommendPresenter> impl
     @Override
     public void showNoData() {
 
+    }
+
+    @Override
+    public void onRequestPermissionSuccess() {
+    }
+
+    @Override
+    public void onRequestPermissionError() {
+        Toast.makeText(getActivity(),"您已拒絕授權!",Toast.LENGTH_SHORT).show();
     }
 
 

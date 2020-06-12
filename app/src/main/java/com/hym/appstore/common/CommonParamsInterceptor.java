@@ -3,10 +3,8 @@ package com.hym.appstore.common;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.hym.appstore.bean.requestbean.Constant;
-import com.hym.appstore.common.utils.DeviceUtil;
+import com.hym.appstore.common.utils.DeviceUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -23,7 +21,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okio.Buffer;
-import okio.BufferedSink;
 
 public class CommonParamsInterceptor implements Interceptor {
 
@@ -46,13 +43,12 @@ public class CommonParamsInterceptor implements Interceptor {
 
         try {
             HashMap<String,Object> commonParamsMap = new HashMap<>();
-            commonParamsMap.put(Constant.IMEI,"imei");
-            commonParamsMap.put(Constant.LANGUAGE, DeviceUtil.getSystemLanguage());
-            commonParamsMap.put(Constant.OS,DeviceUtil.getSystemVersion());
-            commonParamsMap.put(Constant.RESOLUTION,"RESOLUTION");
-            commonParamsMap.put(Constant.SDK,"25");
-            commonParamsMap.put(Constant.DENSITY_SCALE_FACTOR,"DENSITY_SCALE_FACTOR");
-
+            commonParamsMap.put(Constant.IMEI, DeviceUtils.getIMEI(mContext));
+            commonParamsMap.put(Constant.LANGUAGE, DeviceUtils.getLanguage());
+            commonParamsMap.put(Constant.OS, DeviceUtils.getOSVersion());
+            commonParamsMap.put(Constant.RESOLUTION,DeviceUtils.getBuildVersionRelease());
+            commonParamsMap.put(Constant.SDK,DeviceUtils.getBuildVersionSDK());
+            commonParamsMap.put(Constant.DENSITY_SCALE_FACTOR,DeviceUtils.getDensity(mContext));
             if (method.equals("GET")) {
                 HttpUrl httpUrl = request.url();
                 HashMap<String,Object> rootMap = new HashMap<>();

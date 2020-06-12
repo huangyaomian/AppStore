@@ -2,6 +2,8 @@ package com.hym.appstore.common.rx.subscriber;
 
 import android.content.Context;
 
+import com.hym.appstore.common.utils.ProgressDialogHandler;
+
 public abstract class ProgressDialogDisposableObserver<T> extends ErrorHandlerDisposableObserver<T> implements ProgressDialogHandler.OnProgressCancelListener {
 
 
