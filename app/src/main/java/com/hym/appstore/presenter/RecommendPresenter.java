@@ -1,7 +1,10 @@
 package com.hym.appstore.presenter;
 
+import android.Manifest;
 import android.app.Activity;
 import android.util.Log;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.common.rx.RxErrorHandler;
@@ -10,6 +13,7 @@ import com.hym.appstore.common.rx.subscriber.ProgressDialogDisposableObserver;
 import com.hym.appstore.common.rx.subscriber.ProgressDisposableObserver;
 import com.hym.appstore.data.RecommendModel;
 import com.hym.appstore.presenter.contract.RecommendContract;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.List;
 
@@ -25,6 +29,15 @@ public class RecommendPresenter extends BasePresenter<RecommendModel,RecommendCo
     @Inject
     public RecommendPresenter(RecommendContract.View mView, RecommendModel model) {
         super(model,mView);
+    }
+
+    public void requestPermission(){
+        RxPermissions rxPermissions = new RxPermissions((FragmentActivity) mContext);
+        rxPermissions
+                .request(Manifest.permission.READ_PHONE_STATE).subscribe(new )
+
+
+
     }
 
 

@@ -2,6 +2,8 @@ package com.hym.appstore.dagger2.module;
 
 import android.app.Application;
 
+import com.google.gson.Gson;
+import com.hym.appstore.BuildConfig;
 import com.hym.appstore.common.CommonParamsInterceptor;
 import com.hym.appstore.common.rx.RxErrorHandler;
 import com.hym.appstore.data.okhttp.ApiService;
@@ -24,16 +26,22 @@ public class HttpModule {
 
     @Provides
     @Singleton
-    public OkHttpClient provideOkHttpClient(){
-        //log用拦截器
-        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-        //开发模式记录整个boby，否则只记录基本信息如返回200，http协议版本等
-        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+    public OkHttpClient provideOkHttpClient(Application application, Gson gson){
 
-        return new OkHttpClient.Builder()
+        OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
+
+        if (BuildConfig.DEBUG) {
+            //log用拦截器
+            HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+            //开发模式记录整个boby，否则只记录基本信息如返回200，http协议版本等
+            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            builder.addInterceptor(httpLoggingInterceptor);
+        }
+
+        return builder
                 //headinterceptor实现了interceptor，用来往request header 添加一些业务相关的数据，如app版本等，token信息
-                .addInterceptor(httpLoggingInterceptor)
-                .addInterceptor(new CommonParamsInterceptor())
+                .addInterceptor(new CommonParamsInterceptor(application,gson))
                 .connectTimeout(10, TimeUnit.SECONDS)//连接超时时间
                 .readTimeout(10,TimeUnit.SECONDS)//读取超时时间
                 .build();
