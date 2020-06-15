@@ -50,39 +50,7 @@ public class RxHttpResponseCompat {
         };
     }
 
-        /*return new ObservableTransformer<BaseBean<T>, T>() {
-            @Override
-            public @NonNull ObservableSource<T> apply(@NonNull Observable<BaseBean<T>> upstream) {
-                return upstream.flatMap(new Function<BaseBean<T>, ObservableSource<T>>() {
-                    @Override
-                    public ObservableSource<T> apply(BaseBean<T> tBaseBean) throws Throwable {
-                        if (tBaseBean.success()) {
-                           return Observable.create(new ObservableOnSubscribe<T>() {
-                                @Override
-                                public void subscribe(@NonNull ObservableEmitter<T> emitter) throws Throwable {
-                                    try {
 
-                                        Log.d("ObservableTransformer","请求成功返回给下级的next");
-                                        if (tBaseBean.getData() == null){
-                                            Log.d("ObservableTransformer","getData為null");
-                                        }
-//                                        Log.d("ObservableTransformer",tBaseBean.getData().toString());
-                                        emitter.onNext(tBaseBean.getData());
-                                        Log.d("ObservableTransformer","请求成功返回给下级的onComplete");
-                                        emitter.onComplete();
-                                    }catch (Exception e){
-                                        emitter.onError(e);
-                                    }
 
-                                }
-                            });
-                        }else {
-                            return Observable.error(new ApiException(tBaseBean.getStatus(),tBaseBean.getMessage()));
-                        }
-                    }
-                }).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
-            }
-        };
-*/
 }
 
