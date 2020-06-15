@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,19 +13,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.BannerBean;
 import com.hym.appstore.bean.HomeBean;
-import com.xuexiang.xui.widget.banner.widget.banner.SimpleImageBanner;
+import com.hym.appstore.common.imageloader.ImageLoader;
+import com.hym.appstore.ui.widget.BannerLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
     private static final int TYPE_BANNER = 1;
     private static final int TYPE_ICON = 2;
     private static final int TYPE_APP = 3;
     private static final int TYPE_GAME = 4;
+
 
 
     private LayoutInflater mLayoutInflater;
@@ -46,6 +51,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (position == 4) {
             return TYPE_GAME;
         }
+        return position;
     }
 
     @NonNull
@@ -62,33 +68,82 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        if (position == 0){
-            BannerViewHolder bannerViewHolder = (BannerViewHolder)holder;
+        if (position == 0) {
+            BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
             List<BannerBean> banners = mHomeBean.getBanners();
-            bannerViewHolder.banner.set
+            List<String> urls = new ArrayList<>(banners.size());
+            for (BannerBean banner : banners) {
+                urls.add(banner.getThumbnail());
+            }
+            bannerViewHolder.banner.setViewUrls(urls);
+            bannerViewHolder.banner.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+//                    banners.get(position)
+                }
+            });
+
+        } else if (position == 1) {
+
+            IconViewHolder iconViewHolder = (IconViewHolder) holder;
+
+            iconViewHolder.mIconHotApp.setOnClickListener(this);
+            iconViewHolder.mIconHotGame.setOnClickListener(this);
+            iconViewHolder.mIconHotRecommend.setOnClickListener(this);
+
         }
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 2;
     }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
 
     class BannerViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.banner)
-        SimpleImageBanner banner;
+        BannerLayout banner;
+
+
 
         public BannerViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(itemView);
+            banner.setImageLoader(new ImgLoader());
         }
     }
 
     class IconViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.icon_hot_app)
+        LinearLayout mIconHotApp;
+        @BindView(R.id.icon_hot_game)
+        LinearLayout mIconHotGame;
+        @BindView(R.id.icon_hot_recommend)
+        LinearLayout mIconHotRecommend;
+
         public IconViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
+
+
+
+
+
+
+    class ImgLoader implements BannerLayout.ImageLoader {
+
+        @Override
+        public void displayImage(Context context, String path, ImageView imageView) {
+            ImageLoader.load(path, imageView);
+        }
+    }
+
 }

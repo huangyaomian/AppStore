@@ -1,13 +1,13 @@
 package com.hym.appstore.dagger2.module;
 
 import com.hym.appstore.data.HomeModel;
-import com.hym.appstore.data.RecommendModel;
 import com.hym.appstore.data.okhttp.ApiService;
 import com.hym.appstore.presenter.contract.HomeContract;
-import com.hym.appstore.presenter.contract.RecommendContract;
 
+import dagger.Module;
 import dagger.Provides;
 
+@Module
 public class HomeModule {
     private HomeContract.View mView;
 

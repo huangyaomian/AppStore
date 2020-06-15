@@ -8,6 +8,8 @@ public class HomeBean {
 
     private List<AppInfoBean> homeApps;
 
+    private List<AppInfoBean> homeGames;
+
     public List<BannerBean> getBanners() {
         return banners;
     }
@@ -32,5 +34,5 @@ public class HomeBean {
         this.homeGames = homeGames;
     }
 
-    private List<AppInfoBean> homeGames;
+
 }

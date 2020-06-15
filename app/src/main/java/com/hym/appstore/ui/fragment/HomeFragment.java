@@ -1,53 +1,32 @@
 package com.hym.appstore.ui.fragment;
 
-import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
+import android.widget.Toast;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.hjq.toast.ToastUtils;
 import com.hym.appstore.R;
-import com.hym.appstore.bean.AppInfoBean;
-import com.hym.appstore.bean.RecommendBean;
+import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.dagger2.component.AppComponent;
-import com.hym.appstore.dagger2.component.DaggerRecommendComponent;
+import com.hym.appstore.dagger2.component.DaggerHomeComponent;
 import com.hym.appstore.dagger2.module.HomeModule;
-import com.hym.appstore.dagger2.module.RecommendModule;
 import com.hym.appstore.presenter.HomePresenter;
-import com.hym.appstore.presenter.RecommendPresenter;
 import com.hym.appstore.presenter.contract.HomeContract;
-import com.hym.appstore.presenter.contract.RecommendContract;
-import com.hym.appstore.ui.adapter.RecommendRVAdapter;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.hym.appstore.ui.adapter.HomeAdapter;
 
 import butterknife.BindView;
 
 public class HomeFragment extends ProgressFragment<HomePresenter> implements HomeContract.View {
 
 
-    /**
-     * 自定义的容器
-     **/
-    private List<AppInfoBean> mGameList;
-
-    private RecommendRVAdapter mRecommendRVAdapter;
+    @BindView(R.id.home_rv)
+    RecyclerView mHomeRv;
+    private HomeAdapter adapter;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-        DaggerRecommendComponent.builder().appComponent(appComponent).HomeModule(new HomeModule(this)).build().inject(this);
+        DaggerHomeComponent.builder().appComponent(appComponent).homeModule(new HomeModule(this)).build().inject(this);
     }
 
     @Override
@@ -63,7 +42,6 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements Hom
 
     @Override
     protected void init() {
-        mGameList = new ArrayList<>();
         mPresenter.requestHomeData(true);
     }
 
@@ -77,13 +55,15 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements Hom
 
 
     @Override
-    public void showResult(List<AppInfoBean> recommendBean) {
+    public void showResult(HomeBean homeBean) {
+        adapter = new HomeAdapter(getActivity(), homeBean);
+        mHomeRv.setAdapter(adapter);
 
     }
 
 
     @Override
-    public void showMoreResult(RecommendBean recommendBean) {
+    public void showMoreResult(HomeBean homeBean) {
 
     }
 
@@ -94,6 +74,7 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements Hom
 
     @Override
     public void onRequestPermissionSuccess() {
+
     }
 
     @Override

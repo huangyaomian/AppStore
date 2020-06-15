@@ -18,7 +18,6 @@ public class HomeModel {
 
 
 
-
     public Observable<BaseBean<HomeBean>> getHomeRequest(){
         return  mApiService.getHome();
     }

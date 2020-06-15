@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 
 import com.abarajithan.rxpermissions.RxPermissions;
 import com.hym.appstore.bean.AppInfoBean;
-import com.hym.appstore.bean.BaseBean;
 import com.hym.appstore.common.rx.RxHttpResponseCompat;
 import com.hym.appstore.common.rx.subscriber.ProgressDisposableObserver;
 import com.hym.appstore.data.RecommendModel;
@@ -16,11 +15,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.Module;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableSource;
-import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Function;
 
 
@@ -73,6 +70,7 @@ public class RecommendPresenter extends BasePresenter<RecommendModel,RecommendCo
             @Override
             public void onNext(@NonNull List<AppInfoBean> appiInfoBeanPageBean) {
                 Log.d("requestRecommendData","onNext");
+                Log.d("requestRecommendData",appiInfoBeanPageBean.toString());
                 if (appiInfoBeanPageBean != null){
                     mView.showResult(appiInfoBeanPageBean);
                 }else {
