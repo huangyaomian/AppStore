@@ -20,12 +20,10 @@ import com.hym.appstore.R;
 import com.hym.appstore.bean.BannerBean;
 import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.common.imageloader.ImageLoader;
-import com.hym.appstore.ui.fragment.RecommendFragment;
 import com.hym.appstore.ui.widget.BannerLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,13 +51,13 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 1) {
+        if (position == 0) {
             return TYPE_BANNER;
-        } else if (position == 2) {
+        } else if (position == 1) {
             return TYPE_ICON;
-        } else if (position == 3) {
+        } else if (position == 2) {
             return TYPE_APP;
-        } else if (position == 4) {
+        } else if (position == 3) {
             return TYPE_GAME;
         }
         return position;
@@ -82,7 +80,6 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
         if (position == 0) {
             BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
             List<BannerBean> banners = mHomeBean.getBanners();
@@ -100,7 +97,6 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             });
 
         } else if (position == 1) {
-
             IconViewHolder iconViewHolder = (IconViewHolder) holder;
             iconViewHolder.mIconHotApp.setOnClickListener(this);
             iconViewHolder.mIconHotGame.setOnClickListener(this);
@@ -108,7 +104,6 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
         }else {
             AppViewHolder viewHolder = (AppViewHolder) holder;
-
             AppInfoAdapter appInfoAdapter = new AppInfoAdapter();
             if (viewHolder.type == TYPE_APP){
                 viewHolder.homeRecyclerviewTitle.setText("热门应用");
@@ -149,7 +144,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
         public BannerViewHolder(@NonNull View itemView) {
             super(itemView);
-            ButterKnife.bind(itemView);
+            ButterKnife.bind(this, itemView);
             banner.setImageLoader(new ImgLoader());
         }
     }
@@ -165,6 +160,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
         public IconViewHolder(@NonNull View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
@@ -179,6 +175,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
         public AppViewHolder(@NonNull View itemView,int type) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
             this.type = type;
             initRecyclerView();
             ButterKnife.bind(itemView);

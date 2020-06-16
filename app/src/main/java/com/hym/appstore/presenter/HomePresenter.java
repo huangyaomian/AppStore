@@ -24,7 +24,6 @@ public class HomePresenter extends BasePresenter<HomeModel, HomeContract.View> {
 
 
     public void requestHomeData(boolean isShowProgress) {
-
         mModel.getHomeRequest()
                 .compose(RxHttpResponseCompat.handle_result())
                 .subscribe(new ProgressDisposableObserver<Optional<HomeBean>>(mContext, mView) {
@@ -38,6 +37,23 @@ public class HomePresenter extends BasePresenter<HomeModel, HomeContract.View> {
                         return isShowProgress;
                     }
                 });
+
+      /*  mModel.getHomeRequest()
+               .subscribeOn(Schedulers.io())//把請求放到子綫程中去做(被观察者设置为子线程(发消息))
+               .observeOn(AndroidSchedulers.mainThread())//观观察者设置为主线程(接收消息）
+                .subscribeWith(new ProgressDisposableObserver<BaseBean<HomeBean>>(mContext, mView) {
+                    @Override
+                    public void onNext(@NonNull BaseBean baseBean) {
+//                        Log.d("requestHomeData", String.valueOf(appInfoBeans);
+                        mView.showResult((HomeBean) baseBean.getData());
+                    }
+
+                    @Override
+                    protected boolean isShowProgress() {
+                        return isShowProgress;
+                    }
+                });*/
+
 
     }
 }

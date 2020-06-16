@@ -1,26 +1,16 @@
 package com.hym.appstore.presenter;
 
-import android.Manifest;
-import android.util.Log;
-
-import androidx.fragment.app.Fragment;
-
-import com.abarajithan.rxpermissions.RxPermissions;
 import com.hym.appstore.bean.AppInfoBean;
-import com.hym.appstore.bean.HomeBean;
-import com.hym.appstore.common.rx.Optional;
 import com.hym.appstore.common.rx.RxHttpResponseCompat;
 import com.hym.appstore.common.rx.subscriber.ProgressDisposableObserver;
 import com.hym.appstore.data.RecommendModel;
 import com.hym.appstore.presenter.contract.RecommendContract;
+
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableSource;
-import io.reactivex.rxjava3.functions.Function;
 
 
 public class RecommendPresenter extends BasePresenter<RecommendModel,RecommendContract.View> {
@@ -87,10 +77,8 @@ public class RecommendPresenter extends BasePresenter<RecommendModel,RecommendCo
         });*/
 
 
-
-
         mModel.getRecommendRequest()
-                .compose(RxHttpResponseCompat.<List<AppInfoBean>>compatResult())
+                .compose(RxHttpResponseCompat.compatResult())
                 .subscribe(new ProgressDisposableObserver<List<AppInfoBean>>(mContext, mView) {
                     @Override
                     public void onNext(@NonNull List<AppInfoBean> appInfoBeans) {
@@ -103,6 +91,22 @@ public class RecommendPresenter extends BasePresenter<RecommendModel,RecommendCo
                         return isShowProgress;
                     }
                 });
+
+
+        /*mModel.getRecommendRequest()
+                .compose(RxHttpResponseCompat.compatResult())
+                .subscribe(new ProgressDisposableObserver<List<AppInfoBean>>(mContext, mView) {
+                    @Override
+                    public void onNext(@NonNull List<AppInfoBean> appInfoBeans) {
+//                        Log.d("requestHomeData", String.valueOf(appInfoBeans);
+                        mView.showResult(appInfoBeans);
+                    }
+
+                    @Override
+                    protected boolean isShowProgress() {
+                        return isShowProgress;
+                    }
+                });*/
 /*
         mModel.getRecommendRequest()
                 .compose(RxHttpResponseCompat.<List<AppInfoBean>>compatResult())

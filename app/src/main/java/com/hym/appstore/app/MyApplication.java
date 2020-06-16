@@ -15,7 +15,6 @@ import com.yanzhenjie.nohttp.Logger;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
 
-import javax.inject.Inject;
 
 
 public class MyApplication extends Application {

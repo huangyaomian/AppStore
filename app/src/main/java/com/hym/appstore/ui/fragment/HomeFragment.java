@@ -3,6 +3,7 @@ package com.hym.appstore.ui.fragment;
 
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,12 +37,14 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements Hom
 
     @Override
     protected void initView() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
     }
 
 
     @Override
     protected void init() {
+        mHomeRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mHomeRv.setItemAnimator(new DefaultItemAnimator());
         mPresenter.requestHomeData(true);
     }
 

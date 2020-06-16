@@ -1,6 +1,5 @@
 package com.hym.appstore.data;
 
-import android.util.Log;
 
 import com.hym.appstore.bean.BaseBean;
 import com.hym.appstore.bean.HomeBean;
