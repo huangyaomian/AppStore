@@ -24,6 +24,7 @@ import com.hym.appstore.ui.adapter.MyViewPagerAdapter;
 import com.hym.appstore.ui.fragment.GameFragment;
 import com.hym.appstore.ui.fragment.HomeFragment;
 import com.hym.appstore.ui.fragment.RankingFragment;
+import com.hym.appstore.ui.fragment.RecommendFragment;
 import com.hym.appstore.ui.fragment.SortFragment;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
@@ -96,7 +97,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initView() {
         toolbar.setOverflowIcon(new IconicsDrawable(this, Ionicons.Icon.ion_android_more_vertical).color(getResources().getColor(R.color.TextColor)).actionBar());
-        fragmentInfos.add(new FragmentInfo("推荐", HomeFragment.class));
+        fragmentInfos.add(new FragmentInfo("推荐", RecommendFragment.class));
         fragmentInfos.add(new FragmentInfo("排行", RankingFragment.class));
         fragmentInfos.add(new FragmentInfo("游戏", GameFragment.class));
         fragmentInfos.add(new FragmentInfo("分类", SortFragment.class));

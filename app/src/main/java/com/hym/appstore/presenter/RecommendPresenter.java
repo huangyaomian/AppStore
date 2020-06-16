@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 
 import com.abarajithan.rxpermissions.RxPermissions;
 import com.hym.appstore.bean.AppInfoBean;
+import com.hym.appstore.bean.HomeBean;
+import com.hym.appstore.common.rx.Optional;
 import com.hym.appstore.common.rx.RxHttpResponseCompat;
 import com.hym.appstore.common.rx.subscriber.ProgressDisposableObserver;
 import com.hym.appstore.data.RecommendModel;
@@ -52,7 +54,7 @@ public class RecommendPresenter extends BasePresenter<RecommendModel,RecommendCo
 
     public void requestRecommendData(boolean isShowProgress) {
 
-        RxPermissions rxPermissions = new RxPermissions((Fragment) mView);
+        /*RxPermissions rxPermissions = new RxPermissions((Fragment) mView);
         rxPermissions.requestSimple(Manifest.permission.READ_PHONE_STATE).flatMap(new Function<Boolean[], ObservableSource<List<AppInfoBean>>>() {
             @Override
             public ObservableSource<List<AppInfoBean>> apply(Boolean[] booleans) throws Throwable {
@@ -82,7 +84,25 @@ public class RecommendPresenter extends BasePresenter<RecommendModel,RecommendCo
             protected boolean isShowProgress() {
                 return isShowProgress;
             }
-        });
+        });*/
+
+
+
+
+        mModel.getRecommendRequest()
+                .compose(RxHttpResponseCompat.<List<AppInfoBean>>compatResult())
+                .subscribe(new ProgressDisposableObserver<List<AppInfoBean>>(mContext, mView) {
+                    @Override
+                    public void onNext(@NonNull List<AppInfoBean> appInfoBeans) {
+//                        Log.d("requestHomeData", String.valueOf(appInfoBeans);
+                        mView.showResult(appInfoBeans);
+                    }
+
+                    @Override
+                    protected boolean isShowProgress() {
+                        return isShowProgress;
+                    }
+                });
 /*
         mModel.getRecommendRequest()
                 .compose(RxHttpResponseCompat.<List<AppInfoBean>>compatResult())
