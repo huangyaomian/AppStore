@@ -14,12 +14,12 @@ import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.dagger2.component.DaggerHomeComponent;
 import com.hym.appstore.dagger2.module.HomeModule;
 import com.hym.appstore.presenter.HomePresenter;
-import com.hym.appstore.presenter.contract.HomeContract;
+import com.hym.appstore.presenter.contract.AppInfoContract;
 import com.hym.appstore.ui.adapter.HomeAdapter;
 
 import butterknife.BindView;
 
-public class HomeFragment extends ProgressFragment<HomePresenter> implements HomeContract.View {
+public class HomeFragment extends ProgressFragment<HomePresenter> implements AppInfoContract.View {
 
 
     @BindView(R.id.home_rv)
@@ -33,7 +33,7 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements Hom
 
     @Override
     protected int setLayoutResourceID() {
-        return R.layout.fragment_home;
+        return R.layout.template_recycler_view;
     }
 
     @Override

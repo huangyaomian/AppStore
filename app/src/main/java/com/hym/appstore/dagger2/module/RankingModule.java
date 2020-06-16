@@ -8,23 +8,20 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class HomeModule {
-    private AppInfoContract.View mView;
+public class RankingModule {
 
-    public HomeModule(AppInfoContract.View mView) {
+    private AppInfoContract.RankingView mView;
+
+    public RankingModule(AppInfoContract.RankingView mView) {
         this.mView = mView;
     }
 
 
     @Provides
-    public AppInfoContract.View provideView(){
+    public AppInfoContract.RankingView provideView(){
         return mView;
     }
 
- /*   @Provides
-    public RecommendModel provideRecommendModel(RequestQueue mRequestQueue){
-        return new RecommendModel(mRequestQueue);
-    }*/
 
     @Provides
     public AppInfoModel provideHomeModel(ApiService apiService){

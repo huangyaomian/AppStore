@@ -2,13 +2,11 @@ package com.hym.appstore.data;
 
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.BaseBean;
-import com.hym.appstore.bean.PageBean;
 import com.hym.appstore.data.okhttp.ApiService;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableSource;
 
 
 public class RecommendModel {

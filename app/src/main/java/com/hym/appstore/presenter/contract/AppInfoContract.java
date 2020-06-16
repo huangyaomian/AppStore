@@ -1,9 +1,11 @@
 package com.hym.appstore.presenter.contract;
 
+import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.HomeBean;
+import com.hym.appstore.bean.PageBean;
 import com.hym.appstore.ui.BaseView;
 
-public interface HomeContract {
+public interface AppInfoContract {
 
     interface View extends BaseView {
 
@@ -15,5 +17,12 @@ public interface HomeContract {
         void onRequestPermissionSuccess();
         void onRequestPermissionError();
 
+    }
+
+    interface RankingView extends BaseView {
+
+        void showResult(PageBean<AppInfoBean> data);
+        void showError(String msg);
+        void onLoadMoreComplete();
     }
 }

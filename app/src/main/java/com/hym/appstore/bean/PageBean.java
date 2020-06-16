@@ -5,12 +5,12 @@ import java.util.List;
 
 public class PageBean<T> implements Serializable {
 
-//    private boolean hasMore;
-//    private int status;
-//    private String message;
+    private boolean hasMore;
+    private int status;
+    private String message;
     private List<T> datas;
 
-  /*  public boolean isHasMore() {
+    public boolean isHasMore() {
         return hasMore;
     }
 
@@ -32,7 +32,7 @@ public class PageBean<T> implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
-    }*/
+    }
 
     public List<T> getDatas() {
         return datas;

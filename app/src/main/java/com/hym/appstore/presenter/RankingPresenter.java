@@ -1,8 +1,7 @@
 package com.hym.appstore.presenter;
 
-import android.util.Log;
-
-import com.hym.appstore.bean.HomeBean;
+import com.hym.appstore.bean.AppInfoBean;
+import com.hym.appstore.bean.PageBean;
 import com.hym.appstore.common.rx.Optional;
 import com.hym.appstore.common.rx.RxHttpResponseCompat;
 import com.hym.appstore.common.rx.subscriber.ProgressDisposableObserver;
@@ -13,25 +12,26 @@ import javax.inject.Inject;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 
-public class HomePresenter extends BasePresenter<AppInfoModel, AppInfoContract.View> {
+public class RankingPresenter extends BasePresenter<AppInfoModel, AppInfoContract.RankingView> {
 
     @Inject
-    public HomePresenter(AppInfoContract.View mView, AppInfoModel model) {
+    public RankingPresenter(AppInfoContract.RankingView mView, AppInfoModel model) {
         super(model, mView);
     }
 
 
 
 
-    public void requestHomeData(boolean isShowProgress) {
-        mModel.getHomeRequest()
+    public void requestRankingData(boolean isShowProgress,int page) {
+        mModel.getRankingRequest(page)
                 .compose(RxHttpResponseCompat.handle_result())
-                .subscribe(new ProgressDisposableObserver<Optional<HomeBean>>(mContext, mView) {
+                .subscribe(new ProgressDisposableObserver<Optional<PageBean<AppInfoBean>>>(mContext, mView) {
+
                     @Override
-                    public void onNext(@NonNull Optional<HomeBean> homeBeanOptional) {
-                        Log.d("requestHomeData", String.valueOf(homeBeanOptional.getIncludeNull().getBanners().size()));
-                        mView.showResult(homeBeanOptional.getIncludeNull());
+                    public void onNext(@NonNull Optional<PageBean<AppInfoBean>> pageBeanOptional) {
+                        mView.showResult(pageBeanOptional.getIncludeNull());
                     }
+
                     @Override
                     protected boolean isShowProgress() {
                         return isShowProgress;

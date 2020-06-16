@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hjq.toast.ToastUtils;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.AppInfoBean;
-import com.hym.appstore.bean.PageBean;
-import com.hym.appstore.bean.RecommendBean;
+import com.hym.appstore.bean.RecommendBean2;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.dagger2.component.DaggerRecommendComponent;
 import com.hym.appstore.dagger2.module.RecommendModule;
@@ -20,7 +19,6 @@ import com.hym.appstore.presenter.contract.RecommendContract;
 import com.hym.appstore.ui.adapter.RecommendRVAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
@@ -135,7 +133,7 @@ public class RecommendFragment extends ProgressFragment<RecommendPresenter> impl
 
 
     @Override
-    public void showMoreResult(RecommendBean recommendBean) {
+    public void showMoreResult(RecommendBean2 recommendBean) {
       /*  recommendRefreshLayout.finishLoadMore(2000*//*,false*//*);//传入false表示加载失败
         List<RecommendBean.DataBean.ItemsBean> items = recommendBean.getData().getItems();
         recommendNextURL = recommendBean.getData().getPager().getNext();
