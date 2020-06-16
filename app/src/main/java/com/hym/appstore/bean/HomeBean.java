@@ -6,9 +6,9 @@ public class HomeBean {
 
     private List<BannerBean> banners;
 
-    private List<AppInfoBean> homeApps;
+    private List<AppInfoBean> recommendApps;
 
-    private List<AppInfoBean> homeGames;
+    private List<AppInfoBean> recommendGames;
 
     public List<BannerBean> getBanners() {
         return banners;
@@ -19,19 +19,19 @@ public class HomeBean {
     }
 
     public List<AppInfoBean> getHomeApps() {
-        return homeApps;
+        return recommendApps;
     }
 
-    public void setHomeApps(List<AppInfoBean> homeApps) {
-        this.homeApps = homeApps;
+    public void setHomeApps(List<AppInfoBean> recommendApps) {
+        this.recommendApps = recommendApps;
     }
 
     public List<AppInfoBean> getHomeGames() {
-        return homeGames;
+        return recommendGames;
     }
 
-    public void setHomeGames(List<AppInfoBean> homeGames) {
-        this.homeGames = homeGames;
+    public void setHomeGames(List<AppInfoBean> recommendGames) {
+        this.recommendGames = recommendGames;
     }
 
 

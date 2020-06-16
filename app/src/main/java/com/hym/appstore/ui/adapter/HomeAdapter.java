@@ -1,6 +1,7 @@
 package com.hym.appstore.ui.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         } else if (position == 3) {
             return TYPE_GAME;
         }
-        return position;
+        return 0;
     }
 
     @NonNull
@@ -80,6 +81,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        Log.d("onBindViewHolder","第幾個item：" + position);
         if (position == 0) {
             BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
             List<BannerBean> banners = mHomeBean.getBanners();
@@ -95,14 +97,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                     Toast.makeText(mContext,"banner--onItemClick " + position, Toast.LENGTH_SHORT).show();
                 }
             });
-
         } else if (position == 1) {
             IconViewHolder iconViewHolder = (IconViewHolder) holder;
             iconViewHolder.mIconHotApp.setOnClickListener(this);
             iconViewHolder.mIconHotGame.setOnClickListener(this);
             iconViewHolder.mIconHotRecommend.setOnClickListener(this);
-
-        }else {
+        } else {
             AppViewHolder viewHolder = (AppViewHolder) holder;
             AppInfoAdapter appInfoAdapter = new AppInfoAdapter();
             if (viewHolder.type == TYPE_APP){

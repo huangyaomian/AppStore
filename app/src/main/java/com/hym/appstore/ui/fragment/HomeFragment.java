@@ -1,6 +1,7 @@
 package com.hym.appstore.ui.fragment;
 
 
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -61,6 +62,8 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements Hom
     public void showResult(HomeBean homeBean) {
         adapter = new HomeAdapter(getActivity(), homeBean);
         mHomeRv.setAdapter(adapter);
+        Log.d("showResult", String.valueOf(mHomeRv.getChildCount()));
+
 
     }
 
