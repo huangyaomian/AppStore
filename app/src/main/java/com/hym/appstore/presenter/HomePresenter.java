@@ -1,6 +1,9 @@
 package com.hym.appstore.presenter;
 
+import android.util.Log;
+
 import com.hym.appstore.bean.HomeBean;
+import com.hym.appstore.common.rx.Optional;
 import com.hym.appstore.common.rx.RxHttpResponseCompat;
 import com.hym.appstore.common.rx.subscriber.ProgressDisposableObserver;
 import com.hym.appstore.data.HomeModel;
@@ -23,13 +26,13 @@ public class HomePresenter extends BasePresenter<HomeModel, HomeContract.View> {
     public void requestHomeData(boolean isShowProgress) {
 
         mModel.getHomeRequest()
-                .compose(RxHttpResponseCompat.<HomeBean>compatResult())
-                .subscribe(new ProgressDisposableObserver<HomeBean>(mContext, mView) {
+                .compose(RxHttpResponseCompat.handle_result())
+                .subscribe(new ProgressDisposableObserver<Optional<HomeBean>>(mContext, mView) {
                     @Override
-                    public void onNext(@NonNull HomeBean homeBean) {
-                        mView.showResult(homeBean);
+                    public void onNext(@NonNull Optional<HomeBean> homeBeanOptional) {
+                        Log.d("requestHomeData", String.valueOf(homeBeanOptional.getIncludeNull().getBanners().size()));
+                        mView.showResult(homeBeanOptional.getIncludeNull());
                     }
-
                     @Override
                     protected boolean isShowProgress() {
                         return isShowProgress;

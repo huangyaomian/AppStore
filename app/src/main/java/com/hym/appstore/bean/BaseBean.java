@@ -1,5 +1,7 @@
 package com.hym.appstore.bean;
 
+import com.hym.appstore.common.rx.Optional;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -39,5 +41,9 @@ public class BaseBean<T> implements Serializable {
 
     public void setData(T datas) {
         this.datas = datas;
+    }
+
+    public Optional<T> transform(){
+        return new Optional<>(datas);
     }
 }

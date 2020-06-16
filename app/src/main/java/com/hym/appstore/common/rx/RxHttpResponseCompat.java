@@ -50,6 +50,42 @@ public class RxHttpResponseCompat {
         };
     }
 
+    /**
+     * http请求结果处理方法
+     *
+     * @param <T>
+     * @return
+     */
+    public static <T> ObservableTransformer<BaseBean<T>, Optional<T>> handle_result() {
+        return upstream -> upstream
+                .flatMap(new Function<BaseBean<T>, ObservableSource<Optional<T>>>() {
+                             @Override
+                             public ObservableSource<Optional<T>> apply(@NonNull BaseBean<T> tBaseBean) throws Exception {
+                                 if (tBaseBean.success()) {
+                                     // result.transform() 就是将返回结果进行包装
+                                     return createHttpData(tBaseBean.transform());
+                                 } else {
+                                     // 发送请求失败的信息
+                                     return Observable.error(new ApiException(tBaseBean.getStatus(), tBaseBean.getMessage()));
+                                 }
+
+                             }
+                         }
+                ).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
+    }
+
+    private static <T> Observable<Optional<T>> createHttpData(Optional<T> t) {
+
+        return Observable.create(e -> {
+            try {
+                e.onNext(t);
+                e.onComplete();
+            } catch (Exception exc) {
+                e.onError(exc);
+            }
+        });
+    }
+
 
 
 }

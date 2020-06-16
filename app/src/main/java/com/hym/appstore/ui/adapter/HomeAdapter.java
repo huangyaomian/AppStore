@@ -6,18 +6,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.BannerBean;
 import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.common.imageloader.ImageLoader;
+import com.hym.appstore.ui.fragment.RecommendFragment;
 import com.hym.appstore.ui.widget.BannerLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,9 +42,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     private LayoutInflater mLayoutInflater;
     private HomeBean mHomeBean;
 
+    private Context mContext;
+
     public HomeAdapter(Context context, HomeBean homeBean) {
         mLayoutInflater = LayoutInflater.from(context);
         this.mHomeBean = homeBean;
+        this.mContext = context;
     }
 
 
@@ -61,6 +72,10 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             return new BannerViewHolder(mLayoutInflater.inflate(R.layout.home_banner, parent, false));
         } else if (viewType == TYPE_ICON) {
             return new IconViewHolder(mLayoutInflater.inflate(R.layout.home_nav_icon, parent, false));
+        } else if (viewType == TYPE_APP) {
+            return new AppViewHolder(mLayoutInflater.inflate(R.layout.home_recyclerview_with_title, null, false), TYPE_APP);
+        } else if (viewType == TYPE_GAME) {
+            return new AppViewHolder(mLayoutInflater.inflate(R.layout.home_recyclerview_with_title, null, false), TYPE_GAME);
         }
         return null;
     }
@@ -80,23 +95,45 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 @Override
                 public void onItemClick(int position) {
 //                    banners.get(position)
+                    Toast.makeText(mContext,"banner--onItemClick " + position, Toast.LENGTH_SHORT).show();
                 }
             });
 
         } else if (position == 1) {
 
             IconViewHolder iconViewHolder = (IconViewHolder) holder;
-
             iconViewHolder.mIconHotApp.setOnClickListener(this);
             iconViewHolder.mIconHotGame.setOnClickListener(this);
             iconViewHolder.mIconHotRecommend.setOnClickListener(this);
 
+        }else {
+            AppViewHolder viewHolder = (AppViewHolder) holder;
+
+            AppInfoAdapter appInfoAdapter = new AppInfoAdapter();
+            if (viewHolder.type == TYPE_APP){
+                viewHolder.homeRecyclerviewTitle.setText("热门应用");
+                appInfoAdapter.addData(mHomeBean.getHomeApps());
+            }else {
+                viewHolder.homeRecyclerviewTitle.setText("热门游戏");
+                appInfoAdapter.addData(mHomeBean.getHomeGames());
+            }
+
+            viewHolder.homeRecyclerview.setAdapter(appInfoAdapter);
+
+            // 设置点击事件
+            appInfoAdapter.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
+//                    Tips.show("onItemClick " + position);
+                    Toast.makeText(mContext,"onItemClick " + position, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 4;
     }
 
     @Override
@@ -109,8 +146,6 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
         @BindView(R.id.banner)
         BannerLayout banner;
-
-
 
         public BannerViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -133,7 +168,33 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         }
     }
 
+    class AppViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.home_recyclerview_title)
+        TextView homeRecyclerviewTitle;
+        @BindView(R.id.home_recyclerview)
+        RecyclerView homeRecyclerview;
+
+        int type;
+
+        public AppViewHolder(@NonNull View itemView,int type) {
+            super(itemView);
+            this.type = type;
+            initRecyclerView();
+            ButterKnife.bind(itemView);
+        }
+
+        private void initRecyclerView(){
+            homeRecyclerview.setLayoutManager(new LinearLayoutManager(mContext){
+                @Override
+                public boolean canScrollVertically() {
+                    return false;
+                }
+            });
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL);
+            homeRecyclerview.addItemDecoration(dividerItemDecoration);
+        }
+    }
 
 
 

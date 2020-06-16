@@ -124,5 +124,8 @@ dependencies {
     // 高斯模糊和圆角等
     implementation 'jp.wasabeef:glide-transformations:4.0.1'
 
+    //BaseRecyclerViewAdapterHelper
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+
 
 }
