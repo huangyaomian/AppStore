@@ -104,7 +104,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             iconViewHolder.mIconHotRecommend.setOnClickListener(this);
         } else {
             AppViewHolder viewHolder = (AppViewHolder) holder;
-            AppInfoAdapter appInfoAdapter = new AppInfoAdapter();
+            AppInfoAdapter appInfoAdapter = AppInfoAdapter.builder().showPosition(false).showCategoryName(false).showBrief(true).build();
+            appInfoAdapter.setAnimationEnable(true);
+            appInfoAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.AlphaIn);
             if (viewHolder.type == TYPE_APP){
                 viewHolder.homeRecyclerviewTitle.setText("热门应用");
                 appInfoAdapter.addData(mHomeBean.getHomeApps());

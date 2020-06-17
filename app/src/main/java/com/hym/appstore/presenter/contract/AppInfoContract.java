@@ -19,7 +19,7 @@ public interface AppInfoContract {
 
     }
 
-    interface RankingView extends BaseView {
+    interface AppInfoView extends BaseView {
 
         void showResult(PageBean<AppInfoBean> data);
         void showError(String msg);

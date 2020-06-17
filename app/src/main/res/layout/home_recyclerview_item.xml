@@ -9,11 +9,27 @@
     android:paddingBottom="12dp"
     >
 
+    <TextView
+        android:id="@+id/home_recyclerview_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingLeft="8dp"
+        android:textColor="@color/TextColor"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingRight="16dp"
+        android:text="1."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/home_item_iv"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/home_recyclerview_position"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -42,16 +58,30 @@
         app:layout_constraintStart_toEndOf="@+id/home_item_iv"
         app:layout_constraintTop_toBottomOf="@+id/home_recyclerview_name" />
 
+    <TextView
+        android:id="@+id/home_recyclerview_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/theme_grey"
+        android:textSize="12sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintStart_toEndOf="@+id/home_item_iv"
+        app:layout_constraintTop_toBottomOf="@+id/home_recyclerview_name" />
+
     <com.mikepenz.iconics.view.IconicsTextView
         android:id="@+id/home_recyclerview_download"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:textColor="@color/theme_blue"
-        android:textSize="14sp"
         android:text="{ion-ios-download-outline}"
-        app:layout_constraintStart_toEndOf="@+id/home_item_iv"
-        app:layout_constraintTop_toBottomOf="@+id/home_recyclerview_brief" />
+        android:textColor="@color/theme_blue"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="20dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

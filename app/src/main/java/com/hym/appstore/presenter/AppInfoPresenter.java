@@ -4,6 +4,7 @@ import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.PageBean;
 import com.hym.appstore.common.rx.Optional;
 import com.hym.appstore.common.rx.RxHttpResponseCompat;
+import com.hym.appstore.common.rx.subscriber.ErrorHandlerDisposableObserver;
 import com.hym.appstore.common.rx.subscriber.ProgressDisposableObserver;
 import com.hym.appstore.data.AppInfoModel;
 import com.hym.appstore.presenter.contract.AppInfoContract;
@@ -11,11 +12,12 @@ import com.hym.appstore.presenter.contract.AppInfoContract;
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.observers.DisposableObserver;
 
-public class RankingPresenter extends BasePresenter<AppInfoModel, AppInfoContract.RankingView> {
+public class AppInfoPresenter extends BasePresenter<AppInfoModel, AppInfoContract.AppInfoView> {
 
     @Inject
-    public RankingPresenter(AppInfoContract.RankingView mView, AppInfoModel model) {
+    public AppInfoPresenter(AppInfoContract.AppInfoView mView, AppInfoModel model) {
         super(model, mView);
     }
 
@@ -23,20 +25,31 @@ public class RankingPresenter extends BasePresenter<AppInfoModel, AppInfoContrac
 
 
     public void requestRankingData(boolean isShowProgress,int page) {
+        DisposableObserver disposableObserver = null;
+        if (page == 0) {
+            disposableObserver = new ProgressDisposableObserver<Optional<PageBean<AppInfoBean>>>(mContext, mView) {
+                @Override
+                public void onNext(@NonNull Optional<PageBean<AppInfoBean>> pageBeanOptional) {
+                    mView.showResult(pageBeanOptional.getIncludeNull());
+                }
+            };
+        }else {
+            disposableObserver = new ErrorHandlerDisposableObserver<Optional<PageBean<AppInfoBean>>>(mContext) {
+
+                @Override
+                public void onNext(@NonNull Optional<PageBean<AppInfoBean>> pageBeanOptional) {
+                    mView.showResult(pageBeanOptional.getIncludeNull());
+                }
+
+                @Override
+                public void onComplete() {
+                    mView.onLoadMoreComplete();
+                }
+            };
+        }
         mModel.getRankingRequest(page)
                 .compose(RxHttpResponseCompat.handle_result())
-                .subscribe(new ProgressDisposableObserver<Optional<PageBean<AppInfoBean>>>(mContext, mView) {
-
-                    @Override
-                    public void onNext(@NonNull Optional<PageBean<AppInfoBean>> pageBeanOptional) {
-                        mView.showResult(pageBeanOptional.getIncludeNull());
-                    }
-
-                    @Override
-                    protected boolean isShowProgress() {
-                        return isShowProgress;
-                    }
-                });
+                .subscribe(disposableObserver);
 
       /*  mModel.getHomeRequest()
                .subscribeOn(Schedulers.io())//把請求放到子綫程中去做(被观察者设置为子线程(发消息))
