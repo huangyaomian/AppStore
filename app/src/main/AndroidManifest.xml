@@ -11,22 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme1">
-        <activity android:name=".ui.activity.LoginActivity"></activity>
-        <activity android:name=".ui.activity.Main2Activity" />
-        <activity android:name=".ui.activity.TestActivity" />
-        <activity android:name=".ui.activity.MainActivity">
+        <activity android:name=".ui.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".ui.activity.TestActivity" />
+        <activity android:name=".ui.activity.MainActivity">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.SplashActivity">
         </activity>
     </application> <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
     <meta-data
