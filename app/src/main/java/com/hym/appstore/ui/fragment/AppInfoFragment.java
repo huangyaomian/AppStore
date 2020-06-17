@@ -9,7 +9,6 @@ import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.PageBean;
-import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.presenter.AppInfoPresenter;
 import com.hym.appstore.presenter.contract.AppInfoContract;
 import com.hym.appstore.ui.adapter.AppInfoAdapter;
@@ -40,7 +39,7 @@ public abstract class AppInfoFragment extends ProgressFragment<AppInfoPresenter>
 
     @Override
     protected void init() {
-        mPresenter.requestRankingData(true,page);
+        mPresenter.requestData(setType(),page);
         initRecyclerView();
     }
 
@@ -57,12 +56,14 @@ public abstract class AppInfoFragment extends ProgressFragment<AppInfoPresenter>
 
     abstract AppInfoAdapter buildAdapter();
 
+    abstract int setType();
+
     @Override
     protected void initEvent() {
         mAppInfoAdapter.getLoadMoreModule().setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                mPresenter.requestRankingData(false,page);
+                mPresenter.requestData(setType(),page);
             }
         });
     }

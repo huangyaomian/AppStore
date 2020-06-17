@@ -1,31 +1,28 @@
 package com.hym.appstore.ui.fragment;
 
-import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.hym.appstore.R;
+import com.hym.appstore.dagger2.component.AppComponent;
+import com.hym.appstore.dagger2.component.DaggerAppInfoComponent;
+import com.hym.appstore.dagger2.module.AppInfoModule;
+import com.hym.appstore.presenter.AppInfoPresenter;
+import com.hym.appstore.ui.adapter.AppInfoAdapter;
 
 
-public class GameFragment extends Fragment {
+public class GameFragment extends AppInfoFragment {
+
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
+    protected void setupActivityComponent(AppComponent appComponent) {
+        DaggerAppInfoComponent.builder().appComponent(appComponent).appInfoModule(new AppInfoModule(this)).build().injectGameFragment(this);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_game, container, false);
+    AppInfoAdapter buildAdapter() {
+        return AppInfoAdapter.builder().showPosition(false).showCategoryName(false).showBrief(false).build();
+    }
+
+    @Override
+    int setType() {
+        return AppInfoPresenter.GAMES_LIST;
     }
 }

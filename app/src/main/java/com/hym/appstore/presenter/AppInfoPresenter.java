@@ -1,6 +1,7 @@
 package com.hym.appstore.presenter;
 
 import com.hym.appstore.bean.AppInfoBean;
+import com.hym.appstore.bean.BaseBean;
 import com.hym.appstore.bean.PageBean;
 import com.hym.appstore.common.rx.Optional;
 import com.hym.appstore.common.rx.RxHttpResponseCompat;
@@ -12,9 +13,16 @@ import com.hym.appstore.presenter.contract.AppInfoContract;
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.observers.DisposableObserver;
 
 public class AppInfoPresenter extends BasePresenter<AppInfoModel, AppInfoContract.AppInfoView> {
+
+    public final static int RANKING_LIST = 1;
+    public final static int GAMES_LIST = 2;
+
+
+
 
     @Inject
     public AppInfoPresenter(AppInfoContract.AppInfoView mView, AppInfoModel model) {
@@ -24,7 +32,7 @@ public class AppInfoPresenter extends BasePresenter<AppInfoModel, AppInfoContrac
 
 
 
-    public void requestRankingData(boolean isShowProgress,int page) {
+    public void requestData(int type,int page) {
         DisposableObserver disposableObserver = null;
         if (page == 0) {
             disposableObserver = new ProgressDisposableObserver<Optional<PageBean<AppInfoBean>>>(mContext, mView) {
@@ -47,7 +55,10 @@ public class AppInfoPresenter extends BasePresenter<AppInfoModel, AppInfoContrac
                 }
             };
         }
-        mModel.getRankingRequest(page)
+
+        Observable observable = getObservable(type,page);
+
+        observable
                 .compose(RxHttpResponseCompat.handle_result())
                 .subscribe(disposableObserver);
 
@@ -68,6 +79,17 @@ public class AppInfoPresenter extends BasePresenter<AppInfoModel, AppInfoContrac
                 });*/
 
 
+    }
+
+
+    private Observable<BaseBean<PageBean<AppInfoBean>>> getObservable(int type, int page){
+        switch (type){
+            case RANKING_LIST:
+                return mModel.getRankingRequest(page);
+            case GAMES_LIST:
+                return mModel.getGameRequest(page);
+        }
+        return Observable.empty();
     }
 }
 

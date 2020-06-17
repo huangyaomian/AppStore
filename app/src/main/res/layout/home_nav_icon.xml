@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingTop="15dp"
-    android:paddingBottom="15dp"
+    android:paddingTop="16dp"
     android:background="@color/theme_while">
 
     <LinearLayout

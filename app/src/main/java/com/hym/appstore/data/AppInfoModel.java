@@ -24,4 +24,8 @@ public class AppInfoModel {
     public Observable<BaseBean<PageBean<AppInfoBean>>> getRankingRequest(int page){
         return  mApiService.getTopList(page);
     }
+
+    public Observable<BaseBean<PageBean<AppInfoBean>>> getGameRequest(int page){
+        return  mApiService.getGames(page);
+    }
 }

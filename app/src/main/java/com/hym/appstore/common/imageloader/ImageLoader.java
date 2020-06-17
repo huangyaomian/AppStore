@@ -25,6 +25,7 @@ import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.bumptech.glide.request.transition.Transition;
 import com.bumptech.glide.signature.ObjectKey;
+import com.hym.appstore.R;
 
 import java.io.File;
 
@@ -56,7 +57,7 @@ public class ImageLoader {
     public static ImageLoadConfig defConfig = new ImageLoadConfig.Builder().
             setCropType(ImageLoadConfig.CENTER_CROP).
             setAsBitmap(true).
-//            setPlaceHolderResId(R.drawable.bg_loading).
+            setPlaceHolderResId(R.drawable.vector_drawable_init_pic).
 //            setErrorResId(R.drawable.bg_error).
             setDiskCacheStrategy(ImageLoadConfig.DiskCache.ALL).
             setPrioriy(ImageLoadConfig.LoadPriority.HIGH).build();

@@ -17,4 +17,8 @@
     <string name="error_http_500">服务器错误</string>
     <string name="error_socket_timeout">网络超时</string>
     <string name="error_socket_unreachable">网络不可用</string>
+    <string name="hint_phone">手机号</string>
+    <string name="hint_password">密码</string>
+    <string name="btn_login">登录</string>
+    <string name="register">立即注册</string>
 </resources>
