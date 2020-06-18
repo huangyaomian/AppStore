@@ -130,5 +130,8 @@ dependencies {
     //rxbinding
     implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
 
+    //rxbus
+    implementation 'com.hwangjr.rxbus:rxbus:1.0.6'
+
 
 }

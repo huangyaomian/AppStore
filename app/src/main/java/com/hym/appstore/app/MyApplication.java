@@ -13,7 +13,6 @@ import com.xuexiang.xui.XUI;
 import com.yanzhenjie.nohttp.InitializationConfig;
 import com.yanzhenjie.nohttp.Logger;
 import com.yanzhenjie.nohttp.NoHttp;
-import com.yanzhenjie.nohttp.rest.RequestQueue;
 
 
 
@@ -22,8 +21,6 @@ public class MyApplication extends Application {
 
     private DaggerAppComponent mAppComponent;
 
-//    @Inject
-    RequestQueue mRequestQueue;
 
 
     public static MyApplication get(Context context){
@@ -34,9 +31,6 @@ public class MyApplication extends Application {
         return mAppComponent;
     }
 
-    public RequestQueue getRequestQueue(){
-        return mRequestQueue;
-    }
 
 
     @Override

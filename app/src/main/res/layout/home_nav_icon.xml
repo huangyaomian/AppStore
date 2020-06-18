@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="热门应用"
+            android:text="@string/guide_1"
             android:textStyle="normal"
             android:textSize="16sp"
             android:textColor="@color/theme_black"/>
@@ -46,7 +46,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="热门游戏"
+            android:text="@string/guide_2"
             android:textStyle="normal"
             android:textSize="16sp"
             android:textColor="@color/theme_black"/>
@@ -68,7 +68,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="热门推荐"
+            android:text="@string/guide_3"
             android:textStyle="normal"
             android:textSize="16sp"
             android:textColor="@color/theme_black"/>

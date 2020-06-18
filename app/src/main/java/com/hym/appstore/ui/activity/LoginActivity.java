@@ -1,7 +1,7 @@
 package com.hym.appstore.ui.activity;
 
 
-import android.widget.Button;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,12 +14,16 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.LoginBean;
 import com.hym.appstore.dagger2.component.AppComponent;
+import com.hym.appstore.dagger2.component.DaggerLoginComponent;
+import com.hym.appstore.dagger2.module.LoginModule;
 import com.hym.appstore.presenter.LoginPresenter;
 import com.hym.appstore.presenter.contract.LoginContract;
+import com.hym.appstore.ui.widget.LoadingButton;
 import com.jakewharton.rxbinding4.InitialValueObservable;
 import com.jakewharton.rxbinding4.view.RxView;
 import com.jakewharton.rxbinding4.widget.RxTextView;
-
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.ionicons_typeface_library.Ionicons;
 
 import butterknife.BindView;
 import io.reactivex.rxjava3.functions.BiFunction;
@@ -42,7 +46,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @BindView(R.id.view_password_wrapper)
     TextInputLayout viewPasswordWrapper;
     @BindView(R.id.btn_login)
-    Button btnLogin;
+    LoadingButton mBtnLogin;
     @BindView(R.id.linearLayout)
     LinearLayout linearLayout;
     @BindView(R.id.txt_register)
@@ -55,6 +59,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
+        DaggerLoginComponent.builder().appComponent(appComponent).loginModule(new LoginModule(this)).build().inject(this);
 
     }
 
@@ -65,27 +70,43 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void initView() {
+
+        toolbar.setNavigationIcon(
+                new IconicsDrawable(this)
+                        .icon(Ionicons.Icon.ion_ios_arrow_back)
+                        .sizeDp(16)
+                        .color(getResources().getColor(R.color.theme_black)
+                        )
+        );
         InitialValueObservable<CharSequence> obPhone = RxTextView.textChanges(txtPhoneEdit);
         InitialValueObservable<CharSequence> obPassword = RxTextView.textChanges(txtPasswordEdit);
 
         InitialValueObservable.combineLatest(obPhone, obPassword, new BiFunction<CharSequence, CharSequence, Boolean>() {
             @Override
             public Boolean apply(CharSequence charSequence, CharSequence charSequence2) throws Throwable {
-                return isPhoneValid(obPhone.toString()) && isPsdValid(obPassword.toString());
+                return isPhoneValid(txtPhoneEdit.getText().toString().trim()) && isPsdValid(txtPasswordEdit.getText().toString().trim());
             }
         }).subscribe(new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) throws Throwable {
-                btnLogin.setEnabled(aBoolean);
+                mBtnLogin.setEnabled(aBoolean);
             }
         });
 
-        RxView.clicks(btnLogin).subscribe(new Consumer<Unit>() {
+        RxView.clicks(mBtnLogin).subscribe(new Consumer<Unit>() {
             @Override
             public void accept(Unit unit) throws Throwable {
-                mPresenter.login(txtPhoneEdit.toString().trim(),txtPasswordEdit.toString().trim());
+                mPresenter.login(txtPhoneEdit.getText().toString().trim(),txtPasswordEdit.getText().toString().trim());
             }
         });
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        txtPhoneEdit.setText("13510526236");
+        txtPasswordEdit.setText("123456");
     }
 
     @Override
@@ -94,7 +115,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
     private boolean isPhoneValid(String phone){
-        return phone.length() == 11 && phone.startsWith("1");
+        return phone.length() == 11;// && phone.startsWith("1");
     }
 
     private boolean isPsdValid(String password){
@@ -108,26 +129,28 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void checkPhoneSuccess() {
-        viewPhoneWrapper.setError("手机号码输入错误");
+//        viewPhoneWrapper.setError("手机号码输入错误");
     }
 
     @Override
     public void loginSuccess(LoginBean bean) {
+        finish();
         Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showLoading() {
+        mBtnLogin.showLoading();
 
     }
 
     @Override
     public void showError(String msg) {
-
+        mBtnLogin.showButtonText();
     }
 
     @Override
     public void dismissLoading() {
-
+        mBtnLogin.showButtonText();
     }
 }

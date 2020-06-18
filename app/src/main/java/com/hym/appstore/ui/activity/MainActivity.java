@@ -1,9 +1,13 @@
 package com.hym.appstore.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,12 +17,20 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.hjq.toast.ToastUtils;
+import com.hwangjr.rxbus.RxBus;
+import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.FragmentInfo;
+import com.hym.appstore.bean.User;
+import com.hym.appstore.common.Constant;
+import com.hym.appstore.common.font.Cniao5Font;
+import com.hym.appstore.common.imageloader.GlideCircleTransform;
+import com.hym.appstore.common.utils.ACache;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.ui.adapter.MyViewPagerAdapter;
 import com.hym.appstore.ui.fragment.GameFragment;
@@ -50,6 +62,12 @@ public class MainActivity extends BaseActivity {
 
     private List<FragmentInfo> fragmentInfos;
 
+    private View headerView;
+    private ImageView mUserHeadView;
+    private TextView mTextUserName;
+    private TextView mTextUserPhone;
+
+
 
 
 
@@ -70,6 +88,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void init() {
+
+        RxBus.get().register(this);
         //fragmentinfo 数据集合
         fragmentInfos =  new ArrayList<>();
 
@@ -81,21 +101,55 @@ public class MainActivity extends BaseActivity {
             supportActionBar.setHomeAsUpIndicator(new IconicsDrawable(this, Ionicons.Icon.ion_android_menu).color(getResources().getColor(R.color.TextColor)).actionBar());
         }
 
+
+
+    }
+
+    private void initDrawerLayout() {
+        headerView = navigationView.getHeaderView(0);
+        mUserHeadView = (ImageView) headerView.findViewById(R.id.icon_image);
+        mUserHeadView.setImageDrawable(new IconicsDrawable(this, Cniao5Font.Icon.cniao_head).colorRes(R.color.theme_while));
+        mTextUserName = (TextView) headerView.findViewById(R.id.username);
+        mTextUserPhone = (TextView) headerView.findViewById(R.id.mail);
+        navigationView.getMenu().findItem(R.id.menu_app_update).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_loop));
+        navigationView.getMenu().findItem(R.id.menu_download_manager).setIcon(new IconicsDrawable(this, Cniao5Font.Icon.cniao_download));
+        navigationView.getMenu().findItem(R.id.menu_app_uninstall).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_trash_outline));
+        navigationView.getMenu().findItem(R.id.menu_setting).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_gear_outline));
+        navigationView.getMenu().findItem(R.id.menu_logout).setIcon(new IconicsDrawable(this, Cniao5Font.Icon.cniao_shutdown));
+
+
 //        navigationView.setCheckedItem(R.id.nav_call);//设置默认选择
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 CharSequence title = item.getTitle();
                 Toast.makeText(MainActivity.this, title, Toast.LENGTH_SHORT).show();
+                switch (item.getItemId()) {
+                    case R.id.menu_logout:
+                        logout();
+                        break;
+
+                }
                 mDrawerLayout.closeDrawers();
-                return true;
+                return false;
             }
         });
+        headerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(LoginActivity.class);
+            }
+        });
+
     }
 
     @Override
     public void initView() {
         toolbar.setOverflowIcon(new IconicsDrawable(this, Ionicons.Icon.ion_android_more_vertical).color(getResources().getColor(R.color.TextColor)).actionBar());
+
+        initDrawerLayout();
+        initUser();
+
         fragmentInfos.add(new FragmentInfo("推荐", HomeFragment.class));
         fragmentInfos.add(new FragmentInfo("排行", RankingFragment.class));
         fragmentInfos.add(new FragmentInfo("游戏", GameFragment.class));
@@ -109,6 +163,15 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initEvent() {
 
+    }
+
+    @Subscribe
+    public void getUser(User user){
+        Glide.with(this).load(user.getLogo_url()).transform(new GlideCircleTransform())
+                .into(mUserHeadView);
+        mTextUserName.setText(user.getUsername());
+        mTextUserPhone.setText(user.getEmail());
+        headerView.setEnabled(false);
     }
 
 
@@ -146,6 +209,50 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
+    private void logout() {
+        headerView.setEnabled(true);
+        ACache aCache = ACache.get(this);
+        aCache.put(Constant.TOKEN, "");
+        aCache.put(Constant.USER, "");
+        mUserHeadView.setImageDrawable(new IconicsDrawable(this, Cniao5Font.Icon.cniao_head).colorRes(R.color.theme_while));
+        mTextUserName.setText(R.string.no_login);
+        mTextUserName.setText(R.string.phone_num);
+
+                headerView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    }
+                });
+        Toast.makeText(MainActivity.this, "推出登錄", Toast.LENGTH_LONG).show();
+    }
+
+    private void initUser() {
+        Object objUser = ACache.get(this).getAsObject(Constant.USER);
+        if (objUser == null) {
+            headerView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }
+            });
+        } else {
+            User user = (User) objUser;
+            initUserHeadView(user);
+        }
+    }
+
+    private void initUserHeadView(User user) {
+        headerView.setEnabled(false);
+        Glide.with(this).load(user.getLogo_url()).transform(new GlideCircleTransform())
+                .into(mUserHeadView);
+        mTextUserName.setText(user.getUsername());
+    }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.get().unregister(this);
+    }
 }

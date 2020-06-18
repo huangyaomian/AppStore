@@ -6,7 +6,7 @@ public class User extends BaseEntity {
     private String email;
     private String logo_url;
     private String username;
-    private String mobl;
+    private String mobi;
 
     public Integer getId() {
         return id;
@@ -40,11 +40,11 @@ public class User extends BaseEntity {
         this.username = username;
     }
 
-    public String getMobl() {
-        return mobl;
+    public String getMobi() {
+        return mobi;
     }
 
-    public void setMobl(String mobl) {
-        this.mobl = mobl;
+    public void setMobi(String mobi) {
+        this.mobi = mobi;
     }
 }

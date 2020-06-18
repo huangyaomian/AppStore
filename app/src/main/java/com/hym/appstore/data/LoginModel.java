@@ -20,7 +20,7 @@ public class LoginModel implements LoginContract.ILoginModel {
     @Override
     public Observable<BaseBean<LoginBean>> login(String phone, String pwd) {
         LoginRequestBean param = new LoginRequestBean();
-        param.setPhone(phone);
+        param.setEmail(phone);
         param.setPassword(pwd);
         return mApiService.login(param);
     }
