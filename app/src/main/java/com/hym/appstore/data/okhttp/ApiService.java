@@ -3,6 +3,7 @@ package com.hym.appstore.data.okhttp;
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.BaseBean;
 import com.hym.appstore.bean.HomeBean;
+import com.hym.appstore.bean.LoginBean;
 import com.hym.appstore.bean.PageBean;
 import com.hym.appstore.bean.requestbean.LoginRequestBean;
 
@@ -35,5 +36,5 @@ public interface ApiService {
     public Observable<BaseBean<PageBean<AppInfoBean>>> getGames(@Query("page") int page);
 
     @POST("login")
-    public Observable<BaseBean> login(@Body LoginRequestBean bean);
+    public Observable<BaseBean<LoginBean>> login(@Body LoginRequestBean bean);
 }

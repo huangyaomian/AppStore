@@ -4,7 +4,7 @@ import com.hym.appstore.common.rx.Optional;
 
 import java.io.Serializable;
 
-public class BaseBean<T> implements Serializable {
+public class BaseBean<T> extends BaseEntity {
 
     public static final int  SUCCESS = 1;
     private int status;

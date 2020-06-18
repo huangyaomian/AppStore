@@ -14,6 +14,7 @@
         <item name="android:windowAnimationStyle">@style/Animation</item>
         <item name="colorPrimary">@color/theme_while</item>
         <item name="colorPrimaryDark">@color/theme_while</item>
+        <item name="colorAccent">@color/theme_blue</item>
         <item name="android:textColor">@color/TextColor</item>
         <item name="android:textColorPrimary">@color/TextColor</item>
         <item name="android:windowTranslucentStatus">true</item>
@@ -42,7 +43,15 @@
 
     <style name="MyEditText" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/theme_grey</item>
-        <item name="colorControlActivated">@color/theme_blue</item>
+        <item name="colorControlActivated">@color/xui_config_color_red</item>
+        <!--设置背景色-->
+        <item name="android:background">@color/theme_while</item>
+        <!--设置文字大小-->
+        <item name="android:textSize">15sp</item>
+        <!--设置文字颜色-->
+        <item name="android:textColor">@color/theme_black</item>
+        <!--设置Hint文字颜色-->
+        <item name="android:textColorHint">@color/theme_grey</item>
     </style>
 
 

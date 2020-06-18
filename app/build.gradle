@@ -127,5 +127,8 @@ dependencies {
     //BaseRecyclerViewAdapterHelper
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
 
+    //rxbinding
+    implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
+
 
 }
