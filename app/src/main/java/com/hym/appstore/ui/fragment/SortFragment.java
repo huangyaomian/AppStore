@@ -1,30 +1,41 @@
 package com.hym.appstore.ui.fragment;
 
-import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.hym.appstore.R;
+import com.hym.appstore.dagger2.component.AppComponent;
+
+import butterknife.BindView;
 
 
-public class SortFragment extends Fragment {
+public class SortFragment extends ProgressFragment<> {
+
+
+    @BindView(R.id.home_rv)
+    RecyclerView mHomeRv;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
+    protected int setLayoutResourceID() {
+        return R.layout.template_recycler_view;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sort, container, false);
+    protected void setupActivityComponent(AppComponent appComponent) {
+
+    }
+
+    @Override
+    protected void init() {
+
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initEvent() {
+
     }
 }
