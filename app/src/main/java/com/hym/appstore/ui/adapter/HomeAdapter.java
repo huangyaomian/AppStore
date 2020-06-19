@@ -20,6 +20,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.BannerBean;
 import com.hym.appstore.bean.HomeBean;
+import com.hym.appstore.common.imageloader.ImageLoadConfig;
 import com.hym.appstore.common.imageloader.ImageLoader;
 import com.hym.appstore.ui.widget.BannerLayout;
 
@@ -202,7 +203,15 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
         @Override
         public void displayImage(Context context, String path, ImageView imageView) {
-            ImageLoader.load(path, imageView);
+            ImageLoadConfig defConfig = new ImageLoadConfig.Builder()
+                    .setCropType(ImageLoadConfig.CENTER_CROP)
+                    .setAsBitmap(true)
+                    .setPlaceHolderResId(R.drawable.vector_drawable_init_pic)
+                    .setDiskCacheStrategy(ImageLoadConfig.DiskCache.ALL)
+                    .setPrioriy(ImageLoadConfig.LoadPriority.HIGH)
+                    .setCrossFade(true)
+                    .build();
+            ImageLoader.load(path, imageView,defConfig);
         }
     }
 

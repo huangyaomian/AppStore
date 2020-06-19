@@ -32,7 +32,6 @@ import java.io.File;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import jp.wasabeef.glide.transformations.GrayscaleTransformation;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 //import com.bumptech.glide.BitmapRequestBuilder;
 //import com.bumptech.glide.DrawableRequestBuilder;
@@ -54,13 +53,16 @@ public class ImageLoader {
 
 
     //默认配置
-    public static ImageLoadConfig defConfig = new ImageLoadConfig.Builder().
-            setCropType(ImageLoadConfig.CENTER_CROP).
-            setAsBitmap(true).
-            setPlaceHolderResId(R.drawable.vector_drawable_init_pic).
-//            setErrorResId(R.drawable.bg_error).
-            setDiskCacheStrategy(ImageLoadConfig.DiskCache.ALL).
-            setPrioriy(ImageLoadConfig.LoadPriority.HIGH).build();
+    public static ImageLoadConfig defConfig = new ImageLoadConfig.Builder()
+            .setCropType(ImageLoadConfig.CENTER_CROP)
+            .setAsBitmap(true)
+            .setPlaceHolderResId(R.drawable.vector_drawable_init_pic)
+//            .setErrorResId(R.drawable.bg_error)
+            .setDiskCacheStrategy(ImageLoadConfig.DiskCache.ALL)
+            .setPrioriy(ImageLoadConfig.LoadPriority.HIGH)
+            .setCrossFade(true)
+            .setRoundedCorners(true)
+            .build();
 
     /**
      * 加载String类型的资源
@@ -97,6 +99,12 @@ public class ImageLoader {
     public static void load(String url , ImageView imageView){
 
         load(imageView.getContext(),imageView,url,null,null);
+
+    }
+
+    public static void load(String url , ImageView imageView,ImageLoadConfig config){
+
+        load(imageView.getContext(),imageView,url,config,null);
 
     }
 
@@ -226,7 +234,8 @@ public class ImageLoader {
             }
             //transform bitmap
             if (config.isRoundedCorners()) {
-                request.transform(new RoundedCornersTransformation(50, 50));
+//                request.transform(new RoundedCornersTransformation(50, 50));
+                request.transform(new GlideRoundTransform());
             } else if (config.isCropCircle()) {
                 request.transform(new CropCircleTransformation());
             } else if (config.isGrayscale()) {

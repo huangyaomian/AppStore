@@ -9,12 +9,8 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.common.imageloader.ImageLoader;
-import com.hym.appstore.presenter.contract.RecommendContract;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder> implements LoadMoreModule {
 

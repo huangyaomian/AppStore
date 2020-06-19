@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.hym.appstore.common.utils.ACache;
 import com.hym.appstore.common.utils.DeviceUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -50,6 +51,11 @@ public class CommonParamsInterceptor implements Interceptor {
             commonParamsMap.put(Constant.RESOLUTION,DeviceUtils.getBuildVersionRelease());
             commonParamsMap.put(Constant.SDK,DeviceUtils.getBuildVersionSDK());
             commonParamsMap.put(Constant.DENSITY_SCALE_FACTOR,DeviceUtils.getDensity(mContext));
+
+            ACache aCache = ACache.get(mContext);
+            String token = aCache.getAsString(Constant.TOKEN);
+            commonParamsMap.put(Constant.TOKEN, token == null ? "" : token);
+
             if (method.equals("GET")) {
                 HttpUrl httpUrl = request.url();
                 HashMap<String,Object> rootMap = new HashMap<>();

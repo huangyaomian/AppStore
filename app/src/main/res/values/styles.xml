@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/theme_black</item>
     </style>
 
 
@@ -52,6 +52,14 @@
         <item name="android:textColor">@color/theme_black</item>
         <!--设置Hint文字颜色-->
         <item name="android:textColorHint">@color/theme_grey</item>
+    </style>
+
+
+    <style name="CustomProgressStyle" parent="@android:style/Widget.ProgressBar">
+        <item name="android:minWidth">24dp</item>
+        <item name="android:maxWidth">24dp</item>
+        <item name="android:minHeight">24dp</item>
+        <item name="android:maxHeight">24dp</item>
     </style>
 
 

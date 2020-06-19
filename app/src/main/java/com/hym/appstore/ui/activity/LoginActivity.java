@@ -105,8 +105,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 onBackPressed();
             }
         });
-        txtPhoneEdit.setText("13510526236");
-        txtPasswordEdit.setText("123456");
+        txtPhoneEdit.setText("13020169902");
+        txtPasswordEdit.setText("cq13020169902");
     }
 
     @Override

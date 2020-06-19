@@ -42,6 +42,10 @@ public class BaseException extends Exception {
     //账户被冻结
     public static final int ERROR_API_ACCOUNT_FREEZE = 10003;
 
+    //TOKEN失效
+    public static final int  ERROR_TOKEN=10010;
+
+
     /*HTTP相关的错我code*/
     public static final int ERROR_HTTP_400 = 400;
     public static final int ERROR_HTTP_404 = 404;

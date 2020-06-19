@@ -5,7 +5,6 @@
    android:background="@color/theme_blue"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:padding="10dp"
-
     android:layout_width="match_parent"
     android:layout_height="180dp">
 
@@ -20,20 +19,22 @@
 
     <TextView
         android:id="@+id/username"
+        android:layout_marginTop="6dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="@string/phone_num"
-        android:textColor="#FFF"
+        android:layout_below="@id/icon_image"
+        android:text="@string/no_login"
+        android:textColor="@color/theme_while"
         android:textSize="14sp" />
 
     <TextView
         android:id="@+id/mail"
+        android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/username"
-        android:text="@string/no_login"
-        android:textColor="#FFF"
-        android:textSize="14sp" />
+        android:text="@string/phone_num"
+        android:textColor="@color/theme_while"
+        android:textSize="10sp" />
 
 </RelativeLayout>

@@ -83,13 +83,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="30dp"
         android:gravity="center"
-        android:text="{ion-ios-download-outline}"
+        android:text="{ion-ios-cloud-download-outline}"
         android:textColor="@color/theme_grey"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:textSize="28sp"
+        android:autoSizeTextType="none"
         android:layout_alignParentRight="true"
+        android:paddingRight="2dp"
         android:layout_centerVertical="true" />
 
 

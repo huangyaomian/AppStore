@@ -108,14 +108,17 @@ public class MainActivity extends BaseActivity {
     private void initDrawerLayout() {
         headerView = navigationView.getHeaderView(0);
         mUserHeadView = (ImageView) headerView.findViewById(R.id.icon_image);
-        mUserHeadView.setImageDrawable(new IconicsDrawable(this, Cniao5Font.Icon.cniao_head).colorRes(R.color.theme_while));
+//        mUserHeadView.setImageDrawable(new IconicsDrawable(this, Cniao5Font.Icon.cniao_head).colorRes(R.color.theme_while));
+        mUserHeadView.setImageDrawable(getResources().getDrawable(R.drawable.vector_drawable_no_log));
         mTextUserName = (TextView) headerView.findViewById(R.id.username);
         mTextUserPhone = (TextView) headerView.findViewById(R.id.mail);
         navigationView.getMenu().findItem(R.id.menu_app_update).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_loop));
-        navigationView.getMenu().findItem(R.id.menu_download_manager).setIcon(new IconicsDrawable(this, Cniao5Font.Icon.cniao_download));
+//        navigationView.getMenu().findItem(R.id.menu_download_manager).setIcon(new IconicsDrawable(this, Cniao5Font.Icon.cniao_download));
+        navigationView.getMenu().findItem(R.id.menu_download_manager).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_cloud_download_outline));
         navigationView.getMenu().findItem(R.id.menu_app_uninstall).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_trash_outline));
         navigationView.getMenu().findItem(R.id.menu_setting).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_gear_outline));
-        navigationView.getMenu().findItem(R.id.menu_logout).setIcon(new IconicsDrawable(this, Cniao5Font.Icon.cniao_shutdown));
+        navigationView.getMenu().findItem(R.id.menu_logout).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_log_out));
+//        navigationView.getMenu().findItem(R.id.menu_logout).setIcon(new IconicsDrawable(this, Cniao5Font.Icon.cniao_shutdown));
 
 
 //        navigationView.setCheckedItem(R.id.nav_call);//设置默认选择
@@ -131,7 +134,7 @@ public class MainActivity extends BaseActivity {
 
                 }
                 mDrawerLayout.closeDrawers();
-                return false;
+                return true;
             }
         });
         headerView.setOnClickListener(new View.OnClickListener() {
@@ -150,10 +153,10 @@ public class MainActivity extends BaseActivity {
         initDrawerLayout();
         initUser();
 
-        fragmentInfos.add(new FragmentInfo("推荐", HomeFragment.class));
-        fragmentInfos.add(new FragmentInfo("排行", RankingFragment.class));
-        fragmentInfos.add(new FragmentInfo("游戏", GameFragment.class));
-        fragmentInfos.add(new FragmentInfo("分类", SortFragment.class));
+        fragmentInfos.add(new FragmentInfo(getString(R.string.home_tab_recommend), HomeFragment.class));
+        fragmentInfos.add(new FragmentInfo(getString(R.string.home_tab_ranking), RankingFragment.class));
+        fragmentInfos.add(new FragmentInfo(getString(R.string.home_tab_game), GameFragment.class));
+        fragmentInfos.add(new FragmentInfo(getString(R.string.home_tab_sort), SortFragment.class));
         MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(),fragmentInfos);
         mainViewpager.setAdapter(myViewPagerAdapter);
         mainTabLayout.setupWithViewPager(mainViewpager);
@@ -167,11 +170,8 @@ public class MainActivity extends BaseActivity {
 
     @Subscribe
     public void getUser(User user){
-        Glide.with(this).load(user.getLogo_url()).transform(new GlideCircleTransform())
-                .into(mUserHeadView);
-        mTextUserName.setText(user.getUsername());
-        mTextUserPhone.setText(user.getEmail());
-        headerView.setEnabled(false);
+        navigationView.getMenu().setGroupVisible(R.id.group2,true);
+        initUserHeadView(user);
     }
 
 
@@ -183,6 +183,7 @@ public class MainActivity extends BaseActivity {
         menu.getItem(2).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_trash_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
         menu.findItem(R.id.delete).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_trash_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
         menu.findItem(R.id.search).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_search).color(getResources().getColor(R.color.TextColor)).actionBar());
+
         return true;
     }
 
@@ -216,15 +217,16 @@ public class MainActivity extends BaseActivity {
         aCache.put(Constant.USER, "");
         mUserHeadView.setImageDrawable(new IconicsDrawable(this, Cniao5Font.Icon.cniao_head).colorRes(R.color.theme_while));
         mTextUserName.setText(R.string.no_login);
-        mTextUserName.setText(R.string.phone_num);
-
+        mTextUserPhone.setText(R.string.phone_num);
                 headerView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     }
                 });
-        Toast.makeText(MainActivity.this, "推出登錄", Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, "退出登錄", Toast.LENGTH_LONG).show();
+        navigationView.getMenu().setGroupVisible(R.id.group2,false);
+        mUserHeadView.setImageDrawable(getResources().getDrawable(R.drawable.vector_drawable_no_log));
     }
 
     private void initUser() {
@@ -236,7 +238,9 @@ public class MainActivity extends BaseActivity {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 }
             });
+            navigationView.getMenu().setGroupVisible(R.id.group2,false);
         } else {
+            navigationView.getMenu().setGroupVisible(R.id.group2,true);
             User user = (User) objUser;
             initUserHeadView(user);
         }
@@ -244,9 +248,10 @@ public class MainActivity extends BaseActivity {
 
     private void initUserHeadView(User user) {
         headerView.setEnabled(false);
-        Glide.with(this).load(user.getLogo_url()).transform(new GlideCircleTransform())
+        Glide.with(this).load("http:" + user.getLogo_url()).transform(new GlideCircleTransform())
                 .into(mUserHeadView);
         mTextUserName.setText(user.getUsername());
+        mTextUserPhone.setText(String.valueOf(user.getId()));
     }
 
 
