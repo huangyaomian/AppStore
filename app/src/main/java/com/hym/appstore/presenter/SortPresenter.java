@@ -1,26 +1,39 @@
 package com.hym.appstore.presenter;
 
 import com.hym.appstore.bean.LoginBean;
+import com.hym.appstore.bean.SortBean;
 import com.hym.appstore.common.Constant;
+import com.hym.appstore.common.rx.RxHttpResponseCompat;
+import com.hym.appstore.common.rx.subscriber.ProgressDisposableObserver;
 import com.hym.appstore.common.utils.ACache;
 import com.hym.appstore.presenter.contract.LoginContract;
+import com.hym.appstore.presenter.contract.SortContract;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
-public class SortPresenter extends BasePresenter<> {
+import io.reactivex.rxjava3.annotations.NonNull;
+
+public class SortPresenter extends BasePresenter<SortContract.ISortModel, SortContract.SortView> {
 
 
     @Inject
-    public SortPresenter(LoginContract.ILoginModel mModel, LoginContract.LoginView mView) {
+    public SortPresenter(SortContract.ISortModel mModel, SortContract.SortView mView) {
         super(mModel, mView);
     }
 
 
 
-
-    private void saveUser(LoginBean bean){
-        ACache aCache = ACache.get(mContext);
-        aCache.put(Constant.TOKEN,bean.getToken());
-        aCache.put(Constant.USER,bean.getUser());
+    public void getAllSort(){
+        mModel.getSort().compose(RxHttpResponseCompat.compatResult())
+                .subscribe(new ProgressDisposableObserver<List<SortBean>>(mContext,mView) {
+                    @Override
+                    public void onNext(@NonNull List<SortBean> sortBeans) {
+                        mView.showResult(sortBeans);
+                    }
+                });
     }
+
+
 }

@@ -44,6 +44,7 @@ public abstract class ProgressDisposableObserver<T> extends ErrorHandlerDisposab
 
     @Override
     public void onError(Throwable t) {
+        t.printStackTrace();
         BaseException baseException = mRxErrorHandler.handleError(t);
 //        Log.d("ErrorHandlerDO",t.getMessage());
         mBaseView.showError(baseException.getDisplayMessage());
