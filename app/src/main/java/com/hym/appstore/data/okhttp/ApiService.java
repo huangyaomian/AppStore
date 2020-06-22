@@ -2,10 +2,10 @@ package com.hym.appstore.data.okhttp;
 
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.BaseBean;
-import com.hym.appstore.bean.SortBean;
 import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.bean.LoginBean;
 import com.hym.appstore.bean.PageBean;
+import com.hym.appstore.bean.SortBean;
 import com.hym.appstore.bean.requestbean.LoginRequestBean;
 
 import java.util.List;
@@ -14,6 +14,7 @@ import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -41,4 +42,14 @@ public interface ApiService {
 
     @GET("category")
     Observable<BaseBean<List<SortBean>>> getCategories();
+
+    @GET("category/featured/{categoryid}")
+    Observable<BaseBean<PageBean<AppInfoBean>>> getFeaturedAppsBySort(@Path("categoryid") int categoryid, @Query("page") int page);
+
+    @GET("category/toplist/{categoryid}")
+    Observable<BaseBean<PageBean<AppInfoBean>>> getTopListAppsBySort(@Path("categoryid") int categoryid,@Query("page") int page);
+
+    @GET("category/newlist/{categoryid}")
+    Observable<BaseBean<PageBean<AppInfoBean>>> getNewListAppsBySort(@Path("categoryid") int categoryid,@Query("page") int page);
+
 }

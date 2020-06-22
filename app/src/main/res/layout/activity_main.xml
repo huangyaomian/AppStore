@@ -21,7 +21,6 @@
             app:elevation="0dp"
             android:fitsSystemWindows="true"
             app:layout_constraintTop_toTopOf="parent">
-            <!--AppBarLayout 搭配使用 否则会被水果列表遮住 -->
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"

@@ -1,5 +1,6 @@
 package com.hym.appstore.ui.fragment;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,14 +44,14 @@ public abstract class AppInfoFragment extends ProgressFragment<AppInfoPresenter>
         initRecyclerView();
     }
 
-    private void initRecyclerView(){
+    protected void initRecyclerView(){
         mHomeRv.setLayoutManager(new LinearLayoutManager(getActivity()));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.shape_question_diveder));
         mHomeRv.addItemDecoration(dividerItemDecoration);
         mAppInfoAdapter = buildAdapter();
         mAppInfoAdapter.setAnimationEnable(true);
         mAppInfoAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.AlphaIn);
-
         mHomeRv.setAdapter(mAppInfoAdapter);
     }
 
