@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -16,7 +15,6 @@ import com.hym.appstore.common.utils.DensityUtil;
 import com.hym.appstore.dagger2.component.AppComponent;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class AppDetailsActivity extends BaseActivity {
 
@@ -88,12 +86,6 @@ public class AppDetailsActivity extends BaseActivity {
         return bitmap;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     private void open(){
         int h = DensityUtil.getScreenH(this);
