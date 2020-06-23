@@ -9,6 +9,7 @@
     android:paddingTop="12dp"
     android:paddingBottom="12dp"
     android:orientation="horizontal"
+    android:background="@color/theme_while"
     >
 
     <TextView

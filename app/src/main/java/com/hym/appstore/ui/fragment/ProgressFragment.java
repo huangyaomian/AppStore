@@ -38,7 +38,7 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
     private FrameLayout mViewContent;
     private TextView mTextError;
 
-    private MyApplication mMyApplication;
+    protected MyApplication mMyApplication;
 
     @Inject
     public T mPresenter;

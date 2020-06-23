@@ -10,4 +10,6 @@
     <color name="theme_grey">#999999</color>
     <color name="line">#ebebeb</color>
     <color name="skip_btn">#80000000</color>
+
+    <color name="transparent">#D9ffffff</color>
 </resources>

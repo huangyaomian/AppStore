@@ -1,17 +1,24 @@
 package com.hym.appstore.ui.fragment;
 
+import android.content.Intent;
+import android.view.View;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.PageBean;
 import com.hym.appstore.presenter.AppInfoPresenter;
 import com.hym.appstore.presenter.contract.AppInfoContract;
+import com.hym.appstore.ui.activity.AppDetailsActivity;
 import com.hym.appstore.ui.adapter.AppInfoAdapter;
 
 import butterknife.BindView;
@@ -65,6 +72,16 @@ public abstract class AppInfoFragment extends ProgressFragment<AppInfoPresenter>
             @Override
             public void onLoadMore() {
                 mPresenter.requestData(setType(),page);
+            }
+        });
+
+        // 设置点击事件
+        mAppInfoAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
+                Toast.makeText(getContext(),"onItemClick " + position, Toast.LENGTH_SHORT).show();
+                mMyApplication.setView(view);
+                startActivity(new Intent(getActivity(), AppDetailsActivity.class));
             }
         });
     }

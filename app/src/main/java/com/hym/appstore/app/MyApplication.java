@@ -2,6 +2,7 @@ package com.hym.appstore.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.view.View;
 
 import androidx.multidex.MultiDex;
 
@@ -9,6 +10,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.hjq.toast.ToastUtils;
 import com.hym.appstore.dagger2.component.DaggerAppComponent;
 import com.hym.appstore.dagger2.module.AppModule;
+import com.hym.appstore.presenter.contract.RecommendContract;
 import com.xuexiang.xui.XUI;
 import com.yanzhenjie.nohttp.InitializationConfig;
 import com.yanzhenjie.nohttp.Logger;
@@ -20,6 +22,10 @@ public class MyApplication extends Application {
 
 
     private DaggerAppComponent mAppComponent;
+
+
+
+    private View mView;
 
 
 
@@ -74,8 +80,13 @@ public class MyApplication extends Application {
         //初始化fresco
         Fresco.initialize(this);
 
+    }
 
+    public View getView() {
+        return mView;
+    }
 
-
+    public void setView(View mView) {
+        this.mView = mView;
     }
 }

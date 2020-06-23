@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hym.appstore">
-    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
     <application
         android:name=".app.MyApplication"
         android:allowBackup="true"
@@ -11,8 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme1">
-        <activity android:name=".ui.activity.SortAppActivity"></activity>
-        <activity android:name=".ui.activity.LoginActivity"></activity>
+        <activity android:name=".ui.activity.AppDetailsActivity" android:theme="@style/Transparent"></activity>
+        <activity android:name=".ui.activity.SortAppActivity" />
+        <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.TestActivity" />
         <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
@@ -21,12 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.SplashActivity"></activity>
-    </application> <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+        <activity android:name=".ui.activity.SplashActivity" />
+    </application> <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
     <meta-data
         android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
-        android:value="GlideModule" /> <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 访问网络，网络定位需要上网 -->
+        android:value="GlideModule" /> <!-- 访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
