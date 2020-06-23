@@ -8,11 +8,9 @@
     android:orientation="horizontal"
     tools:context=".ui.activity.AppDetailsActivity">
 
-    <ImageView
-        android:id="@+id/imgView"
+    <FrameLayout
+        android:id="@+id/app_details_fl"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
