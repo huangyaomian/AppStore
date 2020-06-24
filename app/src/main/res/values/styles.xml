@@ -62,10 +62,30 @@
         <item name="android:maxHeight">24dp</item>
     </style>
 
-<!--透明的样式-->
+    <!--透明的样式-->
     <style name="Transparent" parent="AppTheme1">
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="Text_Title">
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/TextColor</item>
+    </style>
+
+    <style name="Text_Content">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/theme_grey</item>
+    </style>
+
+    <style name="Text_Title_Large" parent="Text_Title">
+        <item name="android:textSize">20dp</item>
+    </style>
+
+    <style name="Text_Content_grey_800">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/theme_grey</item>
     </style>
 
 
