@@ -133,5 +133,8 @@ dependencies {
     //rxbus
     implementation 'com.hwangjr.rxbus:rxbus:1.0.6'
 
+    //expandableTextView
+    implementation 'com.ms-square:expandableTextView:0.1.4'
+
 
 }

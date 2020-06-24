@@ -25,4 +25,8 @@ public interface AppInfoContract {
         void showError(String msg);
         void onLoadMoreComplete();
     }
+
+    interface AppDetailView extends BaseView {
+        void showAppDetail(AppInfoBean appInfoBean);
+    }
 }

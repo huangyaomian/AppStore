@@ -19,4 +19,6 @@ public class Constant {
 
     public static final String APK_DOWNLOAD_DIR = "apk_dl_dir";
 
+    public static final String BASE_IMG_URL = "http://file.market.xiaomi.com/mfc/thumbnail/png/w150q80/";
+
 }

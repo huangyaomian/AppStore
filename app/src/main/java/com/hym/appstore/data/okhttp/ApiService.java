@@ -52,4 +52,7 @@ public interface ApiService {
     @GET("category/newlist/{categoryid}")
     Observable<BaseBean<PageBean<AppInfoBean>>> getNewListAppsBySort(@Path("categoryid") int categoryid,@Query("page") int page);
 
+    @GET("app/{id}")
+    Observable<BaseBean<PageBean<AppInfoBean>>> getAppDetail(@Path("id")int id);
+
 }

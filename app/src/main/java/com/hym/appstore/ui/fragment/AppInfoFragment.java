@@ -81,7 +81,10 @@ public abstract class AppInfoFragment extends ProgressFragment<AppInfoPresenter>
             public void onItemClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
                 Toast.makeText(getContext(),"onItemClick " + position, Toast.LENGTH_SHORT).show();
                 mMyApplication.setView(view);
-                startActivity(new Intent(getActivity(), AppDetailsActivity.class));
+                AppInfoBean appInfoBean = mAppInfoAdapter.getItem(position);
+                Intent intent = new Intent(getActivity(), AppDetailsActivity.class);
+                intent.putExtra("appInfo",appInfoBean);
+                startActivity(intent);
             }
         });
     }

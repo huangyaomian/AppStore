@@ -10,9 +10,14 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.hym.appstore.R;
+import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.common.utils.DensityUtil;
 import com.hym.appstore.dagger2.component.AppComponent;
+import com.hym.appstore.ui.fragment.AppDetailFragment;
 
 import butterknife.BindView;
 
@@ -21,6 +26,11 @@ public class AppDetailsActivity extends BaseActivity {
 
     @BindView(R.id.app_details_fl)
     FrameLayout frameLayout;
+
+    private AppInfoBean mAppInfoBean;
+
+
+
 
     @Override
     protected int setLayoutResourceID() {
@@ -34,6 +44,9 @@ public class AppDetailsActivity extends BaseActivity {
 
     @Override
     public void init() {
+
+        mAppInfoBean = (AppInfoBean) getIntent().getSerializableExtra("appInfo");
+
         View view = mMyApplication.getView();
         Bitmap bitmap = getViewImageCache(view);
         if (bitmap != null) {
@@ -96,6 +109,7 @@ public class AppDetailsActivity extends BaseActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 frameLayout.setVisibility(View.GONE);
+                initFragment();
             }
 
             @Override
@@ -104,5 +118,12 @@ public class AppDetailsActivity extends BaseActivity {
             }
         });
         animator.start();
+    }
+
+    private void initFragment(){
+        AppDetailFragment fragment = new AppDetailFragment(mAppInfoBean.getId());
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.app_details_fl,fragment);
     }
 }

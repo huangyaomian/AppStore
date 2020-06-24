@@ -6,17 +6,17 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module(includes = {AppModelModule.class})
-public class AppInfoModule {
+public class AppDetailModule {
 
-    private AppInfoContract.AppInfoView mView;
+    private AppInfoContract.AppDetailView mView;
 
-    public AppInfoModule(AppInfoContract.AppInfoView mView) {
+    public AppDetailModule(AppInfoContract.AppDetailView mView) {
         this.mView = mView;
     }
 
 
     @Provides
-    public AppInfoContract.AppInfoView provideView(){
+    public AppInfoContract.AppDetailView provideView(){
         return mView;
     }
 
