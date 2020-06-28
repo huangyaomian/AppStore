@@ -31,7 +31,7 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, AppInfoBean appInfoBean) {
 
-        ImageLoader.load(baseImgUrl+appInfoBean.getIcon(),baseViewHolder.getView(R.id.home_item_iv));
+        ImageLoader.load(baseImgUrl+appInfoBean.getIcon(),baseViewHolder.getView(R.id.img_app_icon));
         baseViewHolder.setText(R.id.home_recyclerview_name,appInfoBean.getDisplayName());
 
         TextView txtViewPosition = baseViewHolder.getView(R.id.home_recyclerview_position);
