@@ -1,7 +1,5 @@
 package com.hym.appstore.ui.fragment;
 
-import android.text.format.DateUtils;
-import android.text.style.UpdateAppearance;
 import android.view.LayoutInflater;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -98,21 +96,21 @@ public class AppDetailFragment extends ProgressFragment<AppDetailPresenter> impl
     public void showAppDetail(AppInfoBean appInfoBean) {
         showScreenshot(appInfoBean.getScreenshot());
 
-        viewIntroduction.setText(appInfoBean.getIntroduction());
+//        viewIntroduction.setText(appInfoBean.getIntroduction());
 
-        txtUpdateTime.setText(String.valueOf(appInfoBean.getUpdateTime()));
+       /* txtUpdateTime.setText(DateUtils.formatDate(appInfoBean.getUpdateTime()));
         txtApkSize.setText(appInfoBean.getApkSize());
         txtVersion.setText(appInfoBean.getVersionCode());
         txtPublisher.setText(appInfoBean.getPublisherName());
-        txtPublisher2.setText(appInfoBean.getPublisherName());
+        txtPublisher2.setText(appInfoBean.getPublisherName());*/
 
         mAppInfoAdapter = AppInfoAdapter.builder().layout(R.layout.template_appinfo2_item).build();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewSameDev.setLayoutManager(linearLayoutManager);
-
         mAppInfoAdapter.addData(appInfoBean.getSameDevAppInfoList());
         recyclerViewSameDev.setAdapter(mAppInfoAdapter);
 
+        mAppInfoAdapter = AppInfoAdapter.builder().layout(R.layout.template_appinfo2_item).build();
         recyclerViewRelate.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
         mAppInfoAdapter.addData(appInfoBean.getRelateAppInfoList());
         recyclerViewRelate.setAdapter(mAppInfoAdapter);

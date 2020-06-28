@@ -47,8 +47,8 @@ public class AppInfoBean  implements Serializable {
      * source :
      */
 
-    private List sameDevAppInfoList;
-    private List relateAppInfoList;
+    private List<AppInfoBean> sameDevAppInfoList;
+    private List<AppInfoBean> relateAppInfoList;
 
     public List getSameDevAppInfoList() {
         return sameDevAppInfoList;

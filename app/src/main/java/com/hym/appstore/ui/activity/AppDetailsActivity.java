@@ -4,11 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -126,5 +123,6 @@ public class AppDetailsActivity extends BaseActivity {
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.app_details_fl,fragment);
+        fragmentTransaction.commitAllowingStateLoss();
     }
 }

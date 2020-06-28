@@ -4,9 +4,9 @@
     xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/theme_while"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context=".ui.activity.AppDetailsActivity">
 
     <LinearLayout
@@ -49,7 +49,6 @@
             android:id="@+id/view_gallery"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
-
         </LinearLayout>
 
     </HorizontalScrollView>
@@ -60,6 +59,7 @@
         android:layout_height="wrap_content"
         android:text="应用描述"
         >
+
         <com.ms.square.android.expandabletextview.ExpandableTextView
             android:id="@+id/view_introduction"
             android:layout_width="match_parent"
