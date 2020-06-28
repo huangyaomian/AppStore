@@ -41,7 +41,7 @@ public class AppInfoModel {
         return mApiService.getNewListAppsBySort(categoryid, page);
     }
 
-    public Observable<BaseBean<PageBean<AppInfoBean>>> getAppDetail(int id) {
+    public Observable<BaseBean<AppInfoBean>> getAppDetail(int id) {
         return mApiService.getAppDetail(id);
     }
 

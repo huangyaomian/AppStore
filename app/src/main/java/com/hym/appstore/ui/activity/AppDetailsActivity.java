@@ -46,8 +46,9 @@ public class AppDetailsActivity extends BaseActivity {
     public void init() {
 
         mAppInfoBean = (AppInfoBean) getIntent().getSerializableExtra("appInfo");
+        initFragment();
 
-        View view = mMyApplication.getView();
+      /*  View view = mMyApplication.getView();
         Bitmap bitmap = getViewImageCache(view);
         if (bitmap != null) {
             frameLayout.setBackground(new BitmapDrawable(bitmap));
@@ -68,7 +69,7 @@ public class AppDetailsActivity extends BaseActivity {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(marginLayoutParams);
         frameLayout.setLayoutParams(params);
 
-        open();
+        open();*/
 
     }
 

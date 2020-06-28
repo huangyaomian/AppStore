@@ -33,5 +33,7 @@ public class AppDetailPresenter extends BasePresenter<AppInfoModel, AppInfoContr
                         mView.showAppDetail(appInfoBean);
                     }
                 });
+
+
     }
 }

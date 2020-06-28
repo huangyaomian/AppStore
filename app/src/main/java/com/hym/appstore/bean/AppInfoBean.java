@@ -47,6 +47,35 @@ public class AppInfoBean  implements Serializable {
      * source :
      */
 
+    private List sameDevAppInfoList;
+    private List relateAppInfoList;
+
+    public List getSameDevAppInfoList() {
+        return sameDevAppInfoList;
+    }
+
+    public void setSameDevAppInfoList(List sameDevAppInfoList) {
+        this.sameDevAppInfoList = sameDevAppInfoList;
+    }
+
+    public List getRelateAppInfoList() {
+        return relateAppInfoList;
+    }
+
+    public void setRelateAppInfoList(List relateAppInfoList) {
+        this.relateAppInfoList = relateAppInfoList;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+
+    private String introduction;
     private int addTime;
     private boolean hasSameDevApp;
     private int videoId;
@@ -390,7 +419,7 @@ public class AppInfoBean  implements Serializable {
         this.appTags = appTags;
     }
 
-    public static class Tag {
+    public static class Tag implements Serializable{
         /**
          * "tagId": 159,
          * "link": "sametag/159",
@@ -430,7 +459,7 @@ public class AppInfoBean  implements Serializable {
 
     }
 
-    public static class HdIconBean {
+    public static class HdIconBean implements Serializable{
         /**
          * main : AppStore/0737e44738f7649ba1438f6b68f65d5d34c678cc9
          */

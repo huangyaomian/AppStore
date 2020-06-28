@@ -18,7 +18,7 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder
     private Builder mBuilder;
 
     private AppInfoAdapter(Builder builder) {
-        super(R.layout.home_recyclerview_item);
+        super(builder.layoutId);
         this.mBuilder = builder;
 
 
@@ -30,20 +30,34 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder
 
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, AppInfoBean appInfoBean) {
+
         ImageLoader.load(baseImgUrl+appInfoBean.getIcon(),baseViewHolder.getView(R.id.home_item_iv));
-        baseViewHolder.setText(R.id.home_recyclerview_name,appInfoBean.getDisplayName())
-                .setText(R.id.home_recyclerview_brief,appInfoBean.getBriefShow());
-        TextView positionView = baseViewHolder.getView(R.id.home_recyclerview_position);
-        positionView.setVisibility(mBuilder.isShowPosition? View.VISIBLE:View.GONE);
-        positionView.setText(appInfoBean.getPosition() + 1 + ".");
+        baseViewHolder.setText(R.id.home_recyclerview_name,appInfoBean.getDisplayName());
+
+        TextView txtViewPosition = baseViewHolder.getView(R.id.home_recyclerview_position);
+        if (txtViewPosition != null){
+            txtViewPosition.setVisibility(mBuilder.isShowPosition? View.VISIBLE:View.GONE);
+            txtViewPosition.setText(appInfoBean.getPosition() + 1 + ".");
+        }
+
+        TextView txtViewBrief = baseViewHolder.getView(R.id.home_recyclerview_brief);
+        if (txtViewBrief != null){
+            txtViewBrief.setVisibility(mBuilder.isShowBrief? View.VISIBLE:View.GONE);
+            txtViewBrief.setText(appInfoBean.getBriefShow());
+        }
 
         TextView categoryView = baseViewHolder.getView(R.id.home_recyclerview_category);
-        categoryView.setVisibility(mBuilder.isShowCategoryName? View.VISIBLE:View.GONE);
-        categoryView.setText(appInfoBean.getLevel1CategoryName());
+        if (categoryView != null){
+            categoryView.setVisibility(mBuilder.isShowCategoryName? View.VISIBLE:View.GONE);
+            categoryView.setText(appInfoBean.getLevel1CategoryName());
+        }
 
-        TextView briefView = baseViewHolder.getView(R.id.home_recyclerview_brief);
-        briefView.setVisibility(mBuilder.isShowBrief? View.VISIBLE:View.GONE);
-        briefView.setText(appInfoBean.getBriefShow());
+       /* TextView txtViewSize = baseViewHolder.getView(R.id.txt_apk_size);
+        if (categoryView != null){
+            txtViewSize.setVisibility(mBuilder.isShowApkSize? View.VISIBLE:View.GONE);
+            txtViewSize.setText(appInfoBean.getApkSize());
+        }*/
+
 
     }
 
@@ -52,6 +66,8 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder
         private boolean isShowPosition;
         private boolean isShowCategoryName;
         private boolean isShowBrief;
+        private boolean isShowApkSize;
+        private int layoutId = R.layout.home_recyclerview_item;
 
 
         public Builder showPosition(boolean b){
@@ -69,8 +85,18 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder
             return this;
         }
 
+        public Builder showApkSize(boolean b){
+            this.isShowApkSize = b;
+            return this;
+        }
+
         public AppInfoAdapter build(){
             return new AppInfoAdapter(this);
+        }
+
+        public Builder layout(int resId){
+            this.layoutId = resId;
+            return this;
         }
 
 
