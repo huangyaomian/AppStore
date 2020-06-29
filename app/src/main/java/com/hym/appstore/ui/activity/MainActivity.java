@@ -18,7 +18,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.hjq.toast.ToastUtils;
@@ -49,8 +48,8 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.appBarLayout)
-    AppBarLayout appBarLayout;
+   /* @BindView(R.id.appBarLayout)
+    AppBarLayout appBarLayout;*/
     @BindView(R.id.main_tab_layout)
     TabLayout mainTabLayout;
     @BindView(R.id.main_viewpager)

@@ -6,6 +6,8 @@ import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,6 +25,10 @@ public class AppDetailsActivity extends BaseActivity {
 
     @BindView(R.id.app_details_fl)
     FrameLayout frameLayout;
+    @BindView(R.id.img_icon)
+    ImageView imgIcon;
+    @BindView(R.id.txt_name)
+    TextView txtName;
 
     private AppInfoBean mAppInfoBean;
 

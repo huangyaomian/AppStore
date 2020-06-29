@@ -136,5 +136,8 @@ dependencies {
     //expandableTextView
     implementation 'com.ms-square:expandableTextView:0.1.4'
 
+    //simple-view-behavior
+    implementation 'com.zoonref:simple-view-behavior:1.0'
+
 
 }

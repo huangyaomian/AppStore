@@ -8,7 +8,7 @@
     android:background="@color/theme_while">
 
     <!--Coordinatorlayout 本身就是一个加强版的FrameLayout-->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
@@ -20,14 +20,16 @@
             android:clipToPadding="true"
             app:elevation="0dp"
             android:fitsSystemWindows="true"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+
+            >
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+                app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/Widget.AppCompat.PopupMenu.Overflow"
                 app:title="@string/app_name" />
 
@@ -53,27 +55,27 @@
 
             </com.google.android.material.tabs.TabLayout>
 
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/line"
+                app:layout_constraintTop_toBottomOf="@+id/appBarLayout"/>
 
         </com.google.android.material.appbar.AppBarLayout>
 
 
-        <View
-            android:id="@+id/line2"
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/line"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"/>
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/main_viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintTop_toBottomOf="@+id/line2"
-            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/main_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+                />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 

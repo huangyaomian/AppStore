@@ -33,10 +33,7 @@ public class AppDetailFragment extends ProgressFragment<AppDetailPresenter> impl
 
     @BindView(R.id.view_gallery)
     LinearLayout viewGallery;
-    @BindView(R.id.img_icon)
-    ImageView imgIcon;
-    @BindView(R.id.txt_name)
-    TextView txtName;
+
     @BindView(R.id.expandable_text)
     TextView expandableText;
     @BindView(R.id.expand_collapse)
