@@ -17,22 +17,7 @@
         android:background="@color/theme_blue"
         android:paddingTop="20dp"
         android:paddingBottom="20dp">
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:id="@+id/img_icon"
-            android:layout_gravity="center|top"
-            android:src="@mipmap/ic_launcher"
-            />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_name"
-            android:layout_gravity="center|top"
-            android:elevation="5dp"
-            android:textColor="@color/TextColor"
-            android:text="菜鸟手机助手"/>
 
     </LinearLayout>
 
@@ -41,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:background="@color/theme_while"
-        android:paddingBottom="100dp"
+        android:paddingBottom="10dp"
         android:scrollbars="none">
         <LinearLayout
             android:layout_width="wrap_content"
@@ -55,8 +40,9 @@
 
     <LinearLayout
         style="@style/Text_Title_Large"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="15dp"
         android:text="应用描述"
         >
 
@@ -119,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="2017.0.1" />
+                android:text="0000.0.0" />
 
         </LinearLayout>
 
@@ -143,7 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="20" />
+                android:text="00" />
 
         </LinearLayout>
 
@@ -166,7 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="20 mb" />
+                android:text="00 mb" />
 
 
         </LinearLayout>
@@ -199,12 +185,14 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_view_same_dev"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/theme_while"
         android:gravity="center"
         android:orientation="vertical"
+        android:visibility="gone"
         android:padding="15dp">
 
         <TextView
@@ -223,7 +211,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_same_dev"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:clipToPadding="false"
@@ -234,6 +222,7 @@
 
 
     <LinearLayout
+        android:id="@+id/layout_view_relate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
@@ -241,6 +230,7 @@
         android:background="@color/theme_while"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:visibility="gone"
         android:padding="15dp">
 
         <TextView

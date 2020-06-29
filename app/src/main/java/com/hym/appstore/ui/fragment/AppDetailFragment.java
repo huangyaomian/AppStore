@@ -1,6 +1,7 @@
 package com.hym.appstore.ui.fragment;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +14,7 @@ import com.hym.appstore.R;
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.common.Constant;
 import com.hym.appstore.common.imageloader.ImageLoader;
+import com.hym.appstore.common.utils.DateUtils;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.dagger2.component.DaggerAppDetailComponent;
 import com.hym.appstore.dagger2.module.AppDetailModule;
@@ -55,6 +57,10 @@ public class AppDetailFragment extends ProgressFragment<AppDetailPresenter> impl
     RecyclerView recyclerViewSameDev;
     @BindView(R.id.recycler_view_relate)
     RecyclerView recyclerViewRelate;
+    @BindView(R.id.layout_view_same_dev)
+    LinearLayout layoutViewSameDev;
+    @BindView(R.id.layout_view_relate)
+    LinearLayout layoutViewRelate;
 
 
     private int mAppId;
@@ -98,22 +104,39 @@ public class AppDetailFragment extends ProgressFragment<AppDetailPresenter> impl
 
         viewIntroduction.setText(appInfoBean.getIntroduction());
 
-       /* txtUpdateTime.setText(DateUtils.formatDate(appInfoBean.getUpdateTime()));
-        txtApkSize.setText(appInfoBean.getApkSize());
-        txtVersion.setText(appInfoBean.getVersionCode());
+        txtUpdateTime.setText(DateUtils.formatDate(appInfoBean.getUpdateTime()));
+        txtApkSize.setText(String.valueOf(appInfoBean.getApkSize() / 1024 / 1024 + "MB"));
+        txtVersion.setText(String.valueOf(appInfoBean.getVersionCode()));
         txtPublisher.setText(appInfoBean.getPublisherName());
-        txtPublisher2.setText(appInfoBean.getPublisherName());*/
+        txtPublisher2.setText(appInfoBean.getPublisherName());
 
-      /*  mAppInfoAdapter = AppInfoAdapter.builder().layout(R.layout.template_appinfo2_item).build();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewSameDev.setLayoutManager(linearLayoutManager);
-        mAppInfoAdapter.addData(appInfoBean.getSameDevAppInfoList());
-        recyclerViewSameDev.setAdapter(mAppInfoAdapter);
-*/
-        mAppInfoAdapter = AppInfoAdapter.builder().layout(R.layout.template_appinfo2_item).build();
-        recyclerViewRelate.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-        mAppInfoAdapter.addData(appInfoBean.getRelateAppInfoList());
-        recyclerViewRelate.setAdapter(mAppInfoAdapter);
+        if (appInfoBean.getSameDevAppInfoList().size() > 0) {
+            layoutViewSameDev.setVisibility(View.VISIBLE);
+            mAppInfoAdapter = AppInfoAdapter.builder().layout(R.layout.template_appinfo2_item)
+                    .showName(false).showApkSize(true).showBrief(false).showCategoryName(false).showPosition(false).build();
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+            recyclerViewSameDev.setLayoutManager(linearLayoutManager);
+
+            mAppInfoAdapter.addData(appInfoBean.getSameDevAppInfoList());
+            recyclerViewSameDev.setAdapter(mAppInfoAdapter);
+        } else {
+            layoutViewSameDev.setVisibility(View.GONE);
+        }
+
+        if (appInfoBean.getRelateAppInfoList().size() > 0) {
+            layoutViewRelate.setVisibility(View.VISIBLE);
+            mAppInfoAdapter = AppInfoAdapter.builder().layout(R.layout.template_appinfo2_item).showName(false)
+                    .showApkSize(true).showBrief(false).showCategoryName(false).showPosition(false).build();
+            recyclerViewRelate.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+            mAppInfoAdapter.addData(appInfoBean.getRelateAppInfoList());
+            recyclerViewRelate.setAdapter(mAppInfoAdapter);
+        } else {
+            layoutViewRelate.setVisibility(View.GONE);
+        }
+
+
+
+
 
     }
 

@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txt_apk_size"
-        android:text="20Mb"
+        android:text="00Mb"
         style="@style/Text_Content"/>
 
     <Button

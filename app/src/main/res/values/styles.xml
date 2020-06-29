@@ -10,7 +10,7 @@
 
 
     <!-- bmob application theme. -->
-    <style name="AppTheme1" parent="XUITheme.Phone" >
+    <style name="AppTheme1" parent="XUITheme.Phone">
         <item name="android:windowAnimationStyle">@style/Animation</item>
         <item name="colorPrimary">@color/theme_while</item>
         <item name="colorPrimaryDark">@color/TextColor</item>
@@ -88,6 +88,14 @@
         <item name="android:textColor">@color/theme_grey</item>
     </style>
 
+    <style name="AppTheme1.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme1.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme1.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

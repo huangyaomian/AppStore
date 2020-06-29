@@ -32,30 +32,44 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder
     protected void convert(@NotNull BaseViewHolder baseViewHolder, AppInfoBean appInfoBean) {
 
         ImageLoader.load(baseImgUrl+appInfoBean.getIcon(),baseViewHolder.getView(R.id.img_app_icon));
-        baseViewHolder.setText(R.id.home_recyclerview_name,appInfoBean.getDisplayName());
 
-        TextView txtViewPosition = baseViewHolder.getView(R.id.home_recyclerview_position);
-        if (txtViewPosition != null){
-            txtViewPosition.setVisibility(mBuilder.isShowPosition? View.VISIBLE:View.GONE);
-            txtViewPosition.setText(appInfoBean.getPosition() + 1 + ".");
+        if (mBuilder.isShowName){
+            baseViewHolder.setText(R.id.home_recyclerview_name,appInfoBean.getDisplayName());
         }
 
-        TextView txtViewBrief = baseViewHolder.getView(R.id.home_recyclerview_brief);
-        if (txtViewBrief != null){
-            txtViewBrief.setVisibility(mBuilder.isShowBrief? View.VISIBLE:View.GONE);
-            txtViewBrief.setText(appInfoBean.getBriefShow());
+        if (mBuilder.isShowPosition){
+            TextView txtViewPosition = baseViewHolder.getView(R.id.home_recyclerview_position);
+            if (txtViewPosition != null){
+                txtViewPosition.setVisibility(mBuilder.isShowPosition? View.VISIBLE:View.GONE);
+                txtViewPosition.setText(appInfoBean.getPosition() + 1 + ".");
+            }
         }
 
-        TextView categoryView = baseViewHolder.getView(R.id.home_recyclerview_category);
-        if (categoryView != null){
-            categoryView.setVisibility(mBuilder.isShowCategoryName? View.VISIBLE:View.GONE);
-            categoryView.setText(appInfoBean.getLevel1CategoryName());
+
+        if (mBuilder.isShowBrief) {
+            TextView txtViewBrief = baseViewHolder.getView(R.id.home_recyclerview_brief);
+            if (txtViewBrief != null){
+                txtViewBrief.setVisibility(mBuilder.isShowBrief? View.VISIBLE:View.GONE);
+                txtViewBrief.setText(appInfoBean.getBriefShow());
+            }
         }
 
-       /* TextView txtViewSize = baseViewHolder.getView(R.id.txt_apk_size);
-        if (categoryView != null){
-            txtViewSize.setVisibility(mBuilder.isShowApkSize? View.VISIBLE:View.GONE);
-            txtViewSize.setText(appInfoBean.getApkSize());
+
+        if (mBuilder.isShowCategoryName) {
+            TextView categoryView = baseViewHolder.getView(R.id.home_recyclerview_category);
+            if (categoryView != null){
+                categoryView.setVisibility(mBuilder.isShowCategoryName? View.VISIBLE:View.GONE);
+                categoryView.setText(appInfoBean.getLevel1CategoryName());
+            }
+        }
+
+
+        /*if (mBuilder.isShowApkSize) {
+            TextView txtViewSize = baseViewHolder.getView(R.id.txt_apk_size);
+            if (txtViewSize != null){
+                txtViewSize.setVisibility(mBuilder.isShowApkSize? View.VISIBLE:View.GONE);
+                txtViewSize.setText(appInfoBean.getApkSize());
+            }
         }*/
 
 
@@ -63,10 +77,11 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder
 
 
     public static class Builder{
-        private boolean isShowPosition;
-        private boolean isShowCategoryName;
-        private boolean isShowBrief;
-        private boolean isShowApkSize;
+        private boolean isShowPosition = true;
+        private boolean isShowCategoryName = true;
+        private boolean isShowBrief = true;
+        private boolean isShowApkSize = false;
+        private boolean isShowName = true;
         private int layoutId = R.layout.home_recyclerview_item;
 
 
@@ -87,6 +102,11 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder
 
         public Builder showApkSize(boolean b){
             this.isShowApkSize = b;
+            return this;
+        }
+
+        public Builder showName(boolean b){
+            this.isShowName = b;
             return this;
         }
 
