@@ -14,9 +14,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@color/theme_blue"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp">
+        android:background="@color/theme_while"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
 
     </LinearLayout>
