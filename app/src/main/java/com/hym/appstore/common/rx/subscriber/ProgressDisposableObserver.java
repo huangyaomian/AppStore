@@ -7,10 +7,13 @@ import com.hym.appstore.common.exception.BaseException;
 import com.hym.appstore.common.utils.ProgressDialogHandler;
 import com.hym.appstore.ui.BaseView;
 
+import io.reactivex.rxjava3.disposables.Disposable;
+
 public abstract class ProgressDisposableObserver<T> extends ErrorHandlerDisposableObserver<T> implements ProgressDialogHandler.OnProgressCancelListener {
 
 
     private BaseView mBaseView;
+    private Disposable mDisposable;
 
     public ProgressDisposableObserver(Context context, BaseView baseView) {
         super(context);
@@ -23,18 +26,19 @@ public abstract class ProgressDisposableObserver<T> extends ErrorHandlerDisposab
 
     @Override
     public void onCancelProgress() {
-//        unsubscribe();
+        mDisposable.dispose();
     }
 
-//    protected abstract void unsubscribe();
 
     @Override
-    protected void onStart() {
-        Log.d("requestRecommendData","onStart");
+    public void onSubscribe(Disposable d) {
+        Log.d("requestRecommendData","onSubscribe");
+        mDisposable = d;
         if (isShowProgress()) {
             mBaseView.showLoading();
         }
     }
+
 
     @Override
     public void onComplete() {

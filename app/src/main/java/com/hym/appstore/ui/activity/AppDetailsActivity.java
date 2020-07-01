@@ -5,19 +5,19 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.common.Constant;
@@ -29,7 +29,6 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class AppDetailsActivity extends BaseActivity {
 
@@ -38,17 +37,20 @@ public class AppDetailsActivity extends BaseActivity {
     FrameLayout frameLayout;
     @BindView(R.id.img_icon)
     ImageView imgIcon;
-    @BindView(R.id.txt_name)
-    TextView txtName;
     @BindView(R.id.view_temp)
     View viewTemp;
     @BindView(R.id.tool_bar)
     Toolbar toolbar;
     @BindView(R.id.view_coordinator)
     CoordinatorLayout viewCoordinator;
+    @BindView(R.id.toolbar_layout)
+    CollapsingToolbarLayout mToolbarLayout;
+    @BindView(R.id.app_bar)
+    AppBarLayout mAppBar;
 
 
     private AppInfoBean mAppInfoBean;
+    private boolean isAnim = true;
 
 
     @Override
@@ -70,35 +72,39 @@ public class AppDetailsActivity extends BaseActivity {
                         .color(getResources().getColor(R.color.theme_black)
                         )
         );
-
-
         mAppInfoBean = (AppInfoBean) getIntent().getSerializableExtra("appInfo");
-        txtName.setText(mAppInfoBean.getDisplayName());
+        isAnim = (Boolean) getIntent().getSerializableExtra("isAnim");
+        mToolbarLayout.setTitle(mAppInfoBean.getDisplayName());
         ImageLoader.load(Constant.BASE_IMG_URL + mAppInfoBean.getIcon(), imgIcon);
         initFragment();
 
-        View view = mMyApplication.getView();
-        Bitmap bitmap = getViewImageCache(view);
-        if (bitmap != null) {
-            viewTemp.setBackground(new BitmapDrawable(bitmap));
+
+        if (isAnim) {
+            View view = mMyApplication.getView();
+            Bitmap bitmap = getViewImageCache(view);
+            if (bitmap != null) {
+                viewTemp.setBackground(new BitmapDrawable(bitmap));
+            }
+
+            int[] location = new int[2];
+            view.getLocationOnScreen(location);
+            int left = location[0];
+            int top = location[1];
+
+            ViewGroup.MarginLayoutParams marginLayoutParams = new ViewGroup.MarginLayoutParams(viewTemp.getLayoutParams());
+            marginLayoutParams.topMargin = top;
+            marginLayoutParams.leftMargin = left;
+            marginLayoutParams.width = view.getWidth();
+            marginLayoutParams.height = view.getHeight();
+
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(marginLayoutParams);
+            viewTemp.setLayoutParams(params);
+
+            open();
+        }else {
+            viewTemp.setVisibility(View.GONE);
         }
-
-        int[] location = new int[2];
-        view.getLocationOnScreen(location);
-        int left = location[0];
-        int top = location[1];
-
-        ViewGroup.MarginLayoutParams marginLayoutParams = new ViewGroup.MarginLayoutParams(viewTemp.getLayoutParams());
-        marginLayoutParams.topMargin = top;
-        marginLayoutParams.leftMargin = left;
-        marginLayoutParams.width = view.getWidth();
-        marginLayoutParams.height = view.getHeight();
-
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(marginLayoutParams);
-        viewTemp.setLayoutParams(params);
-
-        open();
 
     }
 
@@ -139,18 +145,24 @@ public class AppDetailsActivity extends BaseActivity {
         int h = DensityUtil.getScreenH(this);
         ObjectAnimator animator = ObjectAnimator.ofFloat(viewTemp, "scaleY", 1f, (float) h);
         animator.setStartDelay(500);
-        animator.setDuration(2000);
+        animator.setDuration(300);
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                viewTemp.setVisibility(View.GONE);
-                viewCoordinator.setVisibility(View.VISIBLE);
+                if (viewTemp != null) {
+                    viewTemp.setVisibility(View.GONE);
+                }
+                if (viewCoordinator != null) {
+                    viewCoordinator.setVisibility(View.VISIBLE);
+                }
                 initFragment();
             }
 
             @Override
             public void onAnimationStart(Animator animation) {
-                viewTemp.setBackgroundColor(getResources().getColor(R.color.theme_while));
+                if (viewTemp != null){
+                    viewTemp.setBackgroundColor(getResources().getColor(R.color.theme_while));
+                }
             }
         });
         animator.start();
@@ -163,6 +175,7 @@ public class AppDetailsActivity extends BaseActivity {
         fragmentTransaction.add(R.id.app_details_fl, fragment);
         fragmentTransaction.commitAllowingStateLoss();
     }
+
 
 
 }

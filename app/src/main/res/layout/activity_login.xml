@@ -89,9 +89,9 @@
             android:background="@drawable/bg_btn"
             app:text="@string/btn_login"
             app:loadingText="@string/loading_ch"
-            app:progressColor="@color/theme_while"
+            app:progressColor="@color/theme_blue"
             android:enabled="false"
-            app:textColor="@color/theme_while"
+            app:textColor="@color/theme_blue"
             android:textColor="@color/theme_while" />
 
 

@@ -84,6 +84,7 @@ public abstract class AppInfoFragment extends ProgressFragment<AppInfoPresenter>
                 AppInfoBean appInfoBean = mAppInfoAdapter.getItem(position);
                 Intent intent = new Intent(getActivity(), AppDetailsActivity.class);
                 intent.putExtra("appInfo",appInfoBean);
+                intent.putExtra("isAnim",true);
                 startActivity(intent);
             }
         });

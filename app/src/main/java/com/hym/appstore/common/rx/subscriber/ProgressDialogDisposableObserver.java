@@ -4,10 +4,13 @@ import android.content.Context;
 
 import com.hym.appstore.common.utils.ProgressDialogHandler;
 
+import io.reactivex.rxjava3.disposables.Disposable;
+
 public abstract class ProgressDialogDisposableObserver<T> extends ErrorHandlerDisposableObserver<T> implements ProgressDialogHandler.OnProgressCancelListener {
 
 
     private ProgressDialogHandler mProgressDialogHandler;
+    private Disposable mDisposable;
 
     public ProgressDialogDisposableObserver(Context context) {
         super(context);
@@ -20,13 +23,14 @@ public abstract class ProgressDialogDisposableObserver<T> extends ErrorHandlerDi
 
     @Override
     public void onCancelProgress() {
-//        unsubscribe();//這個是取消訂閲的但是暫時不知道怎麽弄
+        mDisposable.dispose();//這個是取消訂閲的但是暫時不知道怎麽弄
     }
 
 //    protected abstract void unsubscribe();
 
     @Override
-    protected void onStart() {
+    public void onSubscribe(Disposable d) {
+        mDisposable = d;
         if (isShowProgressDialog()) {
             this.mProgressDialogHandler.showProgressDialog();
         }

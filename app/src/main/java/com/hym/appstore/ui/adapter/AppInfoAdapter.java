@@ -63,13 +63,13 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder
             }
         }
 
-        /*if (mBuilder.isShowApkSize) {
+        if (mBuilder.isShowApkSize) {
             TextView txtViewSize = baseViewHolder.getView(R.id.txt_apk_size);
             if (txtViewSize != null){
                 txtViewSize.setVisibility(mBuilder.isShowApkSize? View.VISIBLE:View.GONE);
-                txtViewSize.setText(appInfoBean.getApkSize());
+                txtViewSize.setText(appInfoBean.getApkSize() / 1024 / 1024 + "MB");
             }
-        }*/
+        }
 
 
     }

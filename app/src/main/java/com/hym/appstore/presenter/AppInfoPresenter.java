@@ -13,7 +13,8 @@ import javax.inject.Inject;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.observers.DisposableObserver;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 public class AppInfoPresenter extends BasePresenter<AppInfoModel, AppInfoContract.AppInfoView> {
 
@@ -78,7 +79,7 @@ public class AppInfoPresenter extends BasePresenter<AppInfoModel, AppInfoContrac
     }*/
 
     public void request(int type, int page, int sortId, int flagType) {
-        DisposableObserver disposableObserver = null;
+        Observer disposableObserver;
         if (page == 0) {
             //加载第一页
             disposableObserver = new ProgressDisposableObserver<PageBean<AppInfoBean>>(mContext, mView) {
@@ -91,6 +92,11 @@ public class AppInfoPresenter extends BasePresenter<AppInfoModel, AppInfoContrac
         } else {
             //加载第下页
             disposableObserver = new ErrorHandlerDisposableObserver<PageBean<AppInfoBean>>(mContext) {
+
+                @Override
+                public void onSubscribe(@NonNull Disposable d) {
+
+                }
 
                 @Override
                 public void onNext(@NonNull PageBean<AppInfoBean> appInfoBeanPageBean) {

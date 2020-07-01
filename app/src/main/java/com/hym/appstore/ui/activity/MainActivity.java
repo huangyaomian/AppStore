@@ -21,14 +21,13 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.hjq.toast.ToastUtils;
-import com.hwangjr.rxbus.RxBus;
-import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.FragmentInfo;
 import com.hym.appstore.bean.User;
 import com.hym.appstore.common.Constant;
 import com.hym.appstore.common.font.Cniao5Font;
 import com.hym.appstore.common.imageloader.GlideCircleTransform;
+import com.hym.appstore.common.rx.RxBus;
 import com.hym.appstore.common.utils.ACache;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.ui.adapter.MyViewPagerAdapter;
@@ -43,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.rxjava3.functions.Consumer;
 
 public class MainActivity extends BaseActivity {
 
@@ -88,7 +88,17 @@ public class MainActivity extends BaseActivity {
     @Override
     public void init() {
 
-        RxBus.get().register(this);
+//        RxBus.get().register(this);
+
+        RxBus.getDefault().toObservable(User.class).subscribe(new Consumer<User>() {
+            @Override
+            public void accept(User user) throws Throwable {
+               initUserHeadView(user);
+            }
+        });
+
+//       PermissionUtils.INSTANCE.checkSinglePermission(this, Manifest.permission.READ_PHONE_STATE);
+
         //fragmentinfo 数据集合
         fragmentInfos =  new ArrayList<>();
 
@@ -167,11 +177,11 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @Subscribe
+/*    @Subscribe
     public void getUser(User user){
         navigationView.getMenu().setGroupVisible(R.id.group2,true);
         initUserHeadView(user);
-    }
+    }*/
 
 
     @Override
@@ -254,9 +264,4 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxBus.get().unregister(this);
-    }
 }

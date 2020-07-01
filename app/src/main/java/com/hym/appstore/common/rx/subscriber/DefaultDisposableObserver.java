@@ -1,8 +1,8 @@
 package com.hym.appstore.common.rx.subscriber;
 
 
-import io.reactivex.rxjava3.observers.DisposableObserver;
+import io.reactivex.rxjava3.core.Observer;
 
-public abstract class DefaultDisposableObserver<T> extends DisposableObserver<T> {
-
+public abstract class DefaultDisposableObserver<T> implements Observer<T> {
+//    DisposableObserver<T>
 }
