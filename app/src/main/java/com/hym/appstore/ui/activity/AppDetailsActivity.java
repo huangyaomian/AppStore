@@ -20,9 +20,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.hym.appstore.R;
 import com.hym.appstore.bean.AppInfoBean;
+import com.hym.appstore.common.Constant;
+import com.hym.appstore.common.imageloader.ImageLoader;
 import com.hym.appstore.common.utils.DensityUtil;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.ui.fragment.AppDetailFragment;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.ionicons_typeface_library.Ionicons;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +42,7 @@ public class AppDetailsActivity extends BaseActivity {
     TextView txtName;
     @BindView(R.id.view_temp)
     View viewTemp;
-    @BindView(R.id.toolbar)
+    @BindView(R.id.tool_bar)
     Toolbar toolbar;
     @BindView(R.id.view_coordinator)
     CoordinatorLayout viewCoordinator;
@@ -59,8 +63,18 @@ public class AppDetailsActivity extends BaseActivity {
 
     @Override
     public void init() {
+        toolbar.setNavigationIcon(
+                new IconicsDrawable(this)
+                        .icon(Ionicons.Icon.ion_ios_arrow_back)
+                        .sizeDp(16)
+                        .color(getResources().getColor(R.color.theme_black)
+                        )
+        );
+
 
         mAppInfoBean = (AppInfoBean) getIntent().getSerializableExtra("appInfo");
+        txtName.setText(mAppInfoBean.getDisplayName());
+        ImageLoader.load(Constant.BASE_IMG_URL + mAppInfoBean.getIcon(), imgIcon);
         initFragment();
 
         View view = mMyApplication.getView();
@@ -96,7 +110,12 @@ public class AppDetailsActivity extends BaseActivity {
 
     @Override
     public void initEvent() {
-
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private Bitmap getViewImageCache(View view) {

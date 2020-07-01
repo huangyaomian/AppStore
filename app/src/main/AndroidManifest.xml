@@ -17,14 +17,14 @@
         <activity android:name=".ui.activity.SortAppActivity" />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.TestActivity" >
+
+        </activity>
+        <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".ui.activity.MainActivity">
-
         </activity>
         <activity android:name=".ui.activity.SplashActivity" />
     </application> <!-- 访问网络，网络定位需要上网 -->

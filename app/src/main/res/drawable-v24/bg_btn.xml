@@ -5,10 +5,10 @@
 
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
 
-            <solid android:color="@color/theme_blue" />
+            <solid android:color="@color/theme_while" />
 
             <!-- 定义边框颜色 -->
-            <stroke android:width="0.1dp" android:color="@color/theme_grey" />
+            <stroke android:width="0.1dp" android:color="@color/theme_blue" />
             <corners
                 android:bottomLeftRadius="5dp"
                 android:bottomRightRadius="5dp"
@@ -22,7 +22,7 @@
     <item android:state_enabled="false">
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
 
-            <solid android:color="@color/theme_grey" />
+            <solid android:color="@color/theme_while" />
 
             <!-- 定义边框颜色 -->
             <stroke android:width="0.1dp" android:color="@color/theme_blue" />
@@ -38,10 +38,10 @@
 
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
 
-            <solid android:color="@color/theme_blue" />
+            <solid android:color="@color/theme_while" />
 
             <!-- 定义边框颜色 -->
-            <stroke android:width="0.1dp" android:color="@color/theme_grey" />
+            <stroke android:width="0.1dp" android:color="@color/theme_blue" />
 
             <corners
                 android:bottomLeftRadius="5dp"
