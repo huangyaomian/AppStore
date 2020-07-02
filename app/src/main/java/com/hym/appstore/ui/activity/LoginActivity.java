@@ -19,16 +19,15 @@ import com.hym.appstore.dagger2.module.LoginModule;
 import com.hym.appstore.presenter.LoginPresenter;
 import com.hym.appstore.presenter.contract.LoginContract;
 import com.hym.appstore.ui.widget.LoadingButton;
-import com.jakewharton.rxbinding4.InitialValueObservable;
-import com.jakewharton.rxbinding4.view.RxView;
-import com.jakewharton.rxbinding4.widget.RxTextView;
+import com.jakewharton.rxbinding2.InitialValueObservable;
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
 
 import butterknife.BindView;
-import io.reactivex.rxjava3.functions.BiFunction;
-import io.reactivex.rxjava3.functions.Consumer;
-import kotlin.Unit;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Consumer;
 
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.LoginView {
 
@@ -83,22 +82,29 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
         InitialValueObservable.combineLatest(obPhone, obPassword, new BiFunction<CharSequence, CharSequence, Boolean>() {
             @Override
-            public Boolean apply(CharSequence charSequence, CharSequence charSequence2) throws Throwable {
+            public Boolean apply(CharSequence charSequence, CharSequence charSequence2) {
                 return isPhoneValid(txtPhoneEdit.getText().toString().trim()) && isPsdValid(txtPasswordEdit.getText().toString().trim());
             }
         }).subscribe(new Consumer<Boolean>() {
             @Override
-            public void accept(Boolean aBoolean) throws Throwable {
+            public void accept(Boolean aBoolean) {
                 mBtnLogin.setEnabled(aBoolean);
             }
         });
 
-        RxView.clicks(mBtnLogin).subscribe(new Consumer<Unit>() {
+        RxView.clicks(mBtnLogin).subscribe(new Consumer<Object>() {
             @Override
-            public void accept(Unit unit) throws Throwable {
+            public void accept(Object unit) throws Exception {
                 mPresenter.login(txtPhoneEdit.getText().toString().trim(),txtPasswordEdit.getText().toString().trim());
             }
         });
+
+        /*RxView.clicks(mBtnLogin).subscribe(new Consumer<Unit>() {
+            @Override
+            public void accept(Unit unit) {
+                mPresenter.login(txtPhoneEdit.getText().toString().trim(),txtPasswordEdit.getText().toString().trim());
+            }
+        });*/
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

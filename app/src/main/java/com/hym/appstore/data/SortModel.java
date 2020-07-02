@@ -8,7 +8,8 @@ import com.hym.appstore.presenter.contract.SortContract;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.Observable;
+
 
 public class SortModel implements SortContract.ISortModel {
     private ApiService mApiService;

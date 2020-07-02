@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.functions.Consumer;
 
 public class MainActivity extends BaseActivity {
 
@@ -92,7 +92,7 @@ public class MainActivity extends BaseActivity {
 
         RxBus.getDefault().toObservable(User.class).subscribe(new Consumer<User>() {
             @Override
-            public void accept(User user) throws Throwable {
+            public void accept(User user) {
                initUserHeadView(user);
             }
         });

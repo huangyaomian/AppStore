@@ -16,7 +16,6 @@
         android:background="@color/theme_while"
         android:visibility="visible"/>
 
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/view_coordinator"
         android:layout_width="match_parent"
@@ -33,8 +32,6 @@
             android:layout_height="180dp"
             android:fitsSystemWindows="true"
             android:theme="@style/AppTheme1.AppBarOverlay">
-
-
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"

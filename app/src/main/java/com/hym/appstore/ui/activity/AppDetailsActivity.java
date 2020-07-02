@@ -73,13 +73,12 @@ public class AppDetailsActivity extends BaseActivity {
                         )
         );
         mAppInfoBean = (AppInfoBean) getIntent().getSerializableExtra("appInfo");
-        isAnim = (Boolean) getIntent().getSerializableExtra("isAnim");
+        isAnim = (boolean) getIntent().getSerializableExtra("isAnim");
         mToolbarLayout.setTitle(mAppInfoBean.getDisplayName());
         ImageLoader.load(Constant.BASE_IMG_URL + mAppInfoBean.getIcon(), imgIcon);
-        initFragment();
 
 
-        if (isAnim) {
+
             View view = mMyApplication.getView();
             Bitmap bitmap = getViewImageCache(view);
             if (bitmap != null) {
@@ -100,10 +99,13 @@ public class AppDetailsActivity extends BaseActivity {
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(marginLayoutParams);
             viewTemp.setLayoutParams(params);
+        open();
+        if (isAnim) {
 
-            open();
         }else {
+            viewTemp.setBackgroundColor(getResources().getColor(R.color.theme_while));
             viewTemp.setVisibility(View.GONE);
+            initFragment();
         }
 
     }

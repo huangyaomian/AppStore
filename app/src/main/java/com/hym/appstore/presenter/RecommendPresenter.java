@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.annotations.NonNull;
 
 
 public class RecommendPresenter extends BasePresenter<RecommendModel,RecommendContract.View> {

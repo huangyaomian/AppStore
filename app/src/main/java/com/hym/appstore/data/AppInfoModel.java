@@ -7,7 +7,7 @@ import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.bean.PageBean;
 import com.hym.appstore.data.okhttp.ApiService;
 
-import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.Observable;
 
 public class AppInfoModel {
     private ApiService mApiService;

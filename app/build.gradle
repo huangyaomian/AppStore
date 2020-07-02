@@ -88,10 +88,6 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.2'  //没有使用特殊Header，可以不加这行
 
 
-/*    //dagger2
-    api 'com.google.dagger:dagger:2.2'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.2'*/
-
     //dagger2
     implementation 'com.google.dagger:dagger-android:2.24'
     // if you use the support libraries
@@ -105,12 +101,12 @@ dependencies {
 
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     //rxjava
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
 //    //rxpermissions
 //    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
@@ -121,6 +117,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation "com.github.bumptech.glide:okhttp3-integration:4.11.0"
+
     // 高斯模糊和圆角等
     implementation 'jp.wasabeef:glide-transformations:4.0.1'
 
@@ -128,7 +125,7 @@ dependencies {
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
 
     //rxbinding
-    implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
 
     //expandableTextView
     implementation 'com.ms-square:expandableTextView:0.1.4'

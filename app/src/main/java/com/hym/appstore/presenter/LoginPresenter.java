@@ -11,8 +11,8 @@ import com.hym.appstore.presenter.contract.LoginContract;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 
 public class  LoginPresenter extends BasePresenter<LoginContract.ILoginModel, LoginContract.LoginView> {
 

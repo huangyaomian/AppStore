@@ -11,7 +11,8 @@ import com.hym.appstore.presenter.contract.AppInfoContract;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.annotations.NonNull;
+
 
 public class HomePresenter extends BasePresenter<AppInfoModel, AppInfoContract.View> {
 

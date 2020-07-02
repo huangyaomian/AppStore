@@ -6,7 +6,7 @@ import com.hym.appstore.data.okhttp.ApiService;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.Observable;
 
 
 public class RecommendModel {

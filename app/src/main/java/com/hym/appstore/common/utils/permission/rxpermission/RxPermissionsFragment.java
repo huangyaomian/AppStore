@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.reactivex.rxjava3.subjects.PublishSubject;
+import io.reactivex.subjects.PublishSubject;
 
 public class RxPermissionsFragment extends Fragment {
 

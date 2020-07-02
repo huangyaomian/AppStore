@@ -2,7 +2,8 @@ package com.hym.appstore.bean;
 
 import java.io.Serializable;
 
-import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * 菜鸟窝http://www.cniao5.com 一个高端的互联网技能学习平台

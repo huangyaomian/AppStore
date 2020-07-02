@@ -1,19 +1,16 @@
 package com.hym.appstore.presenter;
 
-import com.hym.appstore.bean.LoginBean;
 import com.hym.appstore.bean.SortBean;
-import com.hym.appstore.common.Constant;
 import com.hym.appstore.common.rx.RxHttpResponseCompat;
 import com.hym.appstore.common.rx.subscriber.ProgressDisposableObserver;
-import com.hym.appstore.common.utils.ACache;
-import com.hym.appstore.presenter.contract.LoginContract;
 import com.hym.appstore.presenter.contract.SortContract;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.annotations.NonNull;
+
 
 public class SortPresenter extends BasePresenter<SortContract.ISortModel, SortContract.SortView> {
 
