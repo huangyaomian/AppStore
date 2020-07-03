@@ -48,8 +48,8 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-   /* @BindView(R.id.appBarLayout)
-    AppBarLayout appBarLayout;*/
+    /* @BindView(R.id.appBarLayout)
+     AppBarLayout appBarLayout;*/
     @BindView(R.id.main_tab_layout)
     TabLayout mainTabLayout;
     @BindView(R.id.main_viewpager)
@@ -93,7 +93,8 @@ public class MainActivity extends BaseActivity {
         RxBus.getDefault().toObservable(User.class).subscribe(new Consumer<User>() {
             @Override
             public void accept(User user) {
-               initUserHeadView(user);
+                navigationView.getMenu().setGroupVisible(R.id.group2,true);
+                initUserHeadView(user);
             }
         });
 
@@ -227,12 +228,12 @@ public class MainActivity extends BaseActivity {
         mUserHeadView.setImageDrawable(new IconicsDrawable(this, Cniao5Font.Icon.cniao_head).colorRes(R.color.theme_while));
         mTextUserName.setText(R.string.no_login);
         mTextUserPhone.setText(R.string.phone_num);
-                headerView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    }
-                });
+        headerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
         Toast.makeText(MainActivity.this, "退出登錄", Toast.LENGTH_LONG).show();
         navigationView.getMenu().setGroupVisible(R.id.group2,false);
         mUserHeadView.setImageDrawable(getResources().getDrawable(R.drawable.vector_drawable_no_log));

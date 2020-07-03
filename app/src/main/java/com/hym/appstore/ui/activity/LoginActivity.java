@@ -94,7 +94,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
         RxView.clicks(mBtnLogin).subscribe(new Consumer<Object>() {
             @Override
-            public void accept(Object unit) throws Exception {
+            public void accept(Object o) throws Exception {
                 mPresenter.login(txtPhoneEdit.getText().toString().trim(),txtPasswordEdit.getText().toString().trim());
             }
         });
