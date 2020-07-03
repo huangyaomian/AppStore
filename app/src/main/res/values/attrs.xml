@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="ViewBehavior">
-        <attr name="behavior_dependsOn" format="reference"/>
-        <attr name="behavior_dependType">
-            <enum name="height" value="0"/>
-            <enum name="width" value="1"/>
-            <enum name="x" value="2"/>
-            <enum name="y" value="3"/>
+
+    <declare-styleable name="DownloadProgressButton">
+        <attr name="progress_btn_radius" format="dimension" />
+        <attr name="progress_btn_background_color" format="color" />
+        <attr name="progress_btn_background_second_color" format="color" />
+        <attr name="progress_btn_text_color" format="color" />
+        <attr name="progress_btn_text_cover_color" format="color" />
+        <attr name="progress_btn_border_width" format="dimension" />
+        <attr name="progress_btn_ball_style" format="enum">
+            <enum name="STYLE_BALL_PULSE" value="1" />
+            <enum name="STYLE_BALL_JUMP" value="2" />
         </attr>
-
-        <attr name="behavior_dependTarget" format="dimension"/>
-
-        <attr name="behavior_targetX" format="dimension"/>
-        <attr name="behavior_targetY" format="dimension"/>
-        <attr name="behavior_targetWidth" format="dimension"/>
-        <attr name="behavior_targetHeight" format="dimension"/>
-        <attr name="behavior_targetBackgroundColor" format="color"/>
-        <attr name="behavior_targetAlpha" format="float"/>
-        <attr name="behavior_targetRotateX" format="float"/>
-        <attr name="behavior_targetRotateY" format="float"/>
-        <attr name="behavior_animation" format="reference"/>
     </declare-styleable>
+
 </resources>

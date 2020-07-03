@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.hym.appstore.R;
 
+
 public class DownloadProgressButton extends View {
     private int statue=downloadStatue;
     public static final int downloadStatue = 0;

@@ -1,2 +1,2 @@
 rootProject.name='AppStore'
-include ':app'
+include ':app', ':rxdownload'

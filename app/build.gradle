@@ -108,10 +108,9 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
-//    //rxpermissions
-//    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
     //rxpermissions
-//    implementation 'com.abarajithan.rxpermissions:rxpermissions:1.0.0-beta'
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+
 
     //glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
@@ -132,7 +131,8 @@ dependencies {
 
     //simple-view-behavior
     implementation 'com.zoonref:simple-view-behavior:1.0'
-
+    implementation project(path: ':rxdownload')
 
 
 }
+
