@@ -21,13 +21,19 @@ import com.hym.appstore.presenter.contract.AppInfoContract;
 import com.hym.appstore.ui.activity.AppDetailsActivity;
 import com.hym.appstore.ui.adapter.AppInfoAdapter;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
+import zlc.season.rxdownload2.RxDownload;
 
 
 public abstract class AppInfoFragment extends ProgressFragment<AppInfoPresenter> implements AppInfoContract.AppInfoView {
 
     @BindView(R.id.home_rv)
     RecyclerView mHomeRv;
+
+    @Inject
+    RxDownload mRxDownload;
 
     int page = 0;
 

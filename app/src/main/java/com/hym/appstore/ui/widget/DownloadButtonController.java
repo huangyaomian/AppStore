@@ -7,6 +7,7 @@ import com.hym.appstore.bean.AppDownloadInfo;
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.BaseBean;
 import com.hym.appstore.common.Constant;
+import com.hym.appstore.common.rx.RxBus;
 import com.hym.appstore.common.rx.RxHttpResponseCompat;
 import com.hym.appstore.common.rx.RxSchedulers;
 import com.hym.appstore.common.utils.ACache;
@@ -50,10 +51,10 @@ public class DownloadButtonController {
     }
 
     public void handClick(final DownloadProgressButton btn, final AppInfoBean appInfo) {
+        bindClick(btn,appInfo);
         if (mApi == null) {
             return;
         }
-
         isAppInstalled(btn.getContext(), appInfo)
 
                 .flatMap(new Function<DownloadEvent, ObservableSource<DownloadEvent>>() {
@@ -96,11 +97,11 @@ public class DownloadButtonController {
                     }
                 })
                 .compose(RxSchedulers.<DownloadEvent>io_main())
-
                 .subscribe(new DownloadConsumer(btn, appInfo));
 
 
     }
+
 
     private void bindClick(final DownloadProgressButton btn, final AppInfoBean appInfo) {
 
@@ -109,14 +110,11 @@ public class DownloadButtonController {
             @Override
             public void accept(@NonNull Object o) throws Exception {
 
-
                 int flag = (int) btn.getTag(R.id.tag_apk_flag);
-
 
                 switch (flag) {
 
                     case DownloadFlag.INSTALLED:
-
                         runApp(btn.getContext(), appInfo.getPackageName());
                         break;
 
@@ -125,9 +123,7 @@ public class DownloadButtonController {
                         pausedDownload(appInfo.getAppDownloadInfo().getDownloadUrl());
                         break;
 
-
                     case DownloadFlag.NORMAL:
-
                     case DownloadFlag.PAUSED:
                         startDownload(btn, appInfo);
                         break;
@@ -144,11 +140,13 @@ public class DownloadButtonController {
         });
     }
 
+//    安装app
     private void installApp(Context context, AppInfoBean appInfoBean){
         String path = ACache.get(context).getAsString(Constant.APK_DOWNLOAD_DIR) + File.separator + appInfoBean.getReleaseKeyHash();
         AppUtils.installApk(context, path);
     }
 
+//    开启下载
     private void startDownload(final DownloadProgressButton btn, final AppInfoBean appInfoBean){
         PermissionUtil.requestPermisson(btn.getContext(),WRITE_EXTERNAL_STORAGE)
                 .subscribe(new Consumer<Boolean>() {
@@ -222,14 +220,13 @@ public class DownloadButtonController {
 
     }
 
+    //暂停下载
     private void pausedDownload(String url) {
-
-
         mRxDownload.pauseServiceDownload(url).subscribe();
     }
 
+    //开启app
     private void runApp(Context context, String packageName) {
-
         AppUtils.runApp(context, packageName);
     }
 
