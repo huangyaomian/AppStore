@@ -2,7 +2,6 @@ package com.hym.appstore.dagger2.module;
 
 import android.app.Application;
 import android.os.Environment;
-import android.provider.ContactsContract;
 
 import com.hym.appstore.common.Constant;
 import com.hym.appstore.common.utils.ACache;
@@ -29,7 +28,8 @@ public class DownloadModule {
                 .defaultSavePath(downDir.getPath())
                 .retrofit(retrofit)
                 .maxDownloadNumber(10)
-                .maxThread(10);
+                .maxThread(10)
+                .maxRetryCount(2);//下载失败重试次数;
     }
 
     @Provides

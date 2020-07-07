@@ -59,7 +59,6 @@ public class AppDownloadInfo implements Serializable {
     private String dowanloadUrl;
     public String getDownloadUrl(){
 
-
         if(dowanloadUrl !=null)
             return  dowanloadUrl;
 

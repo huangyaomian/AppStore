@@ -8,7 +8,6 @@ import com.hym.appstore.bean.AppDownloadInfo;
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.BaseBean;
 import com.hym.appstore.common.Constant;
-import com.hym.appstore.common.rx.RxBus;
 import com.hym.appstore.common.rx.RxHttpResponseCompat;
 import com.hym.appstore.common.rx.RxSchedulers;
 import com.hym.appstore.common.utils.ACache;
@@ -34,7 +33,6 @@ import zlc.season.rxdownload2.entity.DownloadRecord;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class DownloadButtonController {
-//    https://github.com/dswang2/MyAppPlay/blob/ccd7d18a0d35a15af14207a9660fe88cfaa69aae/app/src/main/java/com/dbstar/myappplay/ui/widget/DownloadButtonController.java
     private RxDownload mRxDownload;
     private Api mApi;
 
@@ -44,13 +42,16 @@ public class DownloadButtonController {
     }
 
     public void handClick(final DownloadProgressButton btn, DownloadRecord record) {
-
         AppInfoBean info = downloadRecord2AppInfo(record);
-
         receiveDownloadStatus(record.getUrl()).subscribe(new DownloadConsumer(btn, info));
 
     }
 
+    /**
+     * 根据AppInfo的信息去做状态的处理
+     *
+     * @param appInfo
+     */
     public void handClick(final DownloadProgressButton btn, final AppInfoBean appInfo) {
 
         if (mApi == null) {
@@ -69,7 +70,6 @@ public class DownloadButtonController {
 
                         }
                         return Observable.just(event);
-
 
                     }
                 })
@@ -103,7 +103,11 @@ public class DownloadButtonController {
 
     }
 
-
+    /**
+     * 点击按钮的状态绑定
+     *
+     * @param btn
+     */
     private void bindClick(final DownloadProgressButton btn, final AppInfoBean appInfo) {
 
         RxView.clicks(btn).subscribe(new Consumer<Object>() {
@@ -143,6 +147,7 @@ public class DownloadButtonController {
 //    安装app
     private void installApp(Context context, AppInfoBean appInfoBean){
         String path = ACache.get(context).getAsString(Constant.APK_DOWNLOAD_DIR) + File.separator + appInfoBean.getReleaseKeyHash();
+        Log.d("installApp",path);
         AppUtils.installApk(context, path);
     }
 
@@ -173,7 +178,10 @@ public class DownloadButtonController {
     }
 
     private void download(DownloadProgressButton btn, AppInfoBean appInfoBean) {
-        mRxDownload.serviceDownload(appInfo2DownloadBean(appInfoBean)).subscribe();
+      /*  mRxDownload.serviceDownload(appInfo2DownloadBean(appInfoBean)).subscribe();
+        mRxDownload.receiveDownloadStatus(appInfoBean.getAppDownloadInfo().getDownloadUrl())
+                .subscribe(new DownloadConsumer(btn, appInfoBean));*/
+        mRxDownload.serviceDownload(appInfoBean.getAppDownloadInfo().getDownloadUrl(),appInfoBean.getReleaseKeyHash()).subscribe();
         mRxDownload.receiveDownloadStatus(appInfoBean.getAppDownloadInfo().getDownloadUrl())
                 .subscribe(new DownloadConsumer(btn, appInfoBean));
 
@@ -225,6 +233,8 @@ public class DownloadButtonController {
 
     //开启app
     private void runApp(Context context, String packageName) {
+        String path = ACache.get(context).getAsString(Constant.APK_DOWNLOAD_DIR) + File.separator;
+        Log.d("installApp",path);
         AppUtils.runApp(context, packageName);
     }
 
@@ -242,7 +252,6 @@ public class DownloadButtonController {
 
 
     public Observable<DownloadEvent> isApkFileExsit(Context context, AppInfoBean appInfo) {
-
         String path = ACache.get(context).getAsString(Constant.APK_DOWNLOAD_DIR) + File.separator + appInfo.getReleaseKeyHash();
         File file = new File(path);
         DownloadEvent event = new DownloadEvent();
@@ -275,25 +284,23 @@ public class DownloadButtonController {
 
         @Override
         public void accept(@NonNull DownloadEvent event) throws Exception {
-            int flag = event.getFlag();
-
+            Integer flag = 0;
+            flag = event.getFlag();
             btn.setTag(R.id.tag_apk_flag, flag);
 
             bindClick(btn, mAppInfo);
 
             switch (flag) {
-
                 case DownloadFlag.INSTALLED:
                     btn.setText("运行");
                     break;
-
 
                 case DownloadFlag.NORMAL:
                     btn.download();
                     break;
 
-
                 case DownloadFlag.STARTED:
+                case DownloadFlag.WAITING: //等待中
                     btn.setProgress((int) event.getDownloadStatus().getPercentNumber());
                     break;
 
