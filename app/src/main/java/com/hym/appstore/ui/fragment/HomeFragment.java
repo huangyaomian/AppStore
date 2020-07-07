@@ -17,7 +17,10 @@ import com.hym.appstore.presenter.HomePresenter;
 import com.hym.appstore.presenter.contract.AppInfoContract;
 import com.hym.appstore.ui.adapter.HomeAdapter;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
+import zlc.season.rxdownload2.RxDownload;
 
 public class HomeFragment extends ProgressFragment<HomePresenter> implements AppInfoContract.View {
 
@@ -25,6 +28,9 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
     @BindView(R.id.home_rv)
     RecyclerView mHomeRv;
     private HomeAdapter adapter;
+
+    @Inject
+    RxDownload mRxDownload;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -60,7 +66,7 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
 
     @Override
     public void showResult(HomeBean homeBean) {
-        adapter = new HomeAdapter(getActivity(), homeBean);
+        adapter = new HomeAdapter(getActivity(), homeBean,mRxDownload);
         mHomeRv.setAdapter(adapter);
         Log.d("showResult", String.valueOf(mHomeRv.getChildCount()));
 

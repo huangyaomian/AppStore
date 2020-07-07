@@ -4,6 +4,9 @@ import android.app.Application;
 import android.os.Environment;
 import android.provider.ContactsContract;
 
+import com.hym.appstore.common.Constant;
+import com.hym.appstore.common.utils.ACache;
+
 import java.io.File;
 
 import javax.inject.Singleton;
@@ -19,6 +22,8 @@ public class DownloadModule {
     @Provides
     @Singleton
     public RxDownload provideRxDownload(Application application, Retrofit retrofit,File downDir){
+
+        ACache.get(application).put(Constant.APK_DOWNLOAD_DIR,downDir.getPath());
 
         return RxDownload.getInstance(application)
                 .defaultSavePath(downDir.getPath())

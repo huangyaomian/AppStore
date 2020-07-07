@@ -28,8 +28,11 @@ import com.hym.appstore.ui.widget.BannerLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import zlc.season.rxdownload2.RxDownload;
 
 public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
@@ -45,10 +48,14 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     private Context mContext;
 
-    public HomeAdapter(Context context, HomeBean homeBean) {
+    RxDownload mRxDownload;
+
+
+    public HomeAdapter(Context context, HomeBean homeBean,RxDownload rxDownload) {
         mLayoutInflater = LayoutInflater.from(context);
         this.mHomeBean = homeBean;
         this.mContext = context;
+        this.mRxDownload = rxDownload;
     }
 
 
@@ -106,7 +113,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             iconViewHolder.mIconHotRecommend.setOnClickListener(this);
         } else {
             AppViewHolder viewHolder = (AppViewHolder) holder;
-            AppInfoAdapter appInfoAdapter = AppInfoAdapter.builder().showPosition(false).showCategoryName(false).showBrief(true).build();
+            AppInfoAdapter appInfoAdapter = AppInfoAdapter.builder().showPosition(false).showCategoryName(false).showBrief(true).rxDownload(mRxDownload).build();
             appInfoAdapter.setAnimationEnable(true);
             appInfoAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.AlphaIn);
             if (viewHolder.type == TYPE_APP){

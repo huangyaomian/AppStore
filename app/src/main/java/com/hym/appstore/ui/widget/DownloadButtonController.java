@@ -1,6 +1,7 @@
 package com.hym.appstore.ui.widget;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.hym.appstore.R;
 import com.hym.appstore.bean.AppDownloadInfo;
@@ -51,7 +52,7 @@ public class DownloadButtonController {
     }
 
     public void handClick(final DownloadProgressButton btn, final AppInfoBean appInfo) {
-        bindClick(btn,appInfo);
+
         if (mApi == null) {
             return;
         }
@@ -111,7 +112,7 @@ public class DownloadButtonController {
             public void accept(@NonNull Object o) throws Exception {
 
                 int flag = (int) btn.getTag(R.id.tag_apk_flag);
-
+                Log.d("bindClick","flag=" + flag);
                 switch (flag) {
 
                     case DownloadFlag.INSTALLED:
@@ -130,7 +131,6 @@ public class DownloadButtonController {
 
                     case DownloadFlag.COMPLETED:
                         installApp(btn.getContext(), appInfo);
-
                         break;
 
                 }
@@ -173,9 +173,7 @@ public class DownloadButtonController {
     }
 
     private void download(DownloadProgressButton btn, AppInfoBean appInfoBean) {
-
         mRxDownload.serviceDownload(appInfo2DownloadBean(appInfoBean)).subscribe();
-
         mRxDownload.receiveDownloadStatus(appInfoBean.getAppDownloadInfo().getDownloadUrl())
                 .subscribe(new DownloadConsumer(btn, appInfoBean));
 
