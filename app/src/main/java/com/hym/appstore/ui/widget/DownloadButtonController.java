@@ -178,13 +178,9 @@ public class DownloadButtonController {
     }
 
     private void download(DownloadProgressButton btn, AppInfoBean appInfoBean) {
-      /*  mRxDownload.serviceDownload(appInfo2DownloadBean(appInfoBean)).subscribe();
-        mRxDownload.receiveDownloadStatus(appInfoBean.getAppDownloadInfo().getDownloadUrl())
-                .subscribe(new DownloadConsumer(btn, appInfoBean));*/
-        mRxDownload.serviceDownload(appInfoBean.getAppDownloadInfo().getDownloadUrl(),appInfoBean.getReleaseKeyHash()).subscribe();
+        mRxDownload.serviceDownload(appInfo2DownloadBean(appInfoBean)).subscribe();
         mRxDownload.receiveDownloadStatus(appInfoBean.getAppDownloadInfo().getDownloadUrl())
                 .subscribe(new DownloadConsumer(btn, appInfoBean));
-
     }
 
     private DownloadBean appInfo2DownloadBean(AppInfoBean appInfoBean) {
