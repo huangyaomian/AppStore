@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import zlc.season.rxdownload2.RxDownload;
 import zlc.season.rxdownload2.entity.DownloadFlag;
 import zlc.season.rxdownload2.entity.DownloadRecord;
 
@@ -38,5 +39,9 @@ public class AppManagerPresent extends BasePresenter<AppManagerContract.IAppMana
             }
         }
         return newList;
+    }
+
+    public RxDownload getRxDownload(){
+        return mModel.getRxDownload();
     }
 }

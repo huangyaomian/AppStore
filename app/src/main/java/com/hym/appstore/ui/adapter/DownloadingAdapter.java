@@ -22,9 +22,9 @@ public class DownloadingAdapter extends BaseQuickAdapter<DownloadRecord, BaseVie
     String baseImgUrl = "http://file.market.xiaomi.com/mfc/thumbnail/png/w150q80/";
     private DownloadButtonController mDownloadButtonController;
 
-    private DownloadingAdapter() {
+    public DownloadingAdapter(RxDownload rxDownload) {
         super(R.layout.template_app_downloading);
-//        mDownloadButtonController = new DownloadButtonController(builder.mRxDownload);
+        mDownloadButtonController = new DownloadButtonController(rxDownload);
 
     }
 
@@ -33,14 +33,21 @@ public class DownloadingAdapter extends BaseQuickAdapter<DownloadRecord, BaseVie
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, DownloadRecord downloadRecord) {
 
+        AppInfoBean appInfoBean = mDownloadButtonController.downloadRecord2AppInfo(downloadRecord);
 
 
-        ImageLoader.load(baseImgUrl+downloadRecord.getExtra2(),baseViewHolder.getView(R.id.img_app_icon));
+        ImageLoader.load(baseImgUrl+appInfoBean.getIcon(),baseViewHolder.getView(R.id.img_app_icon));
 
-        baseViewHolder.setText(R.id.home_recyclerview_name,downloadRecord.getExtra3());
+        baseViewHolder.setText(R.id.home_recyclerview_name,appInfoBean.getDisplayName());
 
-        DownloadProgressButton btn = baseViewHolder.getView(R.id.btn_download);
-        mDownloadButtonController.handClick(btn,downloadRecord);
+        View btnView = baseViewHolder.getView(R.id.btn_download);
+
+        if (btnView instanceof DownloadProgressButton) {
+            DownloadProgressButton btn = (DownloadProgressButton) btnView;
+            mDownloadButtonController.handClick(btn,downloadRecord);
+        }
+
+
 
 
     }

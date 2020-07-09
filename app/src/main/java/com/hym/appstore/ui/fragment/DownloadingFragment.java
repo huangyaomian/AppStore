@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hym.appstore.R;
 import com.hym.appstore.dagger2.component.AppComponent;
+import com.hym.appstore.dagger2.component.DaggerAppManagerComponent;
+import com.hym.appstore.dagger2.module.AppManagerModule;
 import com.hym.appstore.presenter.AppManagerPresent;
 import com.hym.appstore.presenter.contract.AppManagerContract;
+import com.hym.appstore.ui.adapter.DownloadingAdapter;
 
 import java.util.List;
 
@@ -23,7 +26,7 @@ public class DownloadingFragment extends ProgressFragment<AppManagerPresent> imp
     @BindView(R.id.home_rv)
     RecyclerView mRecyclerView;
 
-    private BaseQuickAdapter mAdapter;
+    private DownloadingAdapter mAdapter;
 
     @Override
     protected int setLayoutResourceID() {
@@ -32,12 +35,13 @@ public class DownloadingFragment extends ProgressFragment<AppManagerPresent> imp
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-
+        DaggerAppManagerComponent.builder().appComponent(appComponent).appManagerModule(new AppManagerModule(this)).build().inject(this);
     }
 
     @Override
     protected void init() {
         setupRecyclerView();
+        mPresenter.getDownloadingApps();
     }
 
     private void setupRecyclerView() {
@@ -45,7 +49,7 @@ public class DownloadingFragment extends ProgressFragment<AppManagerPresent> imp
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.shape_question_diveder));
         mRecyclerView.addItemDecoration(dividerItemDecoration);
-//        mAdapter = buildAdapter();
+        mAdapter = new DownloadingAdapter(mPresenter.getRxDownload());
         mAdapter.setAnimationEnable(true);
         mAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.AlphaIn);
         mRecyclerView.setAdapter(mAdapter);
