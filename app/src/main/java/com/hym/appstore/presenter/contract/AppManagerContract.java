@@ -1,5 +1,6 @@
 package com.hym.appstore.presenter.contract;
 
+import com.hym.appstore.common.apkparset.AndroidApk;
 import com.hym.appstore.ui.BaseView;
 
 import java.util.List;
@@ -12,10 +13,13 @@ public interface AppManagerContract {
 
     public interface AppManagerView extends BaseView{
         void showDownloading(List<DownloadRecord> downloadRecords);
+        void showApps(List<AndroidApk> apps);
     }
 
     public interface IAppManagerModel{
         Observable<List<DownloadRecord>> getDownloadRecord();
         RxDownload getRxDownload();
+
+        Observable<List<AndroidApk>> getLocalApks();
     }
 }

@@ -21,7 +21,6 @@ import java.lang.reflect.Method;
 
 public class AndroidApkParser {
 
-
     //利用反射拿到信息
     public static Resources getResources(Context context , String apkPath) throws Exception {
         String PATH_AssetManager = "android.content.res.AssetManager";
@@ -53,11 +52,9 @@ public class AndroidApkParser {
     public static AndroidApk getUninstallAPK(Context context, String path) {
 
         AndroidApk apk = new AndroidApk();
-
-
         PackageManager pm = context.getPackageManager();
 
-       PackageInfo info =  pm.getPackageArchiveInfo(path,PackageManager.GET_ACTIVITIES);
+        PackageInfo info =  pm.getPackageArchiveInfo(path,PackageManager.GET_ACTIVITIES);
 
         //可能安装包并没有下载完
         if (info!=null){
@@ -66,10 +63,6 @@ public class AndroidApkParser {
             apk.setApkPath(path);
             apk.setAppVersionCode(info.versionCode+"");
             apk.setAppVersionName(info.versionName);
-
-
-
-
 
             Resources res =null;
 

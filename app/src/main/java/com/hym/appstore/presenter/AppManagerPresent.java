@@ -1,5 +1,6 @@
 package com.hym.appstore.presenter;
 
+import com.hym.appstore.common.apkparset.AndroidApk;
 import com.hym.appstore.common.rx.RxSchedulers;
 import com.hym.appstore.common.rx.subscriber.ProgressDisposableObserver;
 import com.hym.appstore.presenter.contract.AppManagerContract;
@@ -43,5 +44,15 @@ public class AppManagerPresent extends BasePresenter<AppManagerContract.IAppMana
 
     public RxDownload getRxDownload(){
         return mModel.getRxDownload();
+    }
+
+    public void getLocalApks(){
+        mModel.getLocalApks().compose(RxSchedulers.io_main())
+                .subscribe(new ProgressDisposableObserver<List<AndroidApk>>(mContext,mView) {
+                    @Override
+                    public void onNext(List<AndroidApk> androidApks) {
+                        mView.showApps(androidApks);
+                    }
+                });
     }
 }

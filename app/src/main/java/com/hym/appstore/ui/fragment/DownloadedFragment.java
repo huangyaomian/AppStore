@@ -14,13 +14,13 @@ import java.util.List;
 import zlc.season.rxdownload2.entity.DownloadRecord;
 
 
-public class DownloadingFragment extends AppManagerFragment {
+public class DownloadedFragment extends AppManagerFragment {
 
     private DownloadingAdapter mAdapter;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-        DaggerAppManagerComponent.builder().appComponent(appComponent).appManagerModule(new AppManagerModule(this)).build().inject(this);
+        DaggerAppManagerComponent.builder().appComponent(appComponent).appManagerModule(new AppManagerModule(this)).build().injectDownloaded(this);
     }
 
     @Override
@@ -32,10 +32,7 @@ public class DownloadingFragment extends AppManagerFragment {
     @Override
     protected RecyclerView.Adapter setupAdapter() {
 
-        mAdapter = new DownloadingAdapter(mPresenter.getRxDownload());
-        mAdapter.setAnimationEnable(true);
-        mAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.AlphaIn);
-        return mAdapter;
+        return null;
     }
 
     @Override
@@ -50,7 +47,7 @@ public class DownloadingFragment extends AppManagerFragment {
 
     @Override
     public void showDownloading(List<DownloadRecord> downloadRecords) {
-        mAdapter.addData(downloadRecords);
+
     }
 
     @Override

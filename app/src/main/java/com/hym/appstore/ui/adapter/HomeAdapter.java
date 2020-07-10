@@ -200,7 +200,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 }
             });
             DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL);
-            dividerItemDecoration.setDrawable(ContextCompat.getDrawable(mContext,R.drawable.shape_question_diveder));
+//            dividerItemDecoration.setDrawable(ContextCompat.getDrawable(mContext,R.drawable.shape_question_diveder));
             homeRecyclerview.addItemDecoration(dividerItemDecoration);
         }
     }
