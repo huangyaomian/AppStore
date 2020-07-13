@@ -298,7 +298,7 @@ public class DownloadButtonController {
                     break;
 
                 case DownloadFlag.STARTED:
-                case DownloadFlag.WAITING: //等待中
+//                case DownloadFlag.WAITING: //等待中
                     btn.setProgress((int) event.getDownloadStatus().getPercentNumber());
                     break;
 
