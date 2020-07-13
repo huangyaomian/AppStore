@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hym.appstore.R;
 import com.hym.appstore.dagger2.component.AppComponent;
-import com.hym.appstore.dagger2.component.DaggerAppManagerComponent;
 import com.hym.appstore.dagger2.module.AppManagerModule;
 import com.hym.appstore.presenter.AppManagerPresent;
 import com.hym.appstore.presenter.contract.AppManagerContract;

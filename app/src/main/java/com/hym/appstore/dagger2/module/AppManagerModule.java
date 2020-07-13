@@ -1,5 +1,8 @@
 package com.hym.appstore.dagger2.module;
 
+import android.app.Application;
+import android.content.Context;
+
 import com.hym.appstore.data.AppManagerModel;
 import com.hym.appstore.presenter.contract.AppManagerContract;
 
@@ -23,8 +26,8 @@ public class AppManagerModule {
     }
 
     @Provides
-    public AppManagerContract.IAppManagerModel provideModel(RxDownload rxDownload){
-        return new AppManagerModel(rxDownload);
+    public AppManagerContract.IAppManagerModel provideModel(Application application, RxDownload rxDownload){
+        return new AppManagerModel(application,rxDownload);
     }
 
 

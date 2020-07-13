@@ -22,9 +22,6 @@ public class MyApplication extends Application {
 
 
     private DaggerAppComponent mAppComponent;
-
-
-
     private View mView;
 
 
@@ -53,29 +50,6 @@ public class MyApplication extends Application {
         // 在 Application 中初始化
         ToastUtils.init(this);
 
-
-        //nohttp
-        InitializationConfig initializationConfig = InitializationConfig.newBuilder(this)
-                .addHeader("X-System-Locale","zh_HK")
-                .addHeader("X-Locale","zh_HK")
-                .addHeader("X-Patch-Code","48")
-                .addHeader("X-Version-Code","307")
-                .addHeader("X-Device-Id","c2306fac-1064-4304-bc07-a44ee9478072")
-                .addHeader("X-Device-OS","9")
-                .addHeader("X-ADID","8c8aaebb-f25a-4a7a-9c94-f7691fbe0c24")
-                .addHeader("X-Device-Rooted","0")
-                .addHeader("X-Device-Model","SM-G950U")
-                .addHeader("X-Device-ABIs","arm64-v8a,armeabi-v7a,armeabi")
-                .addHeader("X-Device-UUID","c2306fac-1064-4304-bc07-a44ee9478072")
-                .addHeader("X-User-Token","6d37a4e107faa97d5b966e6f6d4464ec5fcc1a1d")
-                .addHeader("Accept","application/json")
-                .addHeader("Content-Type","application/json; charset=utf-8")
-                .connectionTimeout(30*1000)
-                .readTimeout(30*1000)
-                .build();
-        NoHttp.initialize(initializationConfig);
-        Logger.setDebug(true);// 开启NoHttp的调试模式, 配置后可看到请求过程、日志和错误信息。
-        Logger.setTag("NoHttpSample");// 打印Log的tag。
 
         //初始化fresco
         Fresco.initialize(this);

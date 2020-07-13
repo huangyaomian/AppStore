@@ -42,7 +42,7 @@
         android:layout_toRightOf="@+id/img_app_icon"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/home_recyclerview_name"
+            android:id="@+id/txt_app_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="8dp"
@@ -53,7 +53,7 @@
             android:ellipsize="end" />
 
         <TextView
-            android:id="@+id/home_recyclerview_brief"
+            android:id="@+id/txt_brief"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="8dp"
@@ -65,7 +65,7 @@
             android:visibility="gone"/>
 
         <TextView
-            android:id="@+id/home_recyclerview_category"
+            android:id="@+id/txt_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="8dp"
