@@ -38,7 +38,7 @@ public class DownloadingAdapter extends BaseQuickAdapter<DownloadRecord, BaseVie
 
         ImageLoader.load(baseImgUrl+appInfoBean.getIcon(),baseViewHolder.getView(R.id.img_app_icon));
 
-        baseViewHolder.setText(R.id.home_recyclerview_name,appInfoBean.getDisplayName());
+        baseViewHolder.setText(R.id.txt_app_name,appInfoBean.getDisplayName());
 
         View btnView = baseViewHolder.getView(R.id.btn_download);
 
@@ -46,9 +46,6 @@ public class DownloadingAdapter extends BaseQuickAdapter<DownloadRecord, BaseVie
             DownloadProgressButton btn = (DownloadProgressButton) btnView;
             mDownloadButtonController.handClick(btn,downloadRecord);
         }
-
-
-
 
     }
 

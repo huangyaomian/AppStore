@@ -55,4 +55,15 @@ public class AppManagerPresent extends BasePresenter<AppManagerContract.IAppMana
                     }
                 });
     }
+
+    //获取所有已安装的app
+    public void getInstalledApps(){
+        mModel.getInstalledApps().compose(RxSchedulers.io_main())
+                .subscribe(new ProgressDisposableObserver<List<AndroidApk>>(mContext,mView) {
+                    @Override
+                    public void onNext(List<AndroidApk> androidApks) {
+                        mView.showApps(androidApks);
+                    }
+                });
+    }
 }

@@ -17,5 +17,4 @@ import dagger.Component;
 @Component(modules = AppDetailModule.class,dependencies = AppComponent.class)
 public interface AppDetailComponent {
     void inject(AppDetailFragment fragment);
-
 }

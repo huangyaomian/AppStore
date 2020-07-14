@@ -26,9 +26,11 @@ import com.hym.appstore.common.utils.DensityUtil;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.ui.adapter.MyViewPagerAdapter;
 import com.hym.appstore.ui.fragment.AppDetailFragment;
+import com.hym.appstore.ui.fragment.DownloadedFragment;
 import com.hym.appstore.ui.fragment.DownloadingFragment;
 import com.hym.appstore.ui.fragment.GameFragment;
 import com.hym.appstore.ui.fragment.HomeFragment;
+import com.hym.appstore.ui.fragment.InstalledAppAppFragment;
 import com.hym.appstore.ui.fragment.RankingFragment;
 import com.hym.appstore.ui.fragment.SortFragment;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -84,7 +86,8 @@ public class AppManagerActivity extends BaseActivity {
         //fragmentinfo 数据集合
         fragmentInfos =  new ArrayList<>(4);
         fragmentInfos.add(new FragmentInfo("下载", DownloadingFragment.class));
-//        fragmentInfos.add(new FragmentInfo(getString(R.string.home_tab_ranking), RankingFragment.class));
+        fragmentInfos.add(new FragmentInfo("已完成", DownloadedFragment.class));
+        fragmentInfos.add(new FragmentInfo("已安装", InstalledAppAppFragment.class));
 //        fragmentInfos.add(new FragmentInfo(getString(R.string.home_tab_game), GameFragment.class));
 //        fragmentInfos.add(new FragmentInfo(getString(R.string.home_tab_sort), SortFragment.class));
         MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(),fragmentInfos);

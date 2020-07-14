@@ -426,42 +426,31 @@ public class AppUtils {
 
 
 
-
+    //获取所有已安装的app
     public static List<AndroidApk> getInstalledApps(Context context){
-
 
         PackageManager pm = context.getPackageManager();
 
-
         List<PackageInfo> packageInfos =  pm.getInstalledPackages(PackageManager.MATCH_UNINSTALLED_PACKAGES);
-
 
         List<AndroidApk> apks = new ArrayList<>(packageInfos.size());
 
         for (PackageInfo info : packageInfos){
 
-
-
             AndroidApk apk = new AndroidApk();
 
             apk.setPackageName(info.packageName);
-
             apk.setAppVersionCode(info.versionCode+"");
             apk.setAppVersionName(info.versionName);
             apk.setLastUpdateTime(info.lastUpdateTime);
-
 
             //已安装的apk才能用，未安装的不行
             ApplicationInfo applicationInfo = info.applicationInfo;
 
             if(applicationInfo !=null){
-
-
                 apk.setApkPath(applicationInfo.sourceDir);
                 apk.setAppName(applicationInfo.loadLabel(pm).toString());
                 apk.setDrawable(applicationInfo.loadIcon(pm));
-
-
                 //判断是否系统自带
                 apk.setSystem((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM)>0);
             }

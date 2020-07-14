@@ -21,5 +21,7 @@ public interface AppManagerContract {
         RxDownload getRxDownload();
 
         Observable<List<AndroidApk>> getLocalApks();
+
+        Observable<List<AndroidApk>> getInstalledApps();
     }
 }
