@@ -46,6 +46,7 @@ public class AppManagerPresent extends BasePresenter<AppManagerContract.IAppMana
         return mModel.getRxDownload();
     }
 
+    //獲取所有已下載的apk
     public void getLocalApks(){
         mModel.getLocalApks().compose(RxSchedulers.io_main())
                 .subscribe(new ProgressDisposableObserver<List<AndroidApk>>(mContext,mView) {

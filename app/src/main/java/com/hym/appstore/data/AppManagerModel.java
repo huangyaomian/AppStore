@@ -1,7 +1,6 @@
 package com.hym.appstore.data;
 
 import android.content.Context;
-import android.widget.TabHost;
 
 import com.hym.appstore.common.Constant;
 import com.hym.appstore.common.apkparset.AndroidApk;
@@ -85,7 +84,10 @@ public class AppManagerModel implements AppManagerContract.IAppManagerModel {
 
         for (File apk: apks){
             AndroidApk androidApk = AndroidApk.read(mContext,apk.getPath());
-            androidApks.add(androidApk);
+            if (androidApk != null){
+                androidApks.add(androidApk);
+            }
+
         }
 
         return androidApks;

@@ -1,7 +1,6 @@
 package com.hym.appstore.ui.adapter;
 
 import android.content.Context;
-import android.print.PageRange;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -41,8 +40,6 @@ public class AndroidApkAdapter extends BaseQuickAdapter<AndroidApk, BaseViewHold
 
         helper.setImageDrawable(R.id.img_app_icon, item.getDrawable());
 
-//        helper.addOnClickListener(R.id.btn_action);
-
         final DownloadProgressButton btn = helper.getView(R.id.btn_download);
         final TextView txtStatus = helper.getView(R.id.txt_status);
 
@@ -51,7 +48,6 @@ public class AndroidApkAdapter extends BaseQuickAdapter<AndroidApk, BaseViewHold
 
             btn.setTag(R.id.tag_package_name, item.getPackageName());
             btn.setText("删除");
-
 
             RxView.clicks(btn).subscribe(new Consumer<Object>() {
 
