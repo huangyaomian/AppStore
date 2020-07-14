@@ -6,6 +6,7 @@ import android.widget.TabHost;
 import com.hym.appstore.common.Constant;
 import com.hym.appstore.common.apkparset.AndroidApk;
 import com.hym.appstore.common.utils.ACache;
+import com.hym.appstore.common.utils.AppUtils;
 import com.hym.appstore.presenter.contract.AppManagerContract;
 
 import java.io.File;
@@ -49,6 +50,17 @@ public class AppManagerModel implements AppManagerContract.IAppManagerModel {
             public void subscribe(ObservableEmitter<List<AndroidApk>> emitter) throws Exception {
                 emitter.onNext(scanApks(dir));
                 emitter.onComplete();
+            }
+        });
+    }
+
+    @Override
+    public Observable<List<AndroidApk>> getInstalledApps() {
+        return Observable.create(new ObservableOnSubscribe<List<AndroidApk>>() {
+            @Override
+            public void subscribe(ObservableEmitter<List<AndroidApk>> AndroidApks) throws Exception {
+                AndroidApks.onNext(AppUtils.getInstalledApps(mContext));
+                AndroidApks.onComplete();
             }
         });
     }

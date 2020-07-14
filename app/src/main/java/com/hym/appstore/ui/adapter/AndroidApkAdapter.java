@@ -43,7 +43,7 @@ public class AndroidApkAdapter extends BaseQuickAdapter<AndroidApk, BaseViewHold
 
 //        helper.addOnClickListener(R.id.btn_action);
 
-        final DownloadProgressButton btn = helper.getView(R.id.btn_action);
+        final DownloadProgressButton btn = helper.getView(R.id.btn_download);
         final TextView txtStatus = helper.getView(R.id.txt_status);
 
 
