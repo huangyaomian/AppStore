@@ -1,8 +1,6 @@
 package com.hym.appstore.common.rx;
 
 
-import android.util.Log;
-
 import com.hym.appstore.bean.BaseBean;
 import com.hym.appstore.common.exception.ApiException;
 
@@ -19,7 +17,42 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RxHttpResponseCompat {
 
-    public static <T> ObservableTransformer<BaseBean<T>,T> compatResult(){
+    public static  <T>ObservableTransformer<BaseBean<T>,T> compatResult(){
+        return new ObservableTransformer<BaseBean<T>, T>() {
+            @Override
+            public ObservableSource<T> apply(Observable<BaseBean<T>> baseBeanObservable) {
+                return baseBeanObservable.flatMap(new Function<BaseBean<T>, ObservableSource<T>>() {
+                    @Override
+                    public ObservableSource<T> apply(final BaseBean<T> tBaseBean) throws Exception {
+
+                        if (tBaseBean.success()){
+                            return Observable.create(new ObservableOnSubscribe<T>() {
+                                @Override
+                                public void subscribe(ObservableEmitter<T> subscriber) throws Exception {
+                                    try {
+                                        subscriber.onNext(tBaseBean.getData());
+                                        subscriber.onComplete();
+                                    } catch (Exception e) {
+                                        subscriber.onError(e);
+                                    }
+
+                                }
+                            });
+                        }
+
+
+                        else{
+                            //错误的时候会抛出异常然后再某一个地方集中处理
+                            return Observable.error(new ApiException(tBaseBean.getStatus(), tBaseBean.getMessage()));
+
+                        }
+                    }
+                }).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
+            }
+        };
+    }
+
+    /*public static <T> ObservableTransformer<BaseBean<T>,T> compatResult(){
         return new ObservableTransformer<BaseBean<T>, T>() {
             @Override
             public ObservableSource<T> apply(Observable<BaseBean<T>> baseBeanObservable) {
@@ -49,7 +82,7 @@ public class RxHttpResponseCompat {
                 }).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
             }
         };
-    }
+    }*/
 
     /**
      * http请求结果处理方法

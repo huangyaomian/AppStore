@@ -26,7 +26,6 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder
         super(builder.layoutId);
         this.mBuilder = builder;
         mDownloadButtonController = new DownloadButtonController(builder.mRxDownload);
-
     }
 
     public static Builder builder(){
@@ -37,6 +36,7 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder
     protected void convert(@NotNull BaseViewHolder baseViewHolder, AppInfoBean appInfoBean) {
 
         ImageLoader.load(baseImgUrl+appInfoBean.getIcon(),baseViewHolder.getView(R.id.img_app_icon));
+        View viewBtn  = baseViewHolder.getView(R.id.btn_download);
 
         if (mBuilder.isShowName){
             baseViewHolder.setText(R.id.home_recyclerview_name,appInfoBean.getDisplayName());
@@ -77,9 +77,10 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder
         }
 
 
-        DownloadProgressButton btn = baseViewHolder.getView(R.id.btn_download);
-        mDownloadButtonController.handClick(btn,appInfoBean);
-
+        if (viewBtn instanceof  DownloadProgressButton){
+            DownloadProgressButton btn = (DownloadProgressButton) viewBtn;
+            mDownloadButtonController.handClick(btn,appInfoBean);
+        }
 
     }
 

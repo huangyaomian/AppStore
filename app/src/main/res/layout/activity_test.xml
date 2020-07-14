@@ -7,6 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
 
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout2"
         android:layout_width="match_parent"
@@ -110,6 +111,10 @@
         android:src="@android:drawable/ic_btn_speak_now"
         app:layout_anchor="@id/appBarLayout2"
         app:layout_anchorGravity="bottom|right|end" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 
 

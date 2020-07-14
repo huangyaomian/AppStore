@@ -38,7 +38,10 @@ public class DownloadButtonController {
 
     public DownloadButtonController(RxDownload rxDownload) {
         mRxDownload = rxDownload;
-        mApi = mRxDownload.getRetrofit().create(Api.class);
+        if (mRxDownload != null) {
+            mApi = mRxDownload.getRetrofit().create(Api.class);
+        }
+
     }
 
     public void handClick(final DownloadProgressButton btn, DownloadRecord record) {
