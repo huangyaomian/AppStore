@@ -33,7 +33,6 @@ allprojects {
         //rx-android
         maven { url "https://oss.jfrog.org/libs-snapshot" }
 
-
     }
 }
 

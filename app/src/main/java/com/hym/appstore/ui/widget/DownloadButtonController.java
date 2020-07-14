@@ -19,11 +19,9 @@ import java.io.File;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import zlc.season.rxdownload2.RxDownload;
@@ -148,14 +146,14 @@ public class DownloadButtonController {
         });
     }
 
-//    安装app
+    //    安装app
     private void installApp(Context context, AppInfoBean appInfoBean){
         String path = ACache.get(context).getAsString(Constant.APK_DOWNLOAD_DIR) + File.separator + appInfoBean.getReleaseKeyHash();
         Log.d("installApp",path);
         AppUtils.installApk(context, path);
     }
 
-//    开启下载
+    //    开启下载
     private void startDownload(final DownloadProgressButton btn, final AppInfoBean appInfoBean){
         PermissionUtil.requestPermisson(btn.getContext(),WRITE_EXTERNAL_STORAGE)
                 .subscribe(new Consumer<Boolean>() {
