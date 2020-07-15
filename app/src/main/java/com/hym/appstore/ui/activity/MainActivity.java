@@ -194,7 +194,8 @@ public class MainActivity extends BaseActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar, menu);
         menu.getItem(2).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_trash_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
-        menu.findItem(R.id.delete).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_trash_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
+//        menu.findItem(R.id.delete).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_trash_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
+        menu.findItem(R.id.delete).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_cloud_download_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
         menu.findItem(R.id.search).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_search).color(getResources().getColor(R.color.TextColor)).actionBar());
 
         return true;
@@ -211,7 +212,7 @@ public class MainActivity extends BaseActivity {
 //                Toast.makeText(this, "you clicked backup", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.delete:
-                Toast.makeText(this, "you clicked delete", Toast.LENGTH_SHORT).show();
+                startActivity(AppManagerActivity.class);
                 break;
             case R.id.setting:
                 Toast.makeText(this, "you clicked 11", Toast.LENGTH_SHORT).show();

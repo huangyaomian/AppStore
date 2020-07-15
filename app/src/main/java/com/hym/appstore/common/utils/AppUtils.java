@@ -217,7 +217,8 @@ public class AppUtils {
 
     public static boolean installApk(Context context, String path) {
 
-        String filePath=path+".apk";
+//        String filePath=path+".apk";
+        String filePath=path;
 
         if(isAccessibilityEnabled(context, InstallAccessibilityService.class.getCanonicalName())){
 
