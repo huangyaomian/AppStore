@@ -25,9 +25,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.core.content.FileProvider;
 
 import com.hym.appstore.common.apkparset.AndroidApk;
 import com.hym.appstore.service.InstallAccessibilityService;
@@ -230,8 +233,15 @@ public class AppUtils {
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setDataAndType(Uri.parse("file://" + filePath), "application/vnd.android.package-archive");
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(i);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                i.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                Uri contentUri = FileProvider.getUriForFile(context, "com.hym.appstore.fileProvider", file);
 
+                i.setDataAndType(contentUri, "application/vnd.android.package-archive");
+            } else {
+                i.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+            }
+            context.startActivity(i);
             return true;
         }
         else {
