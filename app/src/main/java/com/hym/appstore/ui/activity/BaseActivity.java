@@ -2,6 +2,7 @@ package com.hym.appstore.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,10 +62,13 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         }
     }
 
+
+
+
+
     protected void startActivity(Class c) {
         this.startActivity(new Intent(this, c));
     }
-
 
     public abstract void init();
     public abstract void initView();

@@ -66,6 +66,8 @@ public class MainActivity extends BaseActivity {
     private TextView mTextUserName;
     private TextView mTextUserPhone;
 
+    private long lastClickTime = 0;
+
 
 
 
@@ -266,6 +268,24 @@ public class MainActivity extends BaseActivity {
                 .into(mUserHeadView);
         mTextUserName.setText(user.getUsername());
         mTextUserPhone.setText(String.valueOf(user.getId()));
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();//一定要将改行删掉
+        if (lastClickTime <= 0) {
+            Toast.makeText(this, "再点击一下，退出应用", Toast.LENGTH_SHORT).show();
+            lastClickTime = System.currentTimeMillis();
+        } else {
+            if ((System.currentTimeMillis() - lastClickTime) > 3000) {  //这里3000，表示两次点击的间隔时间
+                Toast.makeText(this, "再点击一下，退出应用", Toast.LENGTH_SHORT).show();
+                lastClickTime = System.currentTimeMillis();
+            } else {
+                System.exit(0);
+            }
+
+        }
+
     }
 
 

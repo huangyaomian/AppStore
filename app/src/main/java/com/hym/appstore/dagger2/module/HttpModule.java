@@ -3,6 +3,7 @@ package com.hym.appstore.dagger2.module;
 import android.app.Application;
 
 import com.google.gson.Gson;
+import com.hym.appstore.BuildConfig;
 import com.hym.appstore.common.CommonParamsInterceptor;
 import com.hym.appstore.common.rx.RxErrorHandler;
 import com.hym.appstore.data.okhttp.ApiService;
@@ -14,6 +15,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -29,14 +31,14 @@ public class HttpModule {
         OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
 
 //        //这个日志需要去掉不然会有oom
-//        if (BuildConfig.DEBUG) {
-//            //log用拦截器
-//            HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-//            //开发模式记录整个boby，否则只记录基本信息如返回200，http协议版本等
-//            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//
-//            builder.addInterceptor(httpLoggingInterceptor);
-//        }
+        if (BuildConfig.DEBUG) {
+            //log用拦截器
+            HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+            //开发模式记录整个boby，否则只记录基本信息如返回200，http协议版本等
+            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            builder.addInterceptor(httpLoggingInterceptor);
+        }
 
         return builder
                 //headinterceptor实现了interceptor，用来往request header 添加一些业务相关的数据，如app版本等，token信息

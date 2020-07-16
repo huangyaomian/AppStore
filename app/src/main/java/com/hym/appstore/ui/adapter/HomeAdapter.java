@@ -90,7 +90,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Log.d("onBindViewHolder","第幾個item：" + position);
+//        Log.d("onBindViewHolder","第幾個item：" + position);
         if (position == 0) {
             BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
             List<BannerBean> banners = mHomeBean.getBanners();
