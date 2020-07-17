@@ -33,6 +33,11 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder
     }
 
     @Override
+    public int getItemCount() {
+        return getData().size()>10?10:getData().size();
+    }
+
+    @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, AppInfoBean appInfoBean) {
 
         ImageLoader.load(baseImgUrl+appInfoBean.getIcon(),baseViewHolder.getView(R.id.img_app_icon));
