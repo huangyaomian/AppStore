@@ -13,7 +13,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
@@ -35,6 +38,7 @@ import com.hym.appstore.ui.fragment.GameFragment;
 import com.hym.appstore.ui.fragment.HomeFragment;
 import com.hym.appstore.ui.fragment.RankingFragment;
 import com.hym.appstore.ui.fragment.SortFragment;
+import com.hym.appstore.ui.widget.BadgeActionProvider;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
 
@@ -68,6 +72,7 @@ public class MainActivity extends BaseActivity {
 
     private long lastClickTime = 0;
 
+    private BadgeActionProvider badgeActionProvider;
 
 
 
@@ -197,10 +202,28 @@ public class MainActivity extends BaseActivity {
         inflater.inflate(R.menu.toolbar, menu);
         menu.getItem(2).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_trash_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
 //        menu.findItem(R.id.delete).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_trash_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
-        menu.findItem(R.id.delete).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_cloud_download_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
+//        MenuItem menuItem = menu.findItem(R.id.delete).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_cloud_download_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
+        MenuItem downloadMenuItem = toolbar.getMenu().findItem(R.id.delete);
+        badgeActionProvider = (BadgeActionProvider) MenuItemCompat.getActionProvider(downloadMenuItem);
+
+
         menu.findItem(R.id.search).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_search).color(getResources().getColor(R.color.TextColor)).actionBar());
 
         return true;
+    }
+
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        badgeActionProvider.setText("2");
+        badgeActionProvider.setIcon(DrawableCompat.wrap(new IconicsDrawable(this, Ionicons.Icon.ion_ios_cloud_download_outline).color(ContextCompat.getColor(this,R.color.TextColor))));
+        badgeActionProvider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(AppManagerActivity.class);
+            }
+        });
     }
 
     @Override
@@ -213,12 +236,12 @@ public class MainActivity extends BaseActivity {
                 ToastUtils.show("you clicked backup");
 //                Toast.makeText(this, "you clicked backup", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.delete:
+          /*  case R.id.delete:
                 startActivity(AppManagerActivity.class);
-                break;
-            case R.id.setting:
+                break;*/
+/*            case R.id.setting:
                 Toast.makeText(this, "you clicked 11", Toast.LENGTH_SHORT).show();
-                break;
+                break;*/
             case R.id.setting2:
                 Toast.makeText(this, "you clicked 22", Toast.LENGTH_SHORT).show();
                 break;
