@@ -18,10 +18,6 @@ public class DownloadingFragment extends AppManagerFragment {
 
     private DownloadingAdapter mAdapter;
 
-    @Override
-    protected void setupActivityComponent(AppComponent appComponent) {
-        DaggerAppManagerComponent.builder().appComponent(appComponent).appManagerModule(new AppManagerModule(this)).build().inject(this);
-    }
 
     @Override
     protected void init() {
@@ -53,10 +49,6 @@ public class DownloadingFragment extends AppManagerFragment {
         mAdapter.addData(downloadRecords);
     }
 
-    @Override
-    public void showApps(List<AndroidApk> apps) {
-
-    }
 
 
 }

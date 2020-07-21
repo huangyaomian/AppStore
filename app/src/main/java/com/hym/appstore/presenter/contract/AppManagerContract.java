@@ -1,5 +1,6 @@
 package com.hym.appstore.presenter.contract;
 
+import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.common.apkparset.AndroidApk;
 import com.hym.appstore.ui.BaseView;
 
@@ -14,6 +15,7 @@ public interface AppManagerContract {
     public interface AppManagerView extends BaseView{
         void showDownloading(List<DownloadRecord> downloadRecords);
         void showApps(List<AndroidApk> apps);
+        void showUpdateApps(List<AppInfoBean> appInfoBeans);
     }
 
     public interface IAppManagerModel{

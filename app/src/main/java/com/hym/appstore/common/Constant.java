@@ -21,4 +21,8 @@ public class Constant {
 
     public static final String BASE_IMG_URL = "http://file.market.xiaomi.com/mfc/thumbnail/png/w150q80/";
 
+    public static final String APP_UPDATE_LIST = "app_update_list";
+
+    public static final String POSITION = "position";
+
 }

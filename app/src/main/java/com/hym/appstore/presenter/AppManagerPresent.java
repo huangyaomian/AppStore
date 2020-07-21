@@ -1,8 +1,15 @@
 package com.hym.appstore.presenter;
 
+import android.text.TextUtils;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.hym.appstore.bean.AppInfoBean;
+import com.hym.appstore.common.Constant;
 import com.hym.appstore.common.apkparset.AndroidApk;
 import com.hym.appstore.common.rx.RxSchedulers;
 import com.hym.appstore.common.rx.subscriber.ProgressDisposableObserver;
+import com.hym.appstore.common.utils.ACache;
 import com.hym.appstore.presenter.contract.AppManagerContract;
 
 import java.util.ArrayList;
@@ -10,6 +17,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import zlc.season.rxdownload2.RxDownload;
 import zlc.season.rxdownload2.entity.DownloadFlag;
 import zlc.season.rxdownload2.entity.DownloadRecord;
@@ -40,6 +48,30 @@ public class AppManagerPresent extends BasePresenter<AppManagerContract.IAppMana
             }
         }
         return newList;
+    }
+
+    public void getUpdateApps(){
+        String json= ACache.get(mContext).getAsString(Constant.APP_UPDATE_LIST);
+        if(!TextUtils.isEmpty(json)){
+
+            Gson gson = new Gson();
+            List<AppInfoBean> apps = gson.fromJson(json,new TypeToken<List<AppInfoBean>>(){}.getType());
+
+
+            Observable.just(apps)
+                    .compose(RxSchedulers.<List<AppInfoBean>>io_main())
+
+                    .subscribe(new ProgressDisposableObserver<List<AppInfoBean>>(mContext,mView) {
+                        @Override
+                        public void onNext(List<AppInfoBean> appInfos) {
+
+                            mView.showUpdateApps(appInfos);
+                        }
+                    });
+
+
+        }
+
     }
 
     public RxDownload getRxDownload(){

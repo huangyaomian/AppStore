@@ -33,10 +33,15 @@ import com.hym.appstore.common.imageloader.GlideCircleTransform;
 import com.hym.appstore.common.rx.RxBus;
 import com.hym.appstore.common.utils.ACache;
 import com.hym.appstore.dagger2.component.AppComponent;
+import com.hym.appstore.dagger2.component.DaggerMainComponent;
+import com.hym.appstore.dagger2.module.MainModule;
+import com.hym.appstore.presenter.MainPresenter;
+import com.hym.appstore.presenter.contract.MainContract;
 import com.hym.appstore.ui.adapter.MyViewPagerAdapter;
 import com.hym.appstore.ui.fragment.GameFragment;
 import com.hym.appstore.ui.fragment.HomeFragment;
 import com.hym.appstore.ui.fragment.RankingFragment;
+import com.hym.appstore.ui.fragment.RecommendFragment;
 import com.hym.appstore.ui.fragment.SortFragment;
 import com.hym.appstore.ui.widget.BadgeActionProvider;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -48,7 +53,7 @@ import java.util.List;
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.MainView {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -62,8 +67,6 @@ public class MainActivity extends BaseActivity {
     NavigationView navigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-
-    private List<FragmentInfo> fragmentInfos;
 
     private View headerView;
     private ImageView mUserHeadView;
@@ -90,6 +93,10 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
+        DaggerMainComponent.builder().appComponent(appComponent)
+                .mainModule(new MainModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -105,21 +112,19 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-//       PermissionUtils.INSTANCE.checkSinglePermission(this, Manifest.permission.READ_PHONE_STATE);
+        mPresenter.requestPermisson();
 
-        //fragmentinfo 数据集合
-        fragmentInfos =  new ArrayList<>();
+        mPresenter.getAppUpdateInfo();
 
-        // NavigationView 可以将滑动菜单页面的实现变得非常简单
-        ActionBar supportActionBar = getSupportActionBar();
-        //Toolbar 的最左边加入一个导航按钮；引得用户滑动
-        if (supportActionBar != null) {
-            supportActionBar.setDisplayHomeAsUpEnabled(true);
-            supportActionBar.setHomeAsUpIndicator(new IconicsDrawable(this, Ionicons.Icon.ion_android_menu).color(getResources().getColor(R.color.TextColor)).actionBar());
-        }
+    }
 
-
-
+    private List<FragmentInfo> initFragments(){
+        List<FragmentInfo>  mFragments=new ArrayList<>(4);
+        mFragments.add(new FragmentInfo(getString(R.string.home_tab_recommend), HomeFragment.class));
+        mFragments.add(new FragmentInfo(getString(R.string.home_tab_ranking), RankingFragment.class));
+        mFragments.add(new FragmentInfo(getString(R.string.home_tab_game), GameFragment.class));
+        mFragments.add(new FragmentInfo(getString(R.string.home_tab_sort), SortFragment.class));
+        return mFragments;
     }
 
     private void initDrawerLayout() {
@@ -168,18 +173,24 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        toolbar.setOverflowIcon(new IconicsDrawable(this, Ionicons.Icon.ion_android_more_vertical).color(getResources().getColor(R.color.TextColor)).actionBar());
 
-        initDrawerLayout();
-        initUser();
+    }
 
-        fragmentInfos.add(new FragmentInfo(getString(R.string.home_tab_recommend), HomeFragment.class));
-        fragmentInfos.add(new FragmentInfo(getString(R.string.home_tab_ranking), RankingFragment.class));
-        fragmentInfos.add(new FragmentInfo(getString(R.string.home_tab_game), GameFragment.class));
-        fragmentInfos.add(new FragmentInfo(getString(R.string.home_tab_sort), SortFragment.class));
-        MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(),fragmentInfos);
+    private void initTabLayout() {
+        MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(),initFragments());
         mainViewpager.setAdapter(myViewPagerAdapter);
         mainTabLayout.setupWithViewPager(mainViewpager);
+    }
+
+    private void initToolbar(){
+        // NavigationView 可以将滑动菜单页面的实现变得非常简单
+        ActionBar supportActionBar = getSupportActionBar();
+        //Toolbar 的最左边加入一个导航按钮；引得用户滑动
+        if (supportActionBar != null) {
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+            supportActionBar.setHomeAsUpIndicator(new IconicsDrawable(this, Ionicons.Icon.ion_android_menu).color(getResources().getColor(R.color.TextColor)).actionBar());
+        }
+        toolbar.setOverflowIcon(new IconicsDrawable(this, Ionicons.Icon.ion_android_more_vertical).color(getResources().getColor(R.color.TextColor)).actionBar());
     }
 
 
@@ -216,12 +227,15 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        badgeActionProvider.setText("2");
         badgeActionProvider.setIcon(DrawableCompat.wrap(new IconicsDrawable(this, Ionicons.Icon.ion_ios_cloud_download_outline).color(ContextCompat.getColor(this,R.color.TextColor))));
         badgeActionProvider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(AppManagerActivity.class);
+                Intent intent = new Intent(MainActivity.this, AppManagerActivity.class);
+                if (badgeActionProvider.getBadgeNum() > 0) {
+                    intent.putExtra(Constant.POSITION,2);
+                }
+                startActivity(intent);
             }
         });
     }
@@ -309,6 +323,30 @@ public class MainActivity extends BaseActivity {
 
         }
 
+    }
+
+
+    @Override
+    public void requestPermissionSuccess() {
+        initToolbar();
+        initDrawerLayout();
+        initTabLayout();
+        initUser();
+    }
+
+    @Override
+    public void requestPermissionFail() {
+        Toast.makeText(MainActivity.this,"授权失败....",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void changeAppNeedUpdateCount(int count) {
+        if(count>0){
+            badgeActionProvider.setText(count+"");
+        }
+        else{
+            badgeActionProvider.hideBadge();
+        }
     }
 
 

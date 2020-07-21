@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -33,6 +34,7 @@ import com.hym.appstore.ui.fragment.HomeFragment;
 import com.hym.appstore.ui.fragment.InstalledAppAppFragment;
 import com.hym.appstore.ui.fragment.RankingFragment;
 import com.hym.appstore.ui.fragment.SortFragment;
+import com.hym.appstore.ui.fragment.UpgradeAppFragment;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
 
@@ -56,6 +58,8 @@ public class AppManagerActivity extends BaseActivity {
 
 
     private List<FragmentInfo> fragmentInfos;
+
+    private int position;
 
 
     @Override
@@ -83,16 +87,22 @@ public class AppManagerActivity extends BaseActivity {
 
     @Override
     public void initView() {
+
+        position = getIntent().getIntExtra(Constant.POSITION,0);
         //fragmentinfo 数据集合
         fragmentInfos =  new ArrayList<>(4);
         fragmentInfos.add(new FragmentInfo("下载", DownloadingFragment.class));
         fragmentInfos.add(new FragmentInfo("已完成", DownloadedFragment.class));
+        fragmentInfos.add(new FragmentInfo("升级", UpgradeAppFragment.class));
         fragmentInfos.add(new FragmentInfo("已安装", InstalledAppAppFragment.class));
 //        fragmentInfos.add(new FragmentInfo(getString(R.string.home_tab_game), GameFragment.class));
 //        fragmentInfos.add(new FragmentInfo(getString(R.string.home_tab_sort), SortFragment.class));
         MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(),fragmentInfos);
         mainViewpager.setAdapter(myViewPagerAdapter);
         mainTabLayout.setupWithViewPager(mainViewpager);
+
+        mainViewpager.setCurrentItem(position);
+        mainTabLayout.getTabAt(position).select();
     }
 
     @Override

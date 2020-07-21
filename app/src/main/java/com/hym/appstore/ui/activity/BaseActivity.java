@@ -13,6 +13,7 @@ import com.hym.appstore.R;
 import com.hym.appstore.app.MyApplication;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.presenter.BasePresenter;
+import com.hym.appstore.ui.BaseView;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 import com.xuexiang.xui.XUI;
 import com.xuexiang.xui.utils.StatusBarUtils;
@@ -22,7 +23,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity {
+public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
 
     private Unbinder mUnbinder;
     protected MyApplication mMyApplication;
@@ -73,4 +74,20 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     public abstract void init();
     public abstract void initView();
     public abstract void initEvent();
+
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void showError(String msg) {
+
+    }
+
+    @Override
+    public void dismissLoading() {
+
+    }
 }
