@@ -12,7 +12,7 @@ import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.common.imageloader.ImageLoader;
 import com.hym.appstore.ui.widget.DownloadButtonController;
 import com.hym.appstore.ui.widget.DownloadProgressButton;
-import com.ms.square.android.expandabletextview.ExpandableTextView;
+import com.xuexiang.xui.widget.textview.ExpandableTextView;
 
 import org.jetbrains.annotations.NotNull;
 

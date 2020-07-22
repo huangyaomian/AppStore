@@ -26,7 +26,7 @@ import com.hym.appstore.presenter.AppDetailPresenter;
 import com.hym.appstore.presenter.contract.AppInfoContract;
 import com.hym.appstore.ui.activity.AppDetailsActivity;
 import com.hym.appstore.ui.adapter.AppInfoAdapter;
-import com.ms.square.android.expandabletextview.ExpandableTextView;
+import com.xuexiang.xui.widget.textview.ExpandableTextView;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,6 +44,7 @@ public class AppDetailFragment extends ProgressFragment<AppDetailPresenter> impl
     @BindView(R.id.expand_collapse)
     ImageButton expandCollapse;
     @BindView(R.id.view_introduction)
+//    ExpandableTextView viewIntroduction;
     ExpandableTextView viewIntroduction;
     @BindView(R.id.txt_update_time)
     TextView txtUpdateTime;

@@ -35,7 +35,35 @@
         android:text="应用描述"
         >
 
-        <com.ms.square.android.expandabletextview.ExpandableTextView
+        <com.xuexiang.xui.widget.textview.ExpandableTextView
+            android:id="@+id/view_introduction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/theme_while"
+            app:etv_animDuration="200"
+            app:etv_maxCollapsedLines="4"
+            app:etv_animAlphaStart="0.7">
+            <TextView
+                android:id="@+id/expandable_text"
+                style="@style/Text_Content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:id="@+id/expand_collapse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:background="@android:color/transparent"
+                android:padding="?attr/xui_config_content_spacing_vertical"/>
+
+
+        </com.xuexiang.xui.widget.textview.ExpandableTextView>
+
+
+        <!--<com.ms.square.android.expandabletextview.ExpandableTextView
             android:id="@+id/view_introduction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,7 +84,7 @@
                 android:layout_gravity="right|bottom"
                 android:background="@android:color/transparent"
                 android:padding="16dp"/>
-        </com.ms.square.android.expandabletextview.ExpandableTextView>
+        </com.ms.square.android.expandabletextview.ExpandableTextView>-->
     </LinearLayout>
 
     <LinearLayout
