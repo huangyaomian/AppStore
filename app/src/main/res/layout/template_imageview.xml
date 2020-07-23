@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:adjustViewBounds="true"
     android:maxWidth="150dp"
+    android:id="@+id/image_view"
     android:layout_marginRight="2dp"
     android:scaleType="centerCrop">
 
