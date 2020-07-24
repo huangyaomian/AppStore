@@ -6,6 +6,8 @@ import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.bean.LoginBean;
 import com.hym.appstore.bean.PageBean;
 import com.hym.appstore.bean.SortBean;
+import com.hym.appstore.bean.Subject;
+import com.hym.appstore.bean.SubjectDetail;
 import com.hym.appstore.bean.requestbean.LoginRequestBean;
 
 import java.util.List;
@@ -57,5 +59,11 @@ public interface ApiService {
 
     @GET("apps/updateinfo")
     Observable<BaseBean<List<AppInfoBean>>> getAppsUpdateinfo(@Query("packageName") String packageName,@Query("versionCode") String versionCode);
+
+    @GET("subject/hot")
+    Observable<BaseBean<PageBean<Subject>>> subjects(@Query("page") int page);
+
+    @GET("subject/{id}")
+    Observable<BaseBean<SubjectDetail>> subjectDetail(@Path("id") int id);
 
 }

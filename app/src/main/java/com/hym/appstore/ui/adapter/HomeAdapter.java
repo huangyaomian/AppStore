@@ -1,7 +1,7 @@
 package com.hym.appstore.ui.adapter;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +22,7 @@ import com.hym.appstore.bean.BannerBean;
 import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.common.imageloader.ImageLoadConfig;
 import com.hym.appstore.common.imageloader.ImageLoader;
+import com.hym.appstore.ui.activity.SubjectActivity;
 import com.hym.appstore.ui.widget.BannerLayout;
 
 import java.util.ArrayList;
@@ -141,7 +142,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     @Override
     public void onClick(View view) {
-
+        switch (view.getId()){
+            case R.id.icon_hot_recommend:
+                mContext.startActivity(new Intent(mContext, SubjectActivity.class));
+                break;
+        }
     }
 
 

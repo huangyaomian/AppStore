@@ -21,10 +21,6 @@ public class HomeModule {
         return mView;
     }
 
- /*   @Provides
-    public RecommendModel provideRecommendModel(RequestQueue mRequestQueue){
-        return new RecommendModel(mRequestQueue);
-    }*/
 
     @Provides
     public AppInfoModel provideHomeModel(ApiService apiService){

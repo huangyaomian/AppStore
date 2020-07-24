@@ -1,9 +1,6 @@
 package com.hym.appstore.ui.fragment;
 
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -11,7 +8,6 @@ import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.PageBean;
 import com.hym.appstore.bean.Subject;
-import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.ui.adapter.SubjectAdapter;
 import com.hym.appstore.ui.widget.SpaceItemDecoration2;
 
@@ -32,18 +28,12 @@ public class SubjectFragment extends BaseSubjectFragment {
         return R.layout.template_recycler_view;
     }
 
-    @Override
-    protected void setupActivityComponent(AppComponent appComponent) {
-
-    }
 
     @Override
     protected void init() {
         initRecyclerView();
         mPresenter.getSubject(page);
     }
-
-
 
 
     protected void initRecyclerView(){
@@ -70,6 +60,18 @@ public class SubjectFragment extends BaseSubjectFragment {
         //设置一下loadMore的开关
         subjectAdapter.getLoadMoreModule().setEnableLoadMore(pageBean.isHasMore());
     }
+
+
+    @Override
+    protected void initEvent() {
+        subjectAdapter.getLoadMoreModule().setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                mPresenter.getSubject(page);
+            }
+        });
+    }
+
 
 
 }

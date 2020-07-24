@@ -1,48 +1,32 @@
 package com.hym.appstore.data;
 
 
-import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.BaseBean;
-import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.bean.PageBean;
+import com.hym.appstore.bean.Subject;
+import com.hym.appstore.bean.SubjectDetail;
 import com.hym.appstore.data.okhttp.ApiService;
+import com.hym.appstore.presenter.contract.SubjectContract;
 
 import io.reactivex.Observable;
 
-public class SubjectModel {
+public class SubjectModel implements SubjectContract.ISubjectModel {
     private ApiService mApiService;
 
-    public SubjectModel(ApiService mApiService) {
-        this.mApiService = mApiService;
+    public SubjectModel(ApiService apiService) {
+        this.mApiService = apiService;
+
     }
 
 
-    public Observable<BaseBean<HomeBean>> getHomeRequest(){
-        return  mApiService.getHome();
+    @Override
+    public Observable<BaseBean<PageBean<Subject>>> getSubjects(int page) {
+        return mApiService.subjects(page);
     }
 
-    public Observable<BaseBean<PageBean<AppInfoBean>>> getRankingRequest(int page){
-        return  mApiService.getTopList(page);
-    }
-
-    public Observable<BaseBean<PageBean<AppInfoBean>>> getGameRequest(int page){
-        return  mApiService.getGames(page);
-    }
-
-    public Observable<BaseBean<PageBean<AppInfoBean>>> getFeaturedAppsBySort(int categoryid, int page) {
-        return mApiService.getFeaturedAppsBySort(categoryid, page);
-    }
-
-    public Observable<BaseBean<PageBean<AppInfoBean>>> getTopListAppsBySort(int categoryid, int page) {
-        return mApiService.getTopListAppsBySort(categoryid, page);
-    }
-
-    public Observable<BaseBean<PageBean<AppInfoBean>>> getNewListAppsBySort(int categoryid, int page) {
-        return mApiService.getNewListAppsBySort(categoryid, page);
-    }
-
-    public Observable<BaseBean<AppInfoBean>> getAppDetail(int id) {
-        return mApiService.getAppDetail(id);
+    @Override
+    public Observable<BaseBean<SubjectDetail>> getSubjectDetail(int id) {
+        return mApiService.subjectDetail(id);
     }
 
 }
