@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.hym.appstore.R;
+import com.hym.appstore.bean.Subject;
+import com.hym.appstore.common.rx.RxBus;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.ui.fragment.SubjectDetailFragment;
 import com.hym.appstore.ui.fragment.SubjectFragment;
@@ -14,6 +16,8 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
 
 import butterknife.BindView;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 
 public class SubjectActivity extends BaseActivity {
 
@@ -58,6 +62,16 @@ public class SubjectActivity extends BaseActivity {
             }
         });
         mFragmentManager = getSupportFragmentManager();
+
+        showSubjectFragment();
+
+        showSubjectDetailFragmentRxBus();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        handNavigation();
     }
 
     @Override
@@ -71,9 +85,13 @@ public class SubjectActivity extends BaseActivity {
     }
 
     private void showSubjectFragment(){
+        fragmentIndex = FRAGMENT_SUBJECT;
+        mToolBar.setTitle("主题");
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        hideFragment(fragmentTransaction);
         if (mSubjectFragment == null) {
             mSubjectFragment = new SubjectFragment();
+
             fragmentTransaction.add(R.id.content,mSubjectFragment);
         }else {
             fragmentTransaction.show(mSubjectFragment);
@@ -88,4 +106,44 @@ public class SubjectActivity extends BaseActivity {
             showSubjectFragment();
         }
     }
+
+    private void showSubjectDetailFragmentRxBus() {
+
+        RxBus.getDefault().toObservable(Subject.class).subscribe(new Consumer<Subject>() {
+            @Override
+            public void accept(@NonNull Subject subject) throws Exception {
+                showSubjectDetailFragment(subject);
+            }
+        });
+    }
+
+    private void  showSubjectDetailFragment(Subject subject){
+
+        fragmentIndex = FRAGMENT_DETAIL;
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        if(mSubjectDetailFragment != null){
+            ft.remove(mSubjectDetailFragment);
+        }
+        mSubjectDetailFragment = new SubjectDetailFragment();
+        mSubjectDetailFragment.setArgs(subject);
+        ft.add(R.id.content,mSubjectDetailFragment);
+
+        ft.commit();
+
+        mToolBar.setTitle(subject.getTitle());
+    }
+
+    private void  hideFragment(FragmentTransaction ft){
+
+        if(mSubjectFragment != null){
+            ft.hide(mSubjectFragment);
+        }
+        if(mSubjectDetailFragment != null){
+            ft.hide(mSubjectDetailFragment);
+        }
+
+
+    }
+
+
 }

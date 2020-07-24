@@ -1,13 +1,18 @@
 package com.hym.appstore.ui.fragment;
 
+import android.view.View;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.PageBean;
 import com.hym.appstore.bean.Subject;
+import com.hym.appstore.common.rx.RxBus;
 import com.hym.appstore.ui.adapter.SubjectAdapter;
 import com.hym.appstore.ui.widget.SpaceItemDecoration2;
 
@@ -47,6 +52,7 @@ public class SubjectFragment extends BaseSubjectFragment {
 
         subjectAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.AlphaIn);
         mRecyclerView.setAdapter(subjectAdapter);
+
     }
 
     @Override
@@ -70,6 +76,17 @@ public class SubjectFragment extends BaseSubjectFragment {
                 mPresenter.getSubject(page);
             }
         });
+
+        subjectAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+                Subject subject = subjectAdapter.getItem(position);
+
+                RxBus.getDefault().post(subject);
+            }
+        });
+
+
     }
 
 
