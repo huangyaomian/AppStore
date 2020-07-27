@@ -82,7 +82,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
     @Override
-    public void showError(String msg) {
+    public void showError(String msg, int errorCode) {
 
     }
 

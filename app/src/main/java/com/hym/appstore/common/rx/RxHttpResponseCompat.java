@@ -1,6 +1,8 @@
 package com.hym.appstore.common.rx;
 
 
+import android.util.Log;
+
 import com.hym.appstore.bean.BaseBean;
 import com.hym.appstore.common.exception.ApiException;
 
@@ -24,7 +26,7 @@ public class RxHttpResponseCompat {
                 return baseBeanObservable.flatMap(new Function<BaseBean<T>, ObservableSource<T>>() {
                     @Override
                     public ObservableSource<T> apply(final BaseBean<T> tBaseBean) throws Exception {
-
+                        Log.d("ObservableTransformer", "apply: " + tBaseBean.getStatus());
                         if (tBaseBean.success()){
                             return Observable.create(new ObservableOnSubscribe<T>() {
                                 @Override
@@ -39,8 +41,6 @@ public class RxHttpResponseCompat {
                                 }
                             });
                         }
-
-
                         else{
                             //错误的时候会抛出异常然后再某一个地方集中处理
                             return Observable.error(new ApiException(tBaseBean.getStatus(), tBaseBean.getMessage()));

@@ -42,6 +42,12 @@ public class ErrorMessageFactory {
             case BaseException.ERROR_API_LOGIN:
                 errorMsg = context.getResources().getString(R.string.error_login);
                 break;
+            case BaseException.ERROR_TOKEN:
+                errorMsg = context.getResources().getString(R.string.error_account_login);
+                break;
+            case BaseException.INVALID_TOKEN:
+                errorMsg = context.getResources().getString(R.string.error_account_invalid_login);
+                break;
             default:
                 errorMsg = context.getResources().getString(R.string.error_unkown);
                 break;

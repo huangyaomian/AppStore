@@ -108,7 +108,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     }
 
     @Override
-    public void showError(String msg) {
+    public void showError(String msg,int errorCode) {
     }
 
 }

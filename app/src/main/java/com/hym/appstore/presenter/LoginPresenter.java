@@ -33,8 +33,6 @@ public class  LoginPresenter extends BasePresenter<LoginContract.ILoginModel, Lo
 
         mModel.login(phone,pwd).compose(RxHttpResponseCompat.compatResult())
                 .subscribe(new ErrorHandlerDisposableObserver<LoginBean>(mContext) {
-
-
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         mView.showLoading();

@@ -16,6 +16,8 @@ import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.PageBean;
+import com.hym.appstore.bean.User;
+import com.hym.appstore.common.rx.RxBus;
 import com.hym.appstore.presenter.AppInfoPresenter;
 import com.hym.appstore.presenter.contract.AppInfoContract;
 import com.hym.appstore.ui.activity.AppDetailsActivity;
@@ -24,6 +26,7 @@ import com.hym.appstore.ui.adapter.AppInfoAdapter;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
 import zlc.season.rxdownload2.RxDownload;
 
 
@@ -53,6 +56,12 @@ public abstract class AppInfoFragment extends ProgressFragment<AppInfoPresenter>
 
     @Override
     protected void init() {
+        RxBus.getDefault().toObservable(User.class).subscribe(new Consumer<User>() {
+            @Override
+            public void accept(User user) {
+                mPresenter.requestData(setType(),page);
+            }
+        });
         mPresenter.requestData(setType(),page);
         initRecyclerView();
     }

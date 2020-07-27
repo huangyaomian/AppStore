@@ -151,7 +151,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
     @Override
-    public void showError(String msg) {
+    public void showError(String msg,int errorCode) {
         mBtnLogin.showButtonText();
     }
 

@@ -1,5 +1,6 @@
 package com.hym.appstore.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.LongDef;
@@ -12,14 +13,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.hym.appstore.R;
 import com.hym.appstore.app.MyApplication;
+import com.hym.appstore.common.exception.BaseException;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.presenter.BasePresenter;
 import com.hym.appstore.ui.BaseView;
+import com.hym.appstore.ui.activity.LoginActivity;
 
 import javax.inject.Inject;
 
@@ -37,6 +41,7 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
     private View mViewEmpty;
     private FrameLayout mViewContent;
     private TextView mTextError;
+    private Button mLoginButton;
 
     protected MyApplication mMyApplication;
 
@@ -53,6 +58,7 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
         mViewEmpty = mRootView.findViewById(R.id.view_empty);
         mViewContent = mRootView.findViewById(R.id.view_contern);
         mTextError = mRootView.findViewById(R.id.text_tip);
+        mLoginButton = mRootView.findViewById(R.id.login_btn);
         mTextError.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +114,20 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
         mTextError.setText(msg);
     }
 
+    public void showEmptyView(String msg, int errorCode){
+        showEmptyView(msg);
+        if (errorCode == BaseException.ERROR_TOKEN || errorCode == BaseException.INVALID_TOKEN) {
+            mLoginButton.setVisibility(View.VISIBLE);
+            mLoginButton.setText("登录");
+            mLoginButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(),LoginActivity.class));
+                }
+            });
+        }
+    }
+
     public void showView(int viewId){
         for (int i = 0; i < mRootView.getChildCount(); i++) {
             if (mRootView.getChildAt(i).getId() == viewId) {
@@ -129,9 +149,9 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
     }
 
     @Override
-    public void showError(String msg) {
+    public void showError(String msg,int errorCode) {
         Log.d("ProgressFragment","showError");
-        showEmptyView(msg);
+        showEmptyView(msg,errorCode);
     }
 
 

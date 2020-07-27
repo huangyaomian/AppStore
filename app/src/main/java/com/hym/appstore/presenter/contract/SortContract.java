@@ -13,7 +13,7 @@ public interface SortContract {
     interface SortView extends BaseView {
 
         void showResult(List<SortBean> datas);
-        void showError(String msg);
+//        void showError(String msg);
 
     }
 

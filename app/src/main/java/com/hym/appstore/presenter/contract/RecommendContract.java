@@ -13,7 +13,7 @@ public interface RecommendContract {
         void showResult(List<AppInfoBean> datas);
         void showMoreResult(RecommendBean2 datas);
         void showNoData();
-        void showError(String msg);
+//        void showError(String msg);
 
         void onRequestPermissionSuccess();
         void onRequestPermissionError();

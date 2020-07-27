@@ -12,7 +12,7 @@ public interface AppInfoContract {
         void showResult(HomeBean datas);
         void showMoreResult(HomeBean datas);
         void showNoData();
-        void showError(String msg);
+        void showError(String msg,int errorCode);
 
         void onRequestPermissionSuccess();
         void onRequestPermissionError();
@@ -22,7 +22,7 @@ public interface AppInfoContract {
     interface AppInfoView extends BaseView {
 
         void showResult(PageBean<AppInfoBean> data);
-        void showError(String msg);
+        void showError(String msg,int errorCode);
         void onLoadMoreComplete();
     }
 

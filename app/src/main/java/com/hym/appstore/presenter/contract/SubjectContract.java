@@ -20,7 +20,7 @@ public interface SubjectContract {
 
     interface SubjectView extends BaseView {
         void showSubject(PageBean<Subject> pageBean);
-        void showError(String msg);
+//        void showError(String msg);
         void onLoadMoreComplete();
 
         void showSubjectDetail(SubjectDetail detail);

@@ -25,4 +25,6 @@ public class GameFragment extends AppInfoFragment {
     int setType() {
         return AppInfoPresenter.GAMES_LIST;
     }
+
+
 }
