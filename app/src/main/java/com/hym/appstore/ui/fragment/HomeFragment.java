@@ -92,7 +92,7 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
         }
         bannerView.setViewUrls(urls);
         adapter.setHeaderView(view);
-
+//        https://github.com/CymChad/BaseRecyclerViewAdapterHelper/blob/master/readme/4-%E5%A4%9A%E5%B8%83%E5%B1%80.md
 
 
         List<HomeBean> list = new ArrayList<>();
