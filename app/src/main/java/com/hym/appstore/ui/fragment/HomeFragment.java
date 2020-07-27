@@ -1,9 +1,11 @@
 package com.hym.appstore.ui.fragment;
 
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -13,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.BannerBean;
 import com.hym.appstore.bean.HomeBean;
+import com.hym.appstore.common.imageloader.ImageLoadConfig;
+import com.hym.appstore.common.imageloader.ImageLoader;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.dagger2.component.DaggerHomeComponent;
 import com.hym.appstore.dagger2.module.HomeModule;
@@ -80,6 +84,7 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.home_banner,null);
         BannerLayout bannerView = view.findViewById(R.id.banner);
+        bannerView.setImageLoader(new ImgLoader());
         List<BannerBean> banners = homeBean.getBanners();
         List<String> urls = new ArrayList<>(banners.size());
         for (BannerBean banner : banners) {
@@ -121,5 +126,21 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
     @Override
     public void onRequestPermissionError() {
         Toast.makeText(getActivity(),"您已拒絕授權!",Toast.LENGTH_SHORT).show();
+    }
+
+    class ImgLoader implements BannerLayout.ImageLoader {
+
+        @Override
+        public void displayImage(Context context, String path, ImageView imageView) {
+            ImageLoadConfig defConfig = new ImageLoadConfig.Builder()
+                    .setCropType(ImageLoadConfig.CENTER_CROP)
+                    .setAsBitmap(true)
+                    .setPlaceHolderResId(R.drawable.vector_drawable_init_pic)
+                    .setDiskCacheStrategy(ImageLoadConfig.DiskCache.ALL)
+                    .setPrioriy(ImageLoadConfig.LoadPriority.HIGH)
+                    .setCrossFade(true)
+                    .build();
+            ImageLoader.load(path, imageView,defConfig);
+        }
     }
 }
