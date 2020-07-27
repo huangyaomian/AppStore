@@ -2,6 +2,8 @@ package com.hym.appstore.ui.fragment;
 
 
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -9,13 +11,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hym.appstore.R;
+import com.hym.appstore.bean.BannerBean;
 import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.dagger2.component.DaggerHomeComponent;
 import com.hym.appstore.dagger2.module.HomeModule;
 import com.hym.appstore.presenter.HomePresenter;
 import com.hym.appstore.presenter.contract.AppInfoContract;
-import com.hym.appstore.ui.adapter.HomeAdapter;
+import com.hym.appstore.ui.adapter.HomeAdapter2;
+import com.hym.appstore.ui.widget.BannerLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -27,7 +34,8 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
 
     @BindView(R.id.home_rv)
     RecyclerView mHomeRv;
-    private HomeAdapter adapter;
+//    private HomeAdapter adapter;
+    private HomeAdapter2 adapter;
 
     @Inject
     RxDownload mRxDownload;
@@ -66,7 +74,28 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
 
     @Override
     public void showResult(HomeBean homeBean) {
-        adapter = new HomeAdapter(getActivity(), homeBean,mRxDownload);
+        adapter = new HomeAdapter2(getActivity(),mRxDownload);
+//        adapter = new HomeAdapter(getActivity(), homeBean,mRxDownload);
+//        return new HomeAdapter2.BannerViewHolder(mLayoutInflater.inflate(R.layout.home_banner, parent, false));
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        View view = inflater.inflate(R.layout.home_banner,null);
+        BannerLayout bannerView = view.findViewById(R.id.banner);
+        List<BannerBean> banners = homeBean.getBanners();
+        List<String> urls = new ArrayList<>(banners.size());
+        for (BannerBean banner : banners) {
+            urls.add(banner.getThumbnail());
+        }
+        bannerView.setViewUrls(urls);
+        adapter.setHeaderView(view);
+
+
+
+        List<HomeBean> list = new ArrayList<>();
+        list.add(homeBean);
+        list.add(homeBean);
+        list.add(homeBean);
+        list.add(homeBean);
+        adapter.addData(list);
         mHomeRv.setAdapter(adapter);
         Log.d("showResult", String.valueOf(mHomeRv.getChildCount()));
 

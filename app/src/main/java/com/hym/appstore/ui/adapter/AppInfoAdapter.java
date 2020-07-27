@@ -20,6 +20,7 @@ import zlc.season.rxdownload2.RxDownload;
 
 public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder> implements LoadMoreModule {
 
+
     String baseImgUrl = "http://file.market.xiaomi.com/mfc/thumbnail/png/w150q80/";
     private Builder mBuilder;
     private DownloadButtonController mDownloadButtonController;
@@ -36,18 +37,15 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder
 
     @Override
     public int getItemCount() {
-        return getData().size()>10?10:getData().size();
+        return getData().size();
     }
+
 
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, AppInfoBean appInfoBean) {
 
         ImageLoader.load(baseImgUrl+appInfoBean.getIcon(),baseViewHolder.getView(R.id.img_app_icon));
         View viewBtn  = baseViewHolder.getView(R.id.btn_download);
-
-
-
-
 
         if (mBuilder.isShowName){
             baseViewHolder.setText(R.id.home_recyclerview_name,appInfoBean.getDisplayName());
@@ -105,7 +103,7 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder
                     txtViewSize.setText(appInfoBean.getApkSize() / 1024 / 1024 + "MB");
                 }
 
-        }
+            }
 
 
         }

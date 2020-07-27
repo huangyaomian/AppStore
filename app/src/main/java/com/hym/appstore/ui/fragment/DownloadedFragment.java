@@ -2,17 +2,10 @@ package com.hym.appstore.ui.fragment;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hym.appstore.common.apkparset.AndroidApk;
-import com.hym.appstore.dagger2.component.AppComponent;
-import com.hym.appstore.dagger2.component.DaggerAppManagerComponent;
-import com.hym.appstore.dagger2.module.AppManagerModule;
 import com.hym.appstore.ui.adapter.AndroidApkAdapter;
-import com.hym.appstore.ui.adapter.DownloadingAdapter;
 
 import java.util.List;
-
-import zlc.season.rxdownload2.entity.DownloadRecord;
 
 
 public class DownloadedFragment extends AppManagerFragment {
@@ -23,6 +16,12 @@ public class DownloadedFragment extends AppManagerFragment {
 
     @Override
     protected void init() {
+//        RxBus.getDefault().toObservable(User.class).subscribe(new Consumer<User>() {
+//            @Override
+//            public void accept(User user) {
+//                mPresenter.getLocalApks();
+//            }
+//        });
         super.init();
         mPresenter.getLocalApks();
     }
