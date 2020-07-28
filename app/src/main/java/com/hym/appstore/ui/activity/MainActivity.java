@@ -41,7 +41,6 @@ import com.hym.appstore.ui.adapter.MyViewPagerAdapter;
 import com.hym.appstore.ui.fragment.GameFragment;
 import com.hym.appstore.ui.fragment.HomeFragment;
 import com.hym.appstore.ui.fragment.RankingFragment;
-import com.hym.appstore.ui.fragment.RecommendFragment;
 import com.hym.appstore.ui.fragment.SortFragment;
 import com.hym.appstore.ui.widget.BadgeActionProvider;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -76,8 +75,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     private long lastClickTime = 0;
 
     private BadgeActionProvider badgeActionProvider;
-
-
 
 
     @Override

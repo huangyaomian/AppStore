@@ -10,7 +10,6 @@ public interface AppInfoContract {
     interface View extends BaseView {
 
         void showResult(HomeBean datas);
-        void showMoreResult(HomeBean datas);
         void showNoData();
         void showError(String msg,int errorCode);
 

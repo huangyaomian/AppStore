@@ -3,39 +3,26 @@ package com.hym.appstore.ui.activity;
 import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.tabs.TabLayout;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.hym.appstore.R;
-import com.hym.appstore.bean.AppInfoBean;
-import com.hym.appstore.bean.FragmentInfo;
-import com.hym.appstore.common.Constant;
-import com.hym.appstore.common.utils.ACache;
-import com.hym.appstore.common.utils.JsonUtils;
+import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.dagger2.component.AppComponent;
+import com.hym.appstore.dagger2.component.DaggerHomeAppComponent;
+import com.hym.appstore.dagger2.module.HomeAppModule;
+import com.hym.appstore.presenter.HomeAppPresenter;
+import com.hym.appstore.presenter.contract.HomeAppContract;
 import com.hym.appstore.ui.adapter.AppInfoAdapter;
-import com.hym.appstore.ui.adapter.MyViewPagerAdapter;
-import com.hym.appstore.ui.fragment.DownloadedFragment;
-import com.hym.appstore.ui.fragment.DownloadingFragment;
-import com.hym.appstore.ui.fragment.InstalledAppAppFragment;
-import com.hym.appstore.ui.fragment.UpgradeAppFragment;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
 
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
+import javax.inject.Inject;
 
 import butterknife.BindView;
-import okhttp3.Cache;
+import zlc.season.rxdownload2.RxDownload;
 
-public class AppHomeActivity extends BaseActivity {
+public class HomeAppActivity extends BaseActivity<HomeAppPresenter> implements HomeAppContract.HomeAppView {
 
 
     @BindView(R.id.toolbar)
@@ -46,6 +33,9 @@ public class AppHomeActivity extends BaseActivity {
 
     private AppInfoAdapter mAdapter;
 
+    @Inject
+    RxDownload mRxDownload;
+
 
     @Override
     protected int setLayoutResourceID() {
@@ -55,10 +45,15 @@ public class AppHomeActivity extends BaseActivity {
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
 
+        DaggerHomeAppComponent.builder().appComponent(appComponent).homeAppModule(new HomeAppModule(this)).build().inject(this);
+
     }
 
     @Override
     public void init() {
+        mPresenter.requestHomeApps(true);
+
+
         toolbar.setNavigationIcon(
                 new IconicsDrawable(this)
                         .icon(Ionicons.Icon.ion_ios_arrow_back)
@@ -72,13 +67,8 @@ public class AppHomeActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        mAdapter = AppInfoAdapter.builder().updateStatus(true).showBrief(true).rxDownload(null).build();
-        String asString = ACache.get(this).getAsString(Constant.APP_HOME_LIST);
-        Type type = new TypeToken<List<AppInfoBean>>() {}.getType();
-        Gson gson = new Gson();;
-        List<AppInfoBean> list = gson.fromJson(asString, type);
-        mAdapter.addData(list);
-        mRecyclerView.setAdapter(mAdapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(layoutManager);
 
     }
 
@@ -93,4 +83,10 @@ public class AppHomeActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void showApps(HomeBean datas) {
+        mAdapter = AppInfoAdapter.builder().updateStatus(true).showBrief(true).rxDownload(mRxDownload).build();
+        mAdapter.addData(datas.getHomeApps());
+        mRecyclerView.setAdapter(mAdapter);
+    }
 }

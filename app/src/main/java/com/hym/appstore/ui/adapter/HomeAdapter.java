@@ -23,7 +23,7 @@ import com.hym.appstore.bean.BannerBean;
 import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.common.imageloader.ImageLoadConfig;
 import com.hym.appstore.common.imageloader.ImageLoader;
-import com.hym.appstore.ui.activity.AppHomeActivity;
+import com.hym.appstore.ui.activity.HomeAppActivity;
 import com.hym.appstore.ui.activity.SubjectActivity;
 import com.hym.appstore.ui.widget.BannerLayout;
 
@@ -152,7 +152,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 mContext.startActivity(new Intent(mContext, SubjectActivity.class));
                 break;
             case R.id.icon_hot_app:
-                mContext.startActivity(new Intent(mContext, AppHomeActivity.class));
+                mContext.startActivity(new Intent(mContext, HomeAppActivity.class));
                 break;
         }
     }
