@@ -22,6 +22,7 @@ import com.hym.appstore.dagger2.component.DaggerHomeComponent;
 import com.hym.appstore.dagger2.module.HomeModule;
 import com.hym.appstore.presenter.HomePresenter;
 import com.hym.appstore.presenter.contract.AppInfoContract;
+import com.hym.appstore.ui.adapter.HomeAdapter;
 import com.hym.appstore.ui.adapter.HomeAdapter2;
 import com.hym.appstore.ui.widget.BannerLayout;
 
@@ -38,8 +39,8 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
 
     @BindView(R.id.home_rv)
     RecyclerView mHomeRv;
-//    private HomeAdapter adapter;
-    private HomeAdapter2 adapter;
+    private HomeAdapter adapter;
+//    private HomeAdapter2 adapter;
 
     @Inject
     RxDownload mRxDownload;
@@ -78,10 +79,10 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
 
     @Override
     public void showResult(HomeBean homeBean) {
-        adapter = new HomeAdapter2(getActivity(),mRxDownload);
+        adapter = new HomeAdapter(getActivity(), homeBean, mRxDownload);
 //        adapter = new HomeAdapter(getActivity(), homeBean,mRxDownload);
 //        return new HomeAdapter2.BannerViewHolder(mLayoutInflater.inflate(R.layout.home_banner, parent, false));
-        LayoutInflater inflater = LayoutInflater.from(getContext());
+       /* LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.home_banner,null);
         BannerLayout bannerView = view.findViewById(R.id.banner);
         bannerView.setImageLoader(new ImgLoader());
@@ -91,16 +92,16 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
             urls.add(banner.getThumbnail());
         }
         bannerView.setViewUrls(urls);
-        adapter.setHeaderView(view);
+        adapter.setHeaderView(view);*/
 //        https://github.com/CymChad/BaseRecyclerViewAdapterHelper/blob/master/readme/4-%E5%A4%9A%E5%B8%83%E5%B1%80.md
 
 
-        List<HomeBean> list = new ArrayList<>();
-        list.add(homeBean);
-        list.add(homeBean);
-        list.add(homeBean);
-        list.add(homeBean);
-        adapter.addData(list);
+//        List<HomeBean> list = new ArrayList<>();
+//        list.add(homeBean);
+//        list.add(homeBean);
+//        list.add(homeBean);
+//        list.add(homeBean);
+//        adapter.addData(list);
         mHomeRv.setAdapter(adapter);
         Log.d("showResult", String.valueOf(mHomeRv.getChildCount()));
 

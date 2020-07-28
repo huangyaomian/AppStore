@@ -15,10 +15,13 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseDelegateMultiAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.delegate.BaseMultiTypeDelegate;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.hym.appstore.R;
+import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.BannerBean;
 import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.common.imageloader.ImageLoadConfig;
@@ -35,7 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import zlc.season.rxdownload2.RxDownload;
 
-public class HomeAdapter2 extends BaseQuickAdapter<HomeBean, BaseViewHolder> implements View.OnClickListener {
+public class HomeAdapter2 extends BaseDelegateMultiAdapter<HomeBean, BaseViewHolder> implements View.OnClickListener {
 
     private static final int TYPE_BANNER = 1;
     private static final int TYPE_ICON = 2;
@@ -52,14 +55,17 @@ public class HomeAdapter2 extends BaseQuickAdapter<HomeBean, BaseViewHolder> imp
 
 
     public HomeAdapter2(Context context,  RxDownload rxDownload) {
-        super(R.layout.home_recyclerview_item);
+//        super(R.layout.home_recyclerview_item);
         mLayoutInflater = LayoutInflater.from(context);
         this.mContext = context;
         this.mRxDownload = rxDownload;
+
+        // 实现自己的代理类：
+        setMultiTypeDelegate(new MyMultiTypeDelegate());
     }
 
 
-    @Override
+  /*  @Override
     public int getItemViewType(int position) {
         if (position == 0) {
             return TYPE_BANNER;
@@ -71,11 +77,11 @@ public class HomeAdapter2 extends BaseQuickAdapter<HomeBean, BaseViewHolder> imp
             return TYPE_GAME;
         }
         return 0;
-    }
+    }*/
 
     @NonNull
     @Override
-    public BaseViewHolder onCreateDefViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_BANNER) {
             return new BannerViewHolder(mLayoutInflater.inflate(R.layout.home_banner, parent, false));
         } else if (viewType == TYPE_ICON) {
@@ -91,7 +97,7 @@ public class HomeAdapter2 extends BaseQuickAdapter<HomeBean, BaseViewHolder> imp
 
     @Override
     public int getItemCount() {
-        return 1;
+        return 4;
     }
 
     @Override
@@ -133,7 +139,10 @@ public class HomeAdapter2 extends BaseQuickAdapter<HomeBean, BaseViewHolder> imp
             appInfoAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.AlphaIn);
             if (viewHolder.type == TYPE_APP){
                 viewHolder.homeRecyclerviewTitle.setText("热门应用");
-                appInfoAdapter.addData(homeBean.getHomeApps());
+                List<AppInfoBean> homeApps = homeBean.getHomeApps();
+                List<AppInfoBean> homeApps2 = new ArrayList<>();
+                homeApps2=homeApps.subList(0,10);
+                appInfoAdapter.addData(homeApps2);
             }else {
                 viewHolder.homeRecyclerviewTitle.setText("热门游戏");
                 appInfoAdapter.addData(homeBean.getHomeGames());
@@ -155,7 +164,35 @@ public class HomeAdapter2 extends BaseQuickAdapter<HomeBean, BaseViewHolder> imp
 
 
 
+    // 方式二：实现自己的代理类
+    final static class MyMultiTypeDelegate extends BaseMultiTypeDelegate<HomeBean> {
 
+        public MyMultiTypeDelegate() {
+            // 绑定 item 类型
+            addItemType(TYPE_BANNER, R.layout.home_banner);
+            addItemType(TYPE_ICON, R.layout.home_nav_icon);
+            addItemType(TYPE_APP, R.layout.home_recyclerview_with_title);
+            addItemType(TYPE_GAME, R.layout.home_recyclerview_with_title);
+        }
+
+
+        @Override
+        public int getItemType(@NotNull List<? extends HomeBean> list, int position) {
+            switch (position) {
+                case 0:
+                    return TYPE_BANNER;
+                case 1:
+                    return TYPE_ICON;
+                case 2:
+                    return TYPE_APP;
+                case 3:
+                    return TYPE_GAME;
+                default:
+                    break;
+            }
+            return 0;
+        }
+    }
 
 
 

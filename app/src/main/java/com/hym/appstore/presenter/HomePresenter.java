@@ -3,9 +3,12 @@ package com.hym.appstore.presenter;
 import android.util.Log;
 
 import com.hym.appstore.bean.HomeBean;
+import com.hym.appstore.common.Constant;
 import com.hym.appstore.common.rx.Optional;
 import com.hym.appstore.common.rx.RxHttpResponseCompat;
 import com.hym.appstore.common.rx.subscriber.ProgressDisposableObserver;
+import com.hym.appstore.common.utils.ACache;
+import com.hym.appstore.common.utils.JsonUtils;
 import com.hym.appstore.data.AppInfoModel;
 import com.hym.appstore.presenter.contract.AppInfoContract;
 
@@ -32,6 +35,10 @@ public class HomePresenter extends BasePresenter<AppInfoModel, AppInfoContract.V
                     public void onNext(@NonNull Optional<HomeBean> homeBeanOptional) {
                         Log.d("requestHomeData", String.valueOf(homeBeanOptional.getIncludeNull().getBanners().size()));
                         mView.showResult(homeBeanOptional.getIncludeNull());
+                        if(homeBeanOptional !=null){
+                            ACache.get(mContext).put(Constant.APP_HOME_LIST, JsonUtils.toJson(homeBeanOptional.getIncludeNull().getHomeApps()));
+                            ACache.get(mContext).put(Constant.GAME_HOME_LIST, JsonUtils.toJson(homeBeanOptional.getIncludeNull().getHomeGames()));
+                        }
                     }
                     @Override
                     protected boolean isShowProgress() {

@@ -5,7 +5,6 @@ import com.hym.appstore.bean.requestbean.AppsUpdateBean;
 import com.hym.appstore.common.Constant;
 import com.hym.appstore.common.apkparset.AndroidApk;
 import com.hym.appstore.common.rx.RxHttpResponseCompat;
-import com.hym.appstore.common.rx.subscriber.ProgressDialogDisposableObserver;
 import com.hym.appstore.common.rx.subscriber.ProgressDisposableObserver;
 import com.hym.appstore.common.utils.ACache;
 import com.hym.appstore.common.utils.AppUtils;
@@ -63,7 +62,7 @@ public class MainPresenter extends BasePresenter<MainContract.IMainModel,MainCon
     public void getAppUpdateInfo(){
 
 
-        getIntalledApps()
+        getInstalledApps()
                 .flatMap(new Function<AppsUpdateBean, ObservableSource<List<AppInfoBean>>>() {
                     @Override
                     public ObservableSource<List<AppInfoBean>> apply(@NonNull AppsUpdateBean params) throws Exception {
@@ -87,7 +86,7 @@ public class MainPresenter extends BasePresenter<MainContract.IMainModel,MainCon
 
     }
 
-    private Observable<AppsUpdateBean> getIntalledApps(){
+    private Observable<AppsUpdateBean> getInstalledApps(){
 
 
         return  Observable.create(new ObservableOnSubscribe<AppsUpdateBean>() {

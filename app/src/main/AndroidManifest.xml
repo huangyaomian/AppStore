@@ -19,6 +19,7 @@
         <activity android:name=".ui.activity.SortAppActivity" />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.AppManagerActivity" />
+        <activity android:name=".ui.activity.AppHomeActivity" />
         <activity android:name=".ui.activity.TestActivity"></activity>
         <activity android:name=".ui.activity.MainActivity">
             <intent-filter>

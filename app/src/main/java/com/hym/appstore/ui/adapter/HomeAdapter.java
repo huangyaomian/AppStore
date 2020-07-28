@@ -18,10 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.hym.appstore.R;
+import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.BannerBean;
 import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.common.imageloader.ImageLoadConfig;
 import com.hym.appstore.common.imageloader.ImageLoader;
+import com.hym.appstore.ui.activity.AppHomeActivity;
 import com.hym.appstore.ui.activity.SubjectActivity;
 import com.hym.appstore.ui.widget.BannerLayout;
 
@@ -116,7 +118,10 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             appInfoAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.AlphaIn);
             if (viewHolder.type == TYPE_APP){
                 viewHolder.homeRecyclerviewTitle.setText("热门应用");
-                appInfoAdapter.addData(mHomeBean.getHomeApps());
+                List<AppInfoBean> homeApps = mHomeBean.getHomeApps();
+                List<AppInfoBean> homeApps2 = new ArrayList<>();
+                homeApps2=homeApps.subList(0,10);
+                appInfoAdapter.addData(homeApps2);
             }else {
                 viewHolder.homeRecyclerviewTitle.setText("热门游戏");
                 appInfoAdapter.addData(mHomeBean.getHomeGames());
@@ -145,6 +150,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         switch (view.getId()){
             case R.id.icon_hot_recommend:
                 mContext.startActivity(new Intent(mContext, SubjectActivity.class));
+                break;
+            case R.id.icon_hot_app:
+                mContext.startActivity(new Intent(mContext, AppHomeActivity.class));
                 break;
         }
     }
