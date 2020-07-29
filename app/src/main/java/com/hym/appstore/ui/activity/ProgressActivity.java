@@ -1,9 +1,7 @@
 package com.hym.appstore.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +9,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -24,7 +21,6 @@ import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.presenter.BasePresenter;
 import com.hym.appstore.ui.BaseView;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
-import com.xuexiang.xui.XUI;
 import com.xuexiang.xui.utils.StatusBarUtils;
 
 import javax.inject.Inject;
@@ -52,22 +48,59 @@ public abstract class ProgressActivity<T extends BasePresenter> extends AppCompa
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         LayoutInflaterCompat.setFactory2(getLayoutInflater(),new IconicsLayoutInflater2(getDelegate()));
+
         super.onCreate(savedInstanceState);
-        setContentView(setLayoutResourceID());
-        mUnbinder = ButterKnife.bind(this);
-        XUI.initTheme(this);
+        setContentView(R.layout.fragment_progress);
+
         StatusBarUtils.initStatusBarStyle(this,false, ActivityCompat.getColor(this, R.color.theme_blue));
         mMyApplication = (MyApplication) getApplication();
         setupActivityComponent(mMyApplication.getAppComponent());
+//        mRootView = (FrameLayout) getLayoutInflater().from(this).inflate(R.layout.fragment_progress,null);
+        mRootView = findViewById(R.id.root_view);
+        setRealContentView();
+        mViewProgress = findViewById(R.id.view_progress);
+        mViewEmpty = findViewById(R.id.view_empty);
+        mViewContent = findViewById(R.id.view_contern);
+        mTextError = findViewById(R.id.text_tip);
+        mLoginButton = findViewById(R.id.login_btn);
+        mTextError.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onEmptyViewClick();
+            }
+        });
+
+
+
         init();
         initView();
         initEvent();
+
     }
 
-    @Nullable
+  /*  @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+        View view = getLayoutInflater().inflate(R.layout.activity_base, null);
+        //设置填充activity_base布局
+        super.setContentView(view);
+
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+            view.setFitsSystemWindows(true);
+        }
+
+        //加载子类Activity的布局
+        initDefaultView(layoutResID);
+    }*/
+
+    private void initDefaultView(int layoutResId) {
+        View childView = LayoutInflater.from(this).inflate(setLayoutResourceID(), null);
+        mRootView.addView(childView, 0);
+    }
+
+    /*@Nullable
     @Override
     public View onCreateView(@Nullable View parent, @NonNull String name, @NonNull Context context, @NonNull AttributeSet attrs) {
-        mRootView = (FrameLayout) getLayoutInflater().from(this).inflate(R.layout.fragment_progress,context);
+        mRootView = (FrameLayout) getLayoutInflater().from(this).inflate(R.layout.fragment_progress,null);
         mViewProgress = mRootView.findViewById(R.id.view_progress);
         mViewEmpty = mRootView.findViewById(R.id.view_empty);
         mViewContent = mRootView.findViewById(R.id.view_contern);
@@ -81,7 +114,7 @@ public abstract class ProgressActivity<T extends BasePresenter> extends AppCompa
         });
 
         return mRootView;
-    }
+    }*/
 
 
 
@@ -118,6 +151,18 @@ public abstract class ProgressActivity<T extends BasePresenter> extends AppCompa
     public void onEmptyViewClick(){
 
     }
+
+/*    private View createLoadingView() {
+        mViewProgress = LayoutInflater.from(this).inflate(R.layout.fragment_progress, null);
+        img = mViewProgress.getRootView().findViewById(R.id.progress);
+        // 加载动画 这边也可以直接用progressbar
+        mAnimationDrawable = (AnimationDrawable) img.getDrawable();
+        // 默认进入页面就开启动画
+        if (!mAnimationDrawable.isRunning()) {
+            mAnimationDrawable.start();
+        }
+        return loadingView;
+    }*/
 
     protected  void setRealContentView(){
         View realContentView = LayoutInflater.from(this).inflate(setLayoutResourceID(), mViewContent, true);

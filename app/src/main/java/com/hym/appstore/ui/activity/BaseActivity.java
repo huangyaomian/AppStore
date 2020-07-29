@@ -2,7 +2,6 @@ package com.hym.appstore.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +29,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     @Inject
     public T mPresenter;
+
 
 /*    @Inject
     public WaitDialog mWaitDialog;*/
@@ -88,6 +88,5 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     @Override
     public void dismissLoading() {
-
     }
 }

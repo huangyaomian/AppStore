@@ -15,21 +15,17 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseDelegateMultiAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.delegate.BaseMultiTypeDelegate;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
-import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.BannerBean;
 import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.common.imageloader.ImageLoadConfig;
 import com.hym.appstore.common.imageloader.ImageLoader;
+import com.hym.appstore.ui.activity.HomeAppActivity;
 import com.hym.appstore.ui.activity.SubjectActivity;
 import com.hym.appstore.ui.widget.BannerLayout;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import zlc.season.rxdownload2.RxDownload;
 
-public class HomeAdapter2 extends BaseDelegateMultiAdapter<HomeBean, BaseViewHolder> implements View.OnClickListener {
+public class HomeAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
     private static final int TYPE_BANNER = 1;
     private static final int TYPE_ICON = 2;
@@ -46,42 +42,41 @@ public class HomeAdapter2 extends BaseDelegateMultiAdapter<HomeBean, BaseViewHol
     private static final int TYPE_GAME = 4;
 
 
+
     private LayoutInflater mLayoutInflater;
-//    private HomeBean mHomeBean;
+    private HomeBean mHomeBean;
 
     private Context mContext;
 
     RxDownload mRxDownload;
 
 
-    public HomeAdapter2(Context context,  RxDownload rxDownload) {
-//        super(R.layout.home_recyclerview_item);
+    public HomeAdapter2(Context context, HomeBean homeBean, RxDownload rxDownload) {
         mLayoutInflater = LayoutInflater.from(context);
+        this.mHomeBean = homeBean;
         this.mContext = context;
         this.mRxDownload = rxDownload;
-
-        // 实现自己的代理类：
-        setMultiTypeDelegate(new MyMultiTypeDelegate());
     }
 
 
-  /*  @Override
+    @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
-            return TYPE_BANNER;
+       /* if (position == 0) {
+            return TYPE_APP;
         } else if (position == 1) {
-            return TYPE_ICON;
+            return TYPE_APP;
         } else if (position == 2) {
             return TYPE_APP;
         } else if (position == 3) {
             return TYPE_GAME;
         }
-        return 0;
-    }*/
+        return 0;*/
+        return TYPE_APP;
+    }
 
     @NonNull
     @Override
-    public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_BANNER) {
             return new BannerViewHolder(mLayoutInflater.inflate(R.layout.home_banner, parent, false));
         } else if (viewType == TYPE_ICON) {
@@ -94,27 +89,11 @@ public class HomeAdapter2 extends BaseDelegateMultiAdapter<HomeBean, BaseViewHol
         return null;
     }
 
-
     @Override
-    public int getItemCount() {
-        return 4;
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.icon_hot_recommend:
-                mContext.startActivity(new Intent(mContext, SubjectActivity.class));
-                break;
-        }
-    }
-
-    @Override
-    protected void convert(@NotNull BaseViewHolder holder, HomeBean homeBean) {
-        //        Log.d("onBindViewHolder","第幾個item：" + position);
-       if (holder.getItemViewType() == TYPE_BANNER) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (position == 6) {
             BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
-            List<BannerBean> banners = homeBean.getBanners();
+            List<BannerBean> banners = mHomeBean.getBanners();
             List<String> urls = new ArrayList<>(banners.size());
             for (BannerBean banner : banners) {
                 urls.add(banner.getThumbnail());
@@ -127,7 +106,7 @@ public class HomeAdapter2 extends BaseDelegateMultiAdapter<HomeBean, BaseViewHol
                     Toast.makeText(mContext,"banner--onItemClick " + position, Toast.LENGTH_SHORT).show();
                 }
             });
-        } else if (holder.getItemViewType() == TYPE_ICON) {
+        } else if (position == 5) {
             IconViewHolder iconViewHolder = (IconViewHolder) holder;
             iconViewHolder.mIconHotApp.setOnClickListener(this);
             iconViewHolder.mIconHotGame.setOnClickListener(this);
@@ -139,13 +118,13 @@ public class HomeAdapter2 extends BaseDelegateMultiAdapter<HomeBean, BaseViewHol
             appInfoAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.AlphaIn);
             if (viewHolder.type == TYPE_APP){
                 viewHolder.homeRecyclerviewTitle.setText("热门应用");
-                List<AppInfoBean> homeApps = homeBean.getHomeApps();
+                List<AppInfoBean> homeApps = mHomeBean.getHomeApps();
                 List<AppInfoBean> homeApps2 = new ArrayList<>();
                 homeApps2=homeApps.subList(0,10);
                 appInfoAdapter.addData(homeApps2);
             }else {
                 viewHolder.homeRecyclerviewTitle.setText("热门游戏");
-                appInfoAdapter.addData(homeBean.getHomeGames());
+                appInfoAdapter.addData(mHomeBean.getHomeGames());
             }
 
             viewHolder.homeRecyclerview.setAdapter(appInfoAdapter);
@@ -161,46 +140,25 @@ public class HomeAdapter2 extends BaseDelegateMultiAdapter<HomeBean, BaseViewHol
         }
     }
 
+    @Override
+    public int getItemCount() {
+        return 1;
+    }
 
-
-
-    // 方式二：实现自己的代理类
-    final static class MyMultiTypeDelegate extends BaseMultiTypeDelegate<HomeBean> {
-
-        public MyMultiTypeDelegate() {
-            // 绑定 item 类型
-            addItemType(TYPE_BANNER, R.layout.home_banner);
-            addItemType(TYPE_ICON, R.layout.home_nav_icon);
-            addItemType(TYPE_APP, R.layout.home_recyclerview_with_title);
-            addItemType(TYPE_GAME, R.layout.home_recyclerview_with_title);
-        }
-
-
-        @Override
-        public int getItemType(@NotNull List<? extends HomeBean> list, int position) {
-            switch (position) {
-                case 0:
-                    return TYPE_BANNER;
-                case 1:
-                    return TYPE_ICON;
-                case 2:
-                    return TYPE_APP;
-                case 3:
-                    return TYPE_GAME;
-                default:
-                    break;
-            }
-            return 0;
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.icon_hot_recommend:
+                mContext.startActivity(new Intent(mContext, SubjectActivity.class));
+                break;
+            case R.id.icon_hot_app:
+                mContext.startActivity(new Intent(mContext, HomeAppActivity.class));
+                break;
         }
     }
 
 
-
-
-
-
-
-    class BannerViewHolder extends BaseViewHolder {
+    class BannerViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.banner)
         BannerLayout banner;
@@ -212,7 +170,7 @@ public class HomeAdapter2 extends BaseDelegateMultiAdapter<HomeBean, BaseViewHol
         }
     }
 
-    class IconViewHolder extends BaseViewHolder {
+    class IconViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.icon_hot_app)
         LinearLayout mIconHotApp;
@@ -227,7 +185,7 @@ public class HomeAdapter2 extends BaseDelegateMultiAdapter<HomeBean, BaseViewHol
         }
     }
 
-    class AppViewHolder extends BaseViewHolder {
+    class AppViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.home_recyclerview_title)
         TextView homeRecyclerviewTitle;

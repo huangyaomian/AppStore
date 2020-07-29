@@ -22,7 +22,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import zlc.season.rxdownload2.RxDownload;
 
-public class HomeAppActivity extends BaseActivity<HomeAppPresenter> implements HomeAppContract.HomeAppView {
+public class HomeAppActivity extends ProgressActivity<HomeAppPresenter> implements HomeAppContract.HomeAppView {
 
 
     @BindView(R.id.toolbar)
@@ -52,7 +52,6 @@ public class HomeAppActivity extends BaseActivity<HomeAppPresenter> implements H
     @Override
     public void init() {
         mPresenter.requestHomeApps(true);
-
 
         toolbar.setNavigationIcon(
                 new IconicsDrawable(this)
