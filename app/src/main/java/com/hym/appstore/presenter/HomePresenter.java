@@ -35,10 +35,7 @@ public class HomePresenter extends BasePresenter<AppInfoModel, AppInfoContract.V
                     public void onNext(@NonNull Optional<HomeBean> homeBeanOptional) {
                         Log.d("requestHomeData", String.valueOf(homeBeanOptional.getIncludeNull().getBanners().size()));
                         mView.showResult(homeBeanOptional.getIncludeNull());
-                        if(homeBeanOptional !=null){
-                            ACache.get(mContext).put(Constant.APP_HOME_LIST, JsonUtils.toJson(homeBeanOptional.getIncludeNull().getHomeApps()));
-                            ACache.get(mContext).put(Constant.GAME_HOME_LIST, JsonUtils.toJson(homeBeanOptional.getIncludeNull().getHomeGames()));
-                        }
+
                     }
                     @Override
                     protected boolean isShowProgress() {

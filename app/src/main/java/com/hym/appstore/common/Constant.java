@@ -23,9 +23,11 @@ public class Constant {
 
     public static final String APP_UPDATE_LIST = "app_update_list";
 
-    public static final String APP_HOME_LIST = "app_home_list";
+    public static final String HOME_LIST = "home_list";
 
-    public static final String GAME_HOME_LIST = "game_home_list";
+    public static final int GAME_HOME_LIST = 2;
+
+    public static final int APP_HOME_LIST = 1;
 
     public static final String POSITION = "position";
 

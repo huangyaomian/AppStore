@@ -57,12 +57,13 @@ public abstract class ProgressActivity<T extends BasePresenter> extends AppCompa
         setupActivityComponent(mMyApplication.getAppComponent());
 //        mRootView = (FrameLayout) getLayoutInflater().from(this).inflate(R.layout.fragment_progress,null);
         mRootView = findViewById(R.id.root_view);
-        setRealContentView();
+
         mViewProgress = findViewById(R.id.view_progress);
         mViewEmpty = findViewById(R.id.view_empty);
         mViewContent = findViewById(R.id.view_contern);
         mTextError = findViewById(R.id.text_tip);
         mLoginButton = findViewById(R.id.login_btn);
+        setRealContentView();
         mTextError.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

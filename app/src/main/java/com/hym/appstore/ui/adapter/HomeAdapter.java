@@ -21,6 +21,7 @@ import com.hym.appstore.R;
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.BannerBean;
 import com.hym.appstore.bean.HomeBean;
+import com.hym.appstore.common.Constant;
 import com.hym.appstore.common.imageloader.ImageLoadConfig;
 import com.hym.appstore.common.imageloader.ImageLoader;
 import com.hym.appstore.ui.activity.HomeAppActivity;
@@ -152,7 +153,14 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 mContext.startActivity(new Intent(mContext, SubjectActivity.class));
                 break;
             case R.id.icon_hot_app:
-                mContext.startActivity(new Intent(mContext, HomeAppActivity.class));
+                Intent intent = new Intent(mContext, HomeAppActivity.class);
+                intent.putExtra(Constant.HOME_LIST,Constant.APP_HOME_LIST);
+                mContext.startActivity(intent);
+                break;
+            case R.id.icon_hot_game:
+                Intent intent2 = new Intent(mContext, HomeAppActivity.class);
+                intent2.putExtra(Constant.HOME_LIST,Constant.GAME_HOME_LIST);
+                mContext.startActivity(intent2);
                 break;
         }
     }

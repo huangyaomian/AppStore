@@ -5,6 +5,7 @@ import com.hym.appstore.bean.BaseBean;
 import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.bean.LoginBean;
 import com.hym.appstore.bean.PageBean;
+import com.hym.appstore.bean.SearchResult;
 import com.hym.appstore.bean.SortBean;
 import com.hym.appstore.bean.Subject;
 import com.hym.appstore.bean.SubjectDetail;
@@ -65,5 +66,11 @@ public interface ApiService {
 
     @GET("subject/{id}")
     Observable<BaseBean<SubjectDetail>> subjectDetail(@Path("id") int id);
+
+    @GET("search/suggest")
+    Observable<BaseBean<List<String>>> searchSuggest(@Query("keyword") String keyword);
+
+    @GET("search")
+    Observable<BaseBean<SearchResult>> search(@Query("keyword") String keyword);
 
 }

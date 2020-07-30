@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hym.appstore.R;
 import com.hym.appstore.bean.HomeBean;
+import com.hym.appstore.common.Constant;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.dagger2.component.DaggerHomeAppComponent;
 import com.hym.appstore.dagger2.module.HomeAppModule;
@@ -85,7 +86,15 @@ public class HomeAppActivity extends ProgressActivity<HomeAppPresenter> implemen
     @Override
     public void showApps(HomeBean datas) {
         mAdapter = AppInfoAdapter.builder().updateStatus(true).showBrief(true).rxDownload(mRxDownload).build();
-        mAdapter.addData(datas.getHomeApps());
+        int intExtra = getIntent().getIntExtra(Constant.HOME_LIST, 1);
+        if (intExtra == Constant.APP_HOME_LIST) {
+            mAdapter.addData(datas.getHomeApps());
+            toolbar.setTitle("热门应用");
+        }else {
+            mAdapter.addData(datas.getHomeGames());
+            toolbar.setTitle("热门游戏");
+        }
+
         mRecyclerView.setAdapter(mAdapter);
     }
 }
