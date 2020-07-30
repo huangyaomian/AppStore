@@ -102,7 +102,7 @@
         <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
         <item name="android:windowActionBarOverlay">@style/ActionButton.Overflow</item>
         <item name="actionOverflowButtonStyle">@style/ActionButton.Overflow</item>
-        <item name="titleTextColor">@android:color/white</item>
+        <item name="titleTextColor">@android:color/black</item>
     </style>
 
     <style name="ActionButton.Overflow" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
@@ -111,10 +111,14 @@
 
 
     <style name="AppTheme.DrawerArrowToggle" parent="Base.Widget.AppCompat.DrawerArrowToggle">
-        <item name="color">@android:color/white</item>
+        <item name="color">@android:color/black</item>
     </style>
 
 <!--    <style name="AppTheme.ToolBar"></style>-->
 
-
+    <style name="empty_img">
+        <item name="android:layout_width">@dimen/def_height</item>
+        <item name="android:layout_height">@dimen/def_height</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
 </resources>

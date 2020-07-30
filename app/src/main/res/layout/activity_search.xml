@@ -12,125 +12,165 @@
 
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/AppTheme.ToolBar"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dp_10"
-        android:paddingRight="@dimen/dp_10"
-
-        >
-
-
-        <RelativeLayout
-            android:id="@+id/search_bar"
+    <!--    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/searchview_bg">
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/AppTheme.ToolBar"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
 
-            <EditText
-                android:id="@+id/searchTextView"
+            >-->
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="true"
+            app:elevation="0dp"
+            android:fitsSystemWindows="true"
+            app:layout_constraintTop_toTopOf="parent"
+
+            >
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="@string/search_hint"
-                android:imeOptions="actionSearch"
-                android:inputType="textNoSuggestions"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:maxLines="1"
-                android:textColor="@color/TextColor"
-                android:textColorHint="@color/theme_while"
-                android:textSize="16sp"/>
+                android:minHeight="?attr/actionBarSize"
+                app:contentInsetStartWithNavigation="0dp"
+                android:theme="@style/AppTheme.ToolBar"
+                android:gravity="center_vertical"
+
+                >
+                <RelativeLayout
+                    android:id="@+id/search_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_grey">
+
+<!--                    @drawable/search_view_bg-->
+
+                    <EditText
+                        android:id="@+id/searchTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="@string/search_hint"
+                        android:imeOptions="actionSearch"
+                        android:inputType="textNoSuggestions"
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="3dp"
+                        android:paddingBottom="3dp"
+                        android:maxLines="1"
+                        android:textColor="@color/TextColor"
+                        android:textColorHint="@color/theme_grey"
+                        android:textSize="16sp"/>
 
 
-            <ImageView
-                android:id="@+id/action_clear_btn"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:visibility="gone"
-                android:background="?android:attr/selectableItemBackground"
-                />
+                    <ImageView
+                        android:id="@+id/action_clear_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:paddingRight="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:visibility="gone" />
 
 
-        </RelativeLayout>
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/line"
+                app:layout_constraintTop_toBottomOf="@+id/appBarLayout"/>
+
+
+        </com.google.android.material.appbar.AppBarLayout>
 
 
 
-    </androidx.appcompat.widget.Toolbar>
 
 
 
-    <LinearLayout
-        android:id="@+id/layout_history"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        <!--    </androidx.appcompat.widget.Toolbar>-->
 
 
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/layout_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:padding="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:visibility="gone">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="历时记录"/>
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/btn_clear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="历时记录"/>
+
+                <ImageView
+                    android:id="@+id/btn_clear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
 
 
-        </RelativeLayout>
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_history"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                android:scrollbarStyle="outsideOverlay"
+                android:clipToPadding="false"
+                android:elevation="1dp" />
+
+        </LinearLayout>
+
+
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_history"
+            android:id="@+id/recycler_view_suggestion"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"
             android:scrollbarStyle="outsideOverlay"
             android:clipToPadding="false"
+            android:visibility="gone"
             android:elevation="1dp" />
 
-    </LinearLayout>
 
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_suggestion"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:scrollbarStyle="outsideOverlay"
-        android:clipToPadding="false"
-        android:visibility="gone"
-        android:elevation="1dp" />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_result"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:scrollbarStyle="outsideOverlay"
-        android:clipToPadding="false"
-        android:visibility="gone"
-        android:elevation="1dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:scrollbarStyle="outsideOverlay"
+            android:clipToPadding="false"
+            android:visibility="gone"
+            android:elevation="1dp" />
 
 
 

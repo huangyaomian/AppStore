@@ -21,6 +21,8 @@ import com.hym.appstore.R;
 import com.hym.appstore.bean.SearchResult;
 import com.hym.appstore.common.rx.RxSchedulers;
 import com.hym.appstore.dagger2.component.AppComponent;
+import com.hym.appstore.dagger2.component.DaggerSearchComponent;
+import com.hym.appstore.dagger2.module.SearchModule;
 import com.hym.appstore.presenter.SearchPresenter;
 import com.hym.appstore.presenter.contract.SearchContract;
 import com.hym.appstore.ui.adapter.AppInfoAdapter;
@@ -100,15 +102,14 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
-//        DaggerSearchComponent.builder().appComponent(appComponent)
-//                .searchModule(new SearchModule(this))
-//                .build()
-//                .inject(this);
+        DaggerSearchComponent.builder().appComponent(appComponent)
+                .searchModule(new SearchModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override
     public void init() {
-
         mPresenter.showHistory();
         setupSearchView();
         setupSuggestionRecyclerView();
@@ -118,12 +119,12 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
     @Override
     public void initView() {
-
         mToolbar.setNavigationIcon(
                 new IconicsDrawable(this)
                         .icon(Ionicons.Icon.ion_ios_arrow_back)
                         .sizeDp(16)
-                        .color(getResources().getColor(R.color.theme_while)
+                        .paddingDp(0)
+                        .color(getResources().getColor(R.color.TextColor)
                         )
         );
 
@@ -136,7 +137,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         });
 
         mActionClearBtn.setImageDrawable(new IconicsDrawable(this, Ionicons.Icon.ion_ios_close_empty)
-                .color(ContextCompat.getColor(this,R.color.theme_while)).sizeDp(16));
+                .color(ContextCompat.getColor(this,R.color.theme_grey)).sizeDp(12));
 
 
         mBtnClear.setImageDrawable(new IconicsDrawable(this, Ionicons.Icon.ion_ios_trash_outline)
@@ -146,7 +147,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
             @Override
             public void accept(@NonNull Object o) throws Exception {
-
+                //这里需要移除view，并且将历史记录清除
             }
         });
     }
@@ -169,19 +170,19 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
         mRecyclerViewSuggestion.setAdapter(mSuggestionAdapter);
 
-
-//        mRecyclerViewSuggestion.addOnItemTouchListener(new OnItemClickListener() {
-//            @Override
-//            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                search(mSuggestionAdapter.getItem(position));
-//            }
-//        });
+        mSuggestionAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(@androidx.annotation.NonNull BaseQuickAdapter adapter, @androidx.annotation.NonNull View view, int position) {
+                mSearchTextView.setText(mSuggestionAdapter.getItem(position));
+                search(mSuggestionAdapter.getItem(position));
+            }
+        });
 
     }
 
     private void initSearchResultRecycleView(){
         mAppInfoAdapter = AppInfoAdapter.builder().showBrief(false).showCategoryName(true).rxDownload(rxDownload).build();
-
+        mAppInfoAdapter.setEmptyView(R.layout.search_empty_view);
         LinearLayoutManager layoutManager =  new LinearLayoutManager(this);
         mRecyclerViewResult.setLayoutManager(layoutManager);
 
@@ -190,21 +191,19 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
         mRecyclerViewResult.setAdapter(mAppInfoAdapter);
 
-//        mRecyclerViewResult.addOnItemTouchListener(new OnItemClickListener() {
-//
-//            @Override
-//            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-//
-//            }
-//        });
+        mAppInfoAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(@androidx.annotation.NonNull BaseQuickAdapter<?, ?> adapter, @androidx.annotation.NonNull View view, int position) {
+
+            }
+        });
+
     }
 
     private void initHistoryRecycleView(List<String> list) {
 
-
         mHistoryAdapter = new SearchHistoryAdapter();
         mHistoryAdapter.addData(list);
-
 
         RecyclerView.LayoutManager lm = new GridLayoutManager(this,5);
         SpaceItemDecoration2 itemd = new SpaceItemDecoration2(10);
@@ -213,20 +212,25 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         mRecyclerViewHistory.setLayoutManager(lm);
         mRecyclerViewHistory.setAdapter(mHistoryAdapter);
 
-//        mRecyclerViewHistory.addOnItemTouchListener(new OnItemChildClickListener() {
-//            @Override
-//            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//
-//                search(mHistoryAdapter.getItem(position));
-//            }
-//        });
+        mHistoryAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(@androidx.annotation.NonNull BaseQuickAdapter<?, ?> adapter, @androidx.annotation.NonNull View view, int position) {
+                search(mHistoryAdapter.getItem(position));
+            }
+        });
+
+        mHistoryAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(@androidx.annotation.NonNull BaseQuickAdapter adapter, @androidx.annotation.NonNull View view, int position) {
+                mSearchTextView.setText(mHistoryAdapter.getItem(position));
+                search(mHistoryAdapter.getItem(position));
+            }
+        });
 
     }
 
 
     private void setupSearchView() {
-
-
 
         RxView.clicks(mActionClearBtn).subscribe(new Consumer<Object>() {
 
@@ -234,7 +238,6 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
             public void accept(@NonNull Object o) throws Exception {
 
                 mSearchTextView.setText("");
-
                 mLayoutHistory.setVisibility(View.VISIBLE);
                 mRecyclerViewSuggestion.setVisibility(View.GONE);
                 mRecyclerViewResult.setVisibility(View.GONE);
@@ -247,6 +250,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
             public void accept(@NonNull Integer integer) throws Exception {
 
                 search(mSearchTextView.getText().toString().trim());
+
             }
         });
 
@@ -283,41 +287,37 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
 
     private void search(String keyword){
-
-
         mPresenter.search(keyword);
     }
 
     @Override
     public void showSearchHistory(List<String> list) {
-
         initHistoryRecycleView(list);
-        mRecyclerViewSuggestion.setVisibility(View.GONE);
-        mLayoutHistory.setVisibility(View.VISIBLE);
-        mRecyclerViewResult.setVisibility(View.GONE);
+        setRecyclerViewSuggestionGone();
+        setLayoutHistoryVisible();
+        setRecyclerViewResultGone();
     }
 
     @Override
     public void showSuggestions(List<String> list) {
 
-
         mSuggestionAdapter.setNewData(list);
-        mRecyclerViewSuggestion.setVisibility(View.VISIBLE);
+        setRecyclerViewSuggestionVisible();
 
-        mLayoutHistory.setVisibility(View.GONE);
-        mRecyclerViewResult.setVisibility(View.GONE);
+        setLayoutHistoryGone();
+        setRecyclerViewResultGone();
 
     }
 
     @Override
     public void showSearchResult(SearchResult result) {
+        setRecyclerViewSuggestionGone();
+        setLayoutHistoryGone();
+        setRecyclerViewResultVisible();
+//        mAppInfoAdapter.setEmptyView(R.layout.loading_view);
 
+//        List<AppInfoBean> list = new ArrayList<>();
         mAppInfoAdapter.setNewData(result.getListApp());
-        mRecyclerViewSuggestion.setVisibility(View.GONE);
-        mLayoutHistory.setVisibility(View.GONE);
-        mRecyclerViewResult.setVisibility(View.VISIBLE);
-
-
     }
 
     @Override
@@ -325,6 +325,38 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
     }
 
+    @Override
+    public void dismissLoading() {
 
+    }
 
+    private void setRecyclerViewResultGone(){
+        Log.d("SearchActivityhym", "setRecyclerViewResultGone: ");
+        mRecyclerViewResult.setVisibility(View.GONE);
+    }
+
+    private void setRecyclerViewResultVisible(){
+        Log.d("SearchActivityhym", "setRecyclerViewResultVisible: ");
+        mRecyclerViewResult.setVisibility(View.VISIBLE);
+    }
+
+    private void setRecyclerViewSuggestionGone(){
+        Log.d("SearchActivityhym", "setRecyclerViewSuggestionGone: ");
+        mRecyclerViewSuggestion.setVisibility(View.GONE);
+    }
+
+    private void setRecyclerViewSuggestionVisible(){
+        Log.d("SearchActivityhym", "setRecyclerViewSuggestionVisible: ");
+        mRecyclerViewSuggestion.setVisibility(View.VISIBLE);
+    }
+
+    private void setLayoutHistoryGone(){
+        Log.d("SearchActivityhym", "setLayoutHistoryGone: ");
+        mLayoutHistory.setVisibility(View.GONE);
+    }
+
+    private void setLayoutHistoryVisible(){
+        Log.d("SearchActivityhym", "setLayoutHistoryVisible: ");
+        mLayoutHistory.setVisibility(View.VISIBLE);
+    }
 }

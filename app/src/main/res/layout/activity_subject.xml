@@ -32,7 +32,7 @@
                 android:minHeight="?attr/actionBarSize"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/Widget.AppCompat.PopupMenu.Overflow"
-                app:title="title"
+                app:contentInsetStartWithNavigation="0dp"
                 />
 
             <View

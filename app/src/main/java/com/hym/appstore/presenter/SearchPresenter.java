@@ -1,13 +1,9 @@
 package com.hym.appstore.presenter;
 
-import android.util.Log;
-
-import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.bean.SearchResult;
 import com.hym.appstore.common.rx.Optional;
 import com.hym.appstore.common.rx.RxHttpResponseCompat;
 import com.hym.appstore.common.rx.subscriber.ProgressDisposableObserver;
-import com.hym.appstore.presenter.contract.HomeAppContract;
 import com.hym.appstore.presenter.contract.SearchContract;
 
 import java.util.ArrayList;
@@ -50,15 +46,30 @@ public class SearchPresenter extends BasePresenter<SearchContract.ISearchModel, 
         saveSearchHistory(keyword);
 
         mModel.search(keyword)
-                .compose(RxHttpResponseCompat.<SearchResult>compatResult())
-                .subscribe(new ProgressDisposableObserver<SearchResult>(mContext,mView) {
+                .compose(RxHttpResponseCompat.handle_result())
+                .subscribe(new ProgressDisposableObserver<Optional<SearchResult>>(mContext,mView) {
                     @Override
-                    public void onNext(SearchResult searchResult) {
-                        mView.showSearchResult(searchResult);
+                    public void onNext(@NonNull Optional<SearchResult> searchResultOptional) {
+                        mView.showSearchResult(searchResultOptional.getIncludeNull());
                     }
                 });
 
     }
+
+//      mModel.getHomeRequest()
+//              .compose(RxHttpResponseCompat.handle_result())
+//            .subscribe(new ProgressDisposableObserver<Optional<HomeBean>>(mContext, mView) {
+//        @Override
+//        public void onNext(@NonNull Optional< HomeBean > homeBeanOptional) {
+//            Log.d("requestHomeData", String.valueOf(homeBeanOptional.getIncludeNull().getBanners().size()));
+//            mView.showResult(homeBeanOptional.getIncludeNull());
+//
+//        }
+//        @Override
+//        protected boolean isShowProgress() {
+//            return isShowProgress;
+//        }
+//    });
 
     private void saveSearchHistory(String keyword) {
 

@@ -1,7 +1,6 @@
 package com.hym.appstore.presenter.contract;
 
 import com.hym.appstore.bean.BaseBean;
-import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.bean.SearchResult;
 import com.hym.appstore.ui.BaseView;
 
@@ -11,7 +10,7 @@ import io.reactivex.Observable;
 
 public interface SearchContract {
 
-    public  interface  SearchView extends BaseView {
+    interface  SearchView extends BaseView {
 
         void showSearchHistory(List<String> list);
         void showSuggestions(List<String> list);
@@ -20,7 +19,7 @@ public interface SearchContract {
     }
 
 
-    public interface ISearchModel{
+    interface ISearchModel{
 
         Observable<BaseBean<List<String>>> getSuggestion(String keyword);
 

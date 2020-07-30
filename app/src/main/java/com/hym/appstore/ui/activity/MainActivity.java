@@ -23,7 +23,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
-import com.hjq.toast.ToastUtils;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.FragmentInfo;
 import com.hym.appstore.bean.User;
@@ -244,8 +243,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
             case R.id.search:
-                ToastUtils.show("you clicked backup");
-//                Toast.makeText(this, "you clicked backup", Toast.LENGTH_SHORT).show();
+                startActivity(SearchActivity.class);
                 break;
           /*  case R.id.delete:
                 startActivity(AppManagerActivity.class);

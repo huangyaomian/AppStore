@@ -86,6 +86,7 @@ public class HomeAppActivity extends ProgressActivity<HomeAppPresenter> implemen
     @Override
     public void showApps(HomeBean datas) {
         mAdapter = AppInfoAdapter.builder().updateStatus(true).showBrief(true).rxDownload(mRxDownload).build();
+        mAdapter.setEmptyView(R.layout.search_empty_view);
         int intExtra = getIntent().getIntExtra(Constant.HOME_LIST, 1);
         if (intExtra == Constant.APP_HOME_LIST) {
             mAdapter.addData(datas.getHomeApps());

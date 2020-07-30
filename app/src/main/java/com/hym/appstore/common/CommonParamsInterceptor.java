@@ -2,11 +2,11 @@ package com.hym.appstore.common;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.hym.appstore.common.utils.ACache;
+import com.hym.appstore.common.utils.DensityUtil;
 import com.hym.appstore.common.utils.DeviceUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -46,13 +46,14 @@ public class CommonParamsInterceptor implements Interceptor {
 
         try {
             HashMap<String,Object> commonParamsMap = new HashMap<>();
-//            commonParamsMap.put(Constant.IMEI, DeviceUtils.getIMEI(mContext));
-            commonParamsMap.put(Constant.IMEI, "1111111111");
+            commonParamsMap.put(Constant.IMEI, DeviceUtils.getIMEI(mContext));
+//            commonParamsMap.put(Constant.IMEI, "1111111111");
+            commonParamsMap.put(Constant.MODEL, DeviceUtils.getModel());
             commonParamsMap.put(Constant.LANGUAGE, DeviceUtils.getLanguage());
             commonParamsMap.put(Constant.OS, DeviceUtils.getOSVersion());
-            commonParamsMap.put(Constant.RESOLUTION,DeviceUtils.getBuildVersionRelease());
+            commonParamsMap.put(Constant.RESOLUTION, DensityUtil.getScreenW(mContext) + "*" + DensityUtil.getScreenH(mContext));
             commonParamsMap.put(Constant.SDK,DeviceUtils.getBuildVersionSDK());
-            commonParamsMap.put(Constant.DENSITY_SCALE_FACTOR,DeviceUtils.getDensity(mContext));
+            commonParamsMap.put(Constant.DENSITY_SCALE_FACTOR,mContext.getResources().getDisplayMetrics().density + "");
 
             ACache aCache = ACache.get(mContext);
             String token = aCache.getAsString(Constant.TOKEN);
