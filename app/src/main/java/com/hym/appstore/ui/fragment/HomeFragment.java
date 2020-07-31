@@ -26,7 +26,7 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
 
 
     @BindView(R.id.home_rv)
-    RecyclerView mHomeRv;
+    RecyclerView mRecyclerView;
     private HomeAdapter adapter;
 
     @Inject
@@ -50,8 +50,9 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
 
     @Override
     protected void init() {
-        mHomeRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mHomeRv.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+//        mHomeRv.setItemAnimator(new DefaultItemAnimator());
         mPresenter.requestHomeData(true);
     }
 
@@ -67,8 +68,12 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
     @Override
     public void showResult(HomeBean homeBean) {
         adapter = new HomeAdapter(getActivity(), homeBean, mRxDownload);
-        mHomeRv.setAdapter(adapter);
-        Log.d("showResult", String.valueOf(mHomeRv.getChildCount()));
+        mRecyclerView.setAdapter(adapter);
+        DefaultItemAnimator itemAnimator = new DefaultItemAnimator();
+        itemAnimator.setAddDuration(500);
+        itemAnimator.setRemoveDuration(500);
+        mRecyclerView.setItemAnimator(itemAnimator);
+        Log.d("showResult", String.valueOf(mRecyclerView.getChildCount()));
 
 
     }
