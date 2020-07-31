@@ -114,7 +114,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         setupSearchView();
         setupSuggestionRecyclerView();
         initSearchResultRecycleView();
-
+        mSearchTextView.setSaveEnabled(false);
     }
 
     @Override
@@ -215,17 +215,12 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         mHistoryAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@androidx.annotation.NonNull BaseQuickAdapter<?, ?> adapter, @androidx.annotation.NonNull View view, int position) {
+                mSearchTextView.setText(mHistoryAdapter.getItem(position));
+                mSearchTextView.setSelection(mSearchTextView.length());
                 search(mHistoryAdapter.getItem(position));
             }
         });
 
-        mHistoryAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(@androidx.annotation.NonNull BaseQuickAdapter adapter, @androidx.annotation.NonNull View view, int position) {
-                mSearchTextView.setText(mHistoryAdapter.getItem(position));
-                search(mHistoryAdapter.getItem(position));
-            }
-        });
 
     }
 
@@ -269,7 +264,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
                     @Override
                     public void accept(@NonNull CharSequence charSequence) throws Exception {
 
-                        Log.d("SearchActivity",charSequence.toString()+"，status="+status);
+                        Log.d("SearchActivity22",charSequence.toString()+"，status="+status);
 
                         if(charSequence.length()>0){
                             mActionClearBtn.setVisibility(View.VISIBLE);
@@ -287,6 +282,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
 
     private void search(String keyword){
+        mAppInfoAdapter.setEmptyView(R.layout.loading_view);
         mPresenter.search(keyword);
     }
 
@@ -314,9 +310,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         setRecyclerViewSuggestionGone();
         setLayoutHistoryGone();
         setRecyclerViewResultVisible();
-//        mAppInfoAdapter.setEmptyView(R.layout.loading_view);
-
-//        List<AppInfoBean> list = new ArrayList<>();
+//
         mAppInfoAdapter.setNewData(result.getListApp());
     }
 

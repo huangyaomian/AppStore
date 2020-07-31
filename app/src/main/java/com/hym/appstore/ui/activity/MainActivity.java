@@ -245,9 +245,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             case R.id.search:
                 startActivity(SearchActivity.class);
                 break;
-          /*  case R.id.delete:
-                startActivity(AppManagerActivity.class);
-                break;*/
 /*            case R.id.setting:
                 Toast.makeText(this, "you clicked 11", Toast.LENGTH_SHORT).show();
                 break;*/
