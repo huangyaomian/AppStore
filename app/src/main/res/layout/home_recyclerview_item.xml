@@ -30,6 +30,7 @@
 
     <ImageView
         android:id="@+id/img_app_icon"
+        android:layout_marginTop="16dp"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_toRightOf="@+id/home_recyclerview_position"

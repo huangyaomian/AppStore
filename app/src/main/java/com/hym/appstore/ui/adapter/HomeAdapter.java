@@ -33,7 +33,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import zlc.season.rxdownload2.RxDownload;
 
 public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
@@ -123,7 +122,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 List<AppInfoBean> homeApps = mHomeBean.getHomeApps();
                 List<AppInfoBean> homeApps2 = new ArrayList<>();
                 homeApps2=homeApps.subList(0,10);
-                appInfoAdapter.addData(homeApps);
+                appInfoAdapter.addData(homeApps2);
             }else {
                 viewHolder.homeRecyclerviewTitle.setText("热门游戏");
                 appInfoAdapter.addData(mHomeBean.getHomeGames());

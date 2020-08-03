@@ -15,7 +15,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
 
         <com.xuexiang.xui.widget.progress.materialprogressbar.MaterialProgressBar

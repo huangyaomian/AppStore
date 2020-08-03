@@ -4,7 +4,6 @@ package com.hym.appstore.ui.fragment;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,9 +19,8 @@ import com.hym.appstore.ui.adapter.HomeAdapter;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter;
-import jp.wasabeef.recyclerview.animators.LandingAnimator;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 import zlc.season.rxdownload2.RxDownload;
 
 public class HomeFragment extends ProgressFragment<HomePresenter> implements AppInfoContract.View {
@@ -73,10 +71,10 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
         adapter = new HomeAdapter(getActivity(), homeBean, mRxDownload);
 //        LandingAnimator landingAnimator = new LandingAnimator();
 //        mRecyclerView.setAnimation(landingAnimator);
-        mRecyclerView.setAdapter(adapter);
-//        SlideInRightAnimationAdapter slideInRightAnimationAdapter = new SlideInRightAnimationAdapter(adapter);
-//        AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(slideInRightAnimationAdapter);
-//        mRecyclerView.setAdapter(alphaInAnimationAdapter);
+//        mRecyclerView.setAdapter(adapter);
+
+        SlideInBottomAnimationAdapter alphaAdapter = new SlideInBottomAnimationAdapter(adapter);
+        mRecyclerView.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
         Log.d("showResult", String.valueOf(mRecyclerView.getChildCount()));
 
 

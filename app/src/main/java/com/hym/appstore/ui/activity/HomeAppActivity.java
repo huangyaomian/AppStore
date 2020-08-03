@@ -21,6 +21,8 @@ import com.mikepenz.ionicons_typeface_library.Ionicons;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 import zlc.season.rxdownload2.RxDownload;
 
 public class HomeAppActivity extends ProgressActivity<HomeAppPresenter> implements HomeAppContract.HomeAppView {
@@ -85,7 +87,9 @@ public class HomeAppActivity extends ProgressActivity<HomeAppPresenter> implemen
 
     @Override
     public void showApps(HomeBean datas) {
+
         mAdapter = AppInfoAdapter.builder().updateStatus(true).showBrief(true).rxDownload(mRxDownload).build();
+
         mAdapter.setEmptyView(R.layout.search_empty_view);
         int intExtra = getIntent().getIntExtra(Constant.HOME_LIST, 1);
         if (intExtra == Constant.APP_HOME_LIST) {
@@ -95,7 +99,9 @@ public class HomeAppActivity extends ProgressActivity<HomeAppPresenter> implemen
             mAdapter.addData(datas.getHomeGames());
             toolbar.setTitle("热门游戏");
         }
+        SlideInBottomAnimationAdapter alphaAdapter = new SlideInBottomAnimationAdapter(mAdapter);
+        mRecyclerView.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
+//        mRecyclerView.setAdapter(mAdapter);
 
-        mRecyclerView.setAdapter(mAdapter);
     }
 }
