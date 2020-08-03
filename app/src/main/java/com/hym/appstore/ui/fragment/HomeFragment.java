@@ -20,6 +20,9 @@ import com.hym.appstore.ui.adapter.HomeAdapter;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.LandingAnimator;
 import zlc.season.rxdownload2.RxDownload;
 
 public class HomeFragment extends ProgressFragment<HomePresenter> implements AppInfoContract.View {
@@ -68,11 +71,12 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
     @Override
     public void showResult(HomeBean homeBean) {
         adapter = new HomeAdapter(getActivity(), homeBean, mRxDownload);
+//        LandingAnimator landingAnimator = new LandingAnimator();
+//        mRecyclerView.setAnimation(landingAnimator);
         mRecyclerView.setAdapter(adapter);
-        DefaultItemAnimator itemAnimator = new DefaultItemAnimator();
-        itemAnimator.setAddDuration(500);
-        itemAnimator.setRemoveDuration(500);
-        mRecyclerView.setItemAnimator(itemAnimator);
+//        SlideInRightAnimationAdapter slideInRightAnimationAdapter = new SlideInRightAnimationAdapter(adapter);
+//        AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(slideInRightAnimationAdapter);
+//        mRecyclerView.setAdapter(alphaInAnimationAdapter);
         Log.d("showResult", String.valueOf(mRecyclerView.getChildCount()));
 
 

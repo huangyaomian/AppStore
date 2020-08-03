@@ -135,4 +135,7 @@ dependencies {
 
     //解決在使用okhttp异步请求是出现异常的情况
     implementation 'org.conscrypt:conscrypt-android:2.2.1'
+
+    //recyclerview-animators
+    implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
 }

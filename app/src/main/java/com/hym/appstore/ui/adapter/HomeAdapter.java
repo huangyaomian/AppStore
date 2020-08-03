@@ -33,6 +33,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import zlc.season.rxdownload2.RxDownload;
 
 public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
@@ -115,19 +116,20 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         } else {
             AppViewHolder viewHolder = (AppViewHolder) holder;
             AppInfoAdapter appInfoAdapter = AppInfoAdapter.builder().showPosition(false).showCategoryName(false).showBrief(true).rxDownload(mRxDownload).build();
-            appInfoAdapter.setAnimationEnable(false);
+//            appInfoAdapter.setAnimationEnable(false);
 //            appInfoAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.AlphaIn);
             if (viewHolder.type == TYPE_APP){
                 viewHolder.homeRecyclerviewTitle.setText("热门应用");
                 List<AppInfoBean> homeApps = mHomeBean.getHomeApps();
                 List<AppInfoBean> homeApps2 = new ArrayList<>();
                 homeApps2=homeApps.subList(0,10);
-                appInfoAdapter.addData(homeApps2);
+                appInfoAdapter.addData(homeApps);
             }else {
                 viewHolder.homeRecyclerviewTitle.setText("热门游戏");
                 appInfoAdapter.addData(mHomeBean.getHomeGames());
             }
-
+//            RecyclerView.ItemAnimator itemAnimator = new SlideInLeftAnimator();
+//            viewHolder.homeRecyclerview.setAnimation(SlideInUpAnimator(OvershootInterpolator(1f)));
             viewHolder.homeRecyclerview.setAdapter(appInfoAdapter);
 
             // 设置点击事件

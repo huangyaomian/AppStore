@@ -145,6 +145,7 @@
                 android:scrollbars="vertical"
                 android:scrollbarStyle="outsideOverlay"
                 android:clipToPadding="false"
+                android:animation="@anim/item_animation_fall_down"
                 android:elevation="1dp" />
 
         </LinearLayout>
@@ -158,6 +159,7 @@
             android:scrollbars="vertical"
             android:scrollbarStyle="outsideOverlay"
             android:clipToPadding="false"
+            android:animation="@anim/item_animation_fall_down"
             android:visibility="gone"
             android:elevation="1dp" />
 
@@ -169,6 +171,7 @@
             android:scrollbars="vertical"
             android:scrollbarStyle="outsideOverlay"
             android:clipToPadding="false"
+            android:animation="@anim/item_animation_fall_down"
             android:visibility="gone"
             android:elevation="1dp" />
 
