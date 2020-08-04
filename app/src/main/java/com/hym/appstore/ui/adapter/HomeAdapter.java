@@ -1,5 +1,6 @@
 package com.hym.appstore.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -18,12 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.hym.appstore.R;
+import com.hym.appstore.app.MyApplication;
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.BannerBean;
 import com.hym.appstore.bean.HomeBean;
 import com.hym.appstore.common.Constant;
 import com.hym.appstore.common.imageloader.ImageLoadConfig;
 import com.hym.appstore.common.imageloader.ImageLoader;
+import com.hym.appstore.ui.activity.AppDetailsActivity;
 import com.hym.appstore.ui.activity.HomeAppActivity;
 import com.hym.appstore.ui.activity.SubjectActivity;
 import com.hym.appstore.ui.widget.BannerLayout;
@@ -137,6 +140,13 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 public void onItemClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
 //                    Tips.show("onItemClick " + position);
                     Toast.makeText(mContext,"onItemClick " + position, Toast.LENGTH_SHORT).show();
+                   /* mMyApplication = (MyApplication) getac.getApplication());
+                    (MyApplication)mContext.getApplicationContext().setView(view);
+                    AppInfoBean appInfoBean = adapter.getItem(position);
+                    Intent intent = new Intent(mContext, AppDetailsActivity.class);
+                    intent.putExtra("appInfo",appInfoBean);
+                    intent.putExtra("isAnim",true);
+                    startActivity(intent);*/
                 }
             });
         }

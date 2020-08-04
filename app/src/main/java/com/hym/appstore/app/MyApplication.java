@@ -8,6 +8,7 @@ import androidx.multidex.MultiDex;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.hjq.toast.ToastUtils;
+import com.hym.appstore.common.db.DBManager;
 import com.hym.appstore.dagger2.component.DaggerAppComponent;
 import com.hym.appstore.dagger2.module.AppModule;
 import com.hym.appstore.presenter.contract.RecommendContract;
@@ -39,7 +40,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        DBManager.initDB(this);
         mAppComponent = (DaggerAppComponent) DaggerAppComponent.builder().appModule(new AppModule(this)).build();
 
         XUI.init(this); //初始化UI框架

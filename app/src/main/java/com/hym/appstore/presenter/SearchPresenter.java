@@ -1,6 +1,7 @@
 package com.hym.appstore.presenter;
 
 import com.hym.appstore.bean.SearchResult;
+import com.hym.appstore.common.db.DBManager;
 import com.hym.appstore.common.rx.Optional;
 import com.hym.appstore.common.rx.RxHttpResponseCompat;
 import com.hym.appstore.common.rx.subscriber.ProgressDisposableObserver;
@@ -18,14 +19,13 @@ public class SearchPresenter extends BasePresenter<SearchContract.ISearchModel, 
 
 
     @Inject
-    public SearchPresenter(SearchContract.ISearchModel iSearchModel, SearchContract.SearchView searchtView) {
-        super(iSearchModel, searchtView);
+    public SearchPresenter(SearchContract.ISearchModel iSearchModel, SearchContract.SearchView searchView) {
+        super(iSearchModel, searchView);
     }
 
 
 
     public void getSuggestions(String keyword){
-
 
         mModel.getSuggestion(keyword)
                 .compose(RxHttpResponseCompat.<List<String>>compatResult())
@@ -44,13 +44,13 @@ public class SearchPresenter extends BasePresenter<SearchContract.ISearchModel, 
     public void search(String keyword){
 
         saveSearchHistory(keyword);
-
         mModel.search(keyword)
                 .compose(RxHttpResponseCompat.handle_result())
                 .subscribe(new ProgressDisposableObserver<Optional<SearchResult>>(mContext,mView) {
                     @Override
                     public void onNext(@NonNull Optional<SearchResult> searchResultOptional) {
                         mView.showSearchResult(searchResultOptional.getIncludeNull());
+
                     }
                 });
 
@@ -73,7 +73,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.ISearchModel, 
 
     private void saveSearchHistory(String keyword) {
 
-        // save to database
+        DBManager.insertSearchHistory(keyword);
     }
 
 
@@ -82,7 +82,9 @@ public class SearchPresenter extends BasePresenter<SearchContract.ISearchModel, 
         // get search history from  database
 
 
-        List<String> list = new ArrayList<>();
+
+        /*List<String> list = new ArrayList<>();
+        list = DBManager.getAllSearchHistoryList();
         list.add("地图");
         list.add("KK");
         list.add("爱奇艺");
@@ -93,10 +95,11 @@ public class SearchPresenter extends BasePresenter<SearchContract.ISearchModel, 
         list.add("TV");
         list.add("直播");
         list.add("妹子");
-        list.add("美女");
-
-        mView.showSearchHistory(list);
-
+        list.add("美女");*/
+        List<String> allSearchHistoryList = DBManager.getAllSearchHistoryList();
+        if (allSearchHistoryList.size()> 0) {
+            mView.showSearchHistory(allSearchHistoryList);
+        }
 
     }
 

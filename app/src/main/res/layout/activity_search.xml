@@ -12,18 +12,6 @@
 
 
 
-    <!--    <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/AppTheme.ToolBar"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10"
-
-            >-->
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -173,15 +161,15 @@
         android:scrollbarStyle="outsideOverlay"
         android:clipToPadding="false"
         android:animation="@anim/item_animation_fall_down"
-        android:visibility="visible"
+        android:visibility="gone"
         android:elevation="1dp" />
 
     <LinearLayout
         android:id="@+id/view_progress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
+        android:layout_gravity="top|center"
+        android:gravity="top|center"
         android:orientation="vertical"
         android:visibility="gone">>
 
@@ -197,7 +185,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textColor="@color/TextColor"
-            android:text="@string/xui_tip_loading_message"/>
+            android:text="搜索中..."/>
 
 
     </LinearLayout>

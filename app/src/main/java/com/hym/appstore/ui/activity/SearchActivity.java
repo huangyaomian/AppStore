@@ -21,6 +21,7 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.SearchResult;
+import com.hym.appstore.common.db.DBManager;
 import com.hym.appstore.common.rx.RxSchedulers;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.dagger2.component.DaggerSearchComponent;
@@ -159,6 +160,8 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
             @Override
             public void accept(@NonNull Object o) throws Exception {
                 //这里需要移除view，并且将历史记录清除
+                DBManager.DeleteAllSearchHistory();
+                setLayoutHistoryGone();
             }
         });
     }
@@ -194,7 +197,6 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
     private void initSearchResultRecycleView() {
         mAppInfoAdapter = AppInfoAdapter.builder().showBrief(false).showCategoryName(true).rxDownload(rxDownload).build();
-        mAppInfoAdapter.setEmptyView(R.layout.search_empty_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerViewResult.setLayoutManager(layoutManager);
 
@@ -297,7 +299,6 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
 
     private void search(String keyword) {
-//        mAppInfoAdapter.setEmptyView(R.layout.loading_view);
         mPresenter.search(keyword);
         mViewProgress.setVisibility(View.VISIBLE);
     }
@@ -371,10 +372,5 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         mLayoutHistory.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }
