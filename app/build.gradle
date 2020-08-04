@@ -138,4 +138,7 @@ dependencies {
 
     //recyclerview-animators
     implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
+
+    //flexbox
+    implementation 'com.google.android:flexbox:2.0.1'
 }

@@ -90,12 +90,6 @@
 
 
 
-
-
-    <!--    </androidx.appcompat.widget.Toolbar>-->
-
-
-
     <LinearLayout
         android:id="@+id/layout_history"
         android:layout_width="match_parent"
@@ -107,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:padding="10dp"
+            android:padding="16dp"
             android:orientation="horizontal">
 
             <TextView
@@ -132,6 +126,7 @@
             android:layout_height="match_parent"
             android:scrollbars="vertical"
             android:scrollbarStyle="outsideOverlay"
+            android:layout_marginLeft="16dp"
             android:clipToPadding="false"
             android:animation="@anim/item_animation_fall_down"
             android:elevation="1dp" />
@@ -171,6 +166,7 @@
         android:layout_gravity="top|center"
         android:gravity="top|center"
         android:orientation="vertical"
+        android:layout_marginTop="20dp"
         android:visibility="gone">>
 
 

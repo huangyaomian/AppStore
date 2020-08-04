@@ -1,6 +1,5 @@
 package com.hym.appstore.ui.activity;
 
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -12,13 +11,16 @@ import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.SearchResult;
 import com.hym.appstore.common.db.DBManager;
@@ -44,7 +46,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -221,11 +222,24 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         mHistoryAdapter = new SearchHistoryAdapter();
         mHistoryAdapter.addData(list);
 
-        RecyclerView.LayoutManager lm = new GridLayoutManager(this, 5);
+//        RecyclerView.LayoutManager lm = new GridLayoutManager(this, 5);
+
         SpaceItemDecoration2 itemd = new SpaceItemDecoration2(10);
         mRecyclerViewHistory.addItemDecoration(itemd);
 
-        mRecyclerViewHistory.setLayoutManager(lm);
+//        mRecyclerViewHistory.setLayoutManager(lm);
+
+
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
+        //flexDirection 属性决定主轴的方向（即项目的排列方向）。类似 LinearLayout 的 vertical 和 horizontal。
+        layoutManager.setFlexDirection(FlexDirection.ROW);//主轴为水平方向，起点在左端。
+        //flexWrap 默认情况下 Flex 跟 LinearLayout 一样，都是不带换行排列的，但是flexWrap属性可以支持换行排列。
+        layoutManager.setFlexWrap(FlexWrap.WRAP);//按正常方向换行
+        //justifyContent 属性定义了项目在主轴上的对齐方式。
+        layoutManager.setJustifyContent(JustifyContent.FLEX_START);//交叉轴的起点对齐。
+        mRecyclerViewHistory.setLayoutManager(layoutManager);
+
+
 //        mRecyclerViewHistory.setAdapter(mHistoryAdapter);
 
         SlideInBottomAnimationAdapter alphaAdapter = new SlideInBottomAnimationAdapter(mHistoryAdapter);
