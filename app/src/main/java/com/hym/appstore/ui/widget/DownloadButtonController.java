@@ -252,11 +252,13 @@ public class DownloadButtonController {
 
 
     public Observable<DownloadEvent> isApkFileExsit(Context context, AppInfoBean appInfo) {
-        String path = ACache.get(context).getAsString(Constant.APK_DOWNLOAD_DIR) + File.separator + appInfo.getReleaseKeyHash();
+        //下载完成的文件是有apk后缀的
+        String path = ACache.get(context).getAsString(Constant.APK_DOWNLOAD_DIR) + File.separator + appInfo.getReleaseKeyHash()+".apk";
         File file = new File(path);
         DownloadEvent event = new DownloadEvent();
         event.setFlag(file.exists() ? DownloadFlag.FILE_EXIST : DownloadFlag.NORMAL);
         return Observable.just(event);
+
     }
 
 
