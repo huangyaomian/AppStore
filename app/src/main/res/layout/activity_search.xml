@@ -126,7 +126,6 @@
             android:layout_height="match_parent"
             android:scrollbars="vertical"
             android:scrollbarStyle="outsideOverlay"
-            android:layout_marginLeft="16dp"
             android:clipToPadding="false"
             android:animation="@anim/item_animation_fall_down"
             android:elevation="1dp" />

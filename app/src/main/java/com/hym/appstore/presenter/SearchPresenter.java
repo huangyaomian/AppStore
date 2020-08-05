@@ -44,6 +44,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.ISearchModel, 
     public void search(String keyword){
 
         saveSearchHistory(keyword);
+
         mModel.search(keyword)
                 .compose(RxHttpResponseCompat.handle_result())
                 .subscribe(new ProgressDisposableObserver<Optional<SearchResult>>(mContext,mView) {

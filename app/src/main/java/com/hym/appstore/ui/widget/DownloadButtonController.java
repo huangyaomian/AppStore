@@ -19,9 +19,11 @@ import java.io.File;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import zlc.season.rxdownload2.RxDownload;
@@ -68,7 +70,7 @@ public class DownloadButtonController {
                             throws Exception {
 
                         if (DownloadFlag.UN_INSTALL == event.getFlag()) {
-
+                            Log.d("hymmm", "apply: 存在文件的app名" +appInfo.getDisplayName()) ;
                             return isApkFileExsit(btn.getContext(), appInfo);
 
                         }
@@ -96,13 +98,12 @@ public class DownloadButtonController {
 
                         }
 
-
                         return Observable.just(event);
                     }
                 })
                 .compose(RxSchedulers.<DownloadEvent>io_main())
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DownloadConsumer(btn, appInfo));
 
 
@@ -283,8 +284,8 @@ public class DownloadButtonController {
 
         @Override
         public void accept(@NonNull DownloadEvent event) throws Exception {
-            Integer flag = 0;
-            flag = event.getFlag();
+            Integer flag = event.getFlag();
+
             btn.setTag(R.id.tag_apk_flag, flag);
 
             bindClick(btn, mAppInfo);
@@ -308,14 +309,15 @@ public class DownloadButtonController {
                     btn.paused();
                     break;
 
-
                 case DownloadFlag.COMPLETED: //已完成
                     btn.setText("安装");
                     //installApp(btn.getContext(),mAppInfo);
                     break;
+
                 case DownloadFlag.FAILED://下载失败
                     btn.setText("失败");
                     break;
+
                 case DownloadFlag.DELETED: //已删除
 
                     break;

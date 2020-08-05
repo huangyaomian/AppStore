@@ -224,8 +224,8 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
 //        RecyclerView.LayoutManager lm = new GridLayoutManager(this, 5);
 
-        SpaceItemDecoration2 itemd = new SpaceItemDecoration2(10);
-        mRecyclerViewHistory.addItemDecoration(itemd);
+//        SpaceItemDecoration2 itemd = new SpaceItemDecoration2(10);
+//        mRecyclerViewHistory.addItemDecoration(itemd);
 
 //        mRecyclerViewHistory.setLayoutManager(lm);
 
@@ -266,9 +266,10 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
             public void accept(@NonNull Object o) throws Exception {
 
                 mSearchTextView.setText("");
-                mLayoutHistory.setVisibility(View.VISIBLE);
-                mRecyclerViewSuggestion.setVisibility(View.GONE);
-                mRecyclerViewResult.setVisibility(View.GONE);
+                mPresenter.showHistory();
+//                mLayoutHistory.setVisibility(View.VISIBLE);
+//                mRecyclerViewSuggestion.setVisibility(View.GONE);
+//                mRecyclerViewResult.setVisibility(View.GONE);
             }
         });
 
@@ -313,6 +314,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
 
     private void search(String keyword) {
+        Log.d("hymmm", "search: " + keyword);
         mPresenter.search(keyword);
         mViewProgress.setVisibility(View.VISIBLE);
     }

@@ -19,7 +19,7 @@ public class DBManager {
     //獲取數據庫當中全部行的内容，存儲到集合中
     public static List<String> getAllSearchHistoryList(){
         ArrayList<String> list = new ArrayList<>();
-        Cursor cursor = database.query("searchHistory", null, null, null, null, null, null);
+        Cursor cursor = database.query("searchHistory", null, null, null, null, null, "id desc");
         while (cursor.moveToNext()) {
             String keyword = cursor.getString(cursor.getColumnIndex("keyword"));
             list.add(keyword);
