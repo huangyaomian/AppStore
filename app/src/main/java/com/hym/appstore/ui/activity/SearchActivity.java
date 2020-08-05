@@ -33,7 +33,6 @@ import com.hym.appstore.presenter.contract.SearchContract;
 import com.hym.appstore.ui.adapter.AppInfoAdapter;
 import com.hym.appstore.ui.adapter.SearchHistoryAdapter;
 import com.hym.appstore.ui.adapter.SuggestionAdapter;
-import com.hym.appstore.ui.widget.SpaceItemDecoration2;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -221,14 +220,6 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
         mHistoryAdapter = new SearchHistoryAdapter();
         mHistoryAdapter.addData(list);
-
-//        RecyclerView.LayoutManager lm = new GridLayoutManager(this, 5);
-
-//        SpaceItemDecoration2 itemd = new SpaceItemDecoration2(10);
-//        mRecyclerViewHistory.addItemDecoration(itemd);
-
-//        mRecyclerViewHistory.setLayoutManager(lm);
-
 
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
         //flexDirection 属性决定主轴的方向（即项目的排列方向）。类似 LinearLayout 的 vertical 和 horizontal。

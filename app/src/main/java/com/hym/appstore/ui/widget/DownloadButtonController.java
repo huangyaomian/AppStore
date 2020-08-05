@@ -19,11 +19,9 @@ import java.io.File;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import zlc.season.rxdownload2.RxDownload;
@@ -72,7 +70,6 @@ public class DownloadButtonController {
                         if (DownloadFlag.UN_INSTALL == event.getFlag()) {
                             Log.d("hymmm", "apply: 存在文件的app名" +appInfo.getDisplayName()) ;
                             return isApkFileExsit(btn.getContext(), appInfo);
-
                         }
                         return Observable.just(event);
 
@@ -102,8 +99,8 @@ public class DownloadButtonController {
                     }
                 })
                 .compose(RxSchedulers.<DownloadEvent>io_main())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DownloadConsumer(btn, appInfo));
 
 
