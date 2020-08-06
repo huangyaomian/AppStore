@@ -194,6 +194,7 @@ public class DownloadButtonController {
         mRxDownload.serviceDownload(appInfo2DownloadBean(appInfoBean)).subscribe();
         mRxDownload.receiveDownloadStatus(appInfoBean.getAppDownloadInfo().getDownloadUrl())
                 .subscribe(new DownloadConsumer(btn, appInfoBean));
+        Log.d("hymmm", "download: " +appInfoBean.getDisplayName()+ "--" + appInfoBean.getAppDownloadInfo().getDownloadUrl());
     }
 
     private DownloadBean appInfo2DownloadBean(AppInfoBean appInfoBean) {
