@@ -1,6 +1,8 @@
 package com.hym.appstore.ui.fragment;
 
 
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -96,6 +98,11 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
     public void onRequestPermissionError() {
         Toast.makeText(getActivity(),"您已拒絕授權!",Toast.LENGTH_SHORT).show();
     }
+
+
+
+
+
 
 
 }

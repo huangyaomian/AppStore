@@ -57,7 +57,6 @@ public class AppManagerPresent extends BasePresenter<AppManagerContract.IAppMana
             Gson gson = new Gson();
             List<AppInfoBean> apps = gson.fromJson(json,new TypeToken<List<AppInfoBean>>(){}.getType());
 
-
             Observable.just(apps)
                     .compose(RxSchedulers.<List<AppInfoBean>>io_main())
 

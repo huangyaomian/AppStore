@@ -61,7 +61,6 @@ public class MainPresenter extends BasePresenter<MainContract.IMainModel,MainCon
 
     public void getAppUpdateInfo(){
 
-
         getInstalledApps()
                 .flatMap(new Function<AppsUpdateBean, ObservableSource<List<AppInfoBean>>>() {
                     @Override
@@ -74,12 +73,10 @@ public class MainPresenter extends BasePresenter<MainContract.IMainModel,MainCon
             public void onNext(List<AppInfoBean> appInfos) {
 
                 if(appInfos !=null){
-
                     ACache.get(mContext).put(Constant.APP_UPDATE_LIST, JsonUtils.toJson(appInfos));
                 }
 
                 mView.changeAppNeedUpdateCount(appInfos==null?0:appInfos.size());
-
 
             }
         });

@@ -218,15 +218,15 @@ public class AppUtils {
         return installed;
     }
 
-    public static boolean installApk(Context context, String path) {
+    public static boolean  installApk(Context context, String path) {
 
-//        String filePath=path+".apk";
-        String filePath=path;
+        String filePath=path+".apk";
+//        String filePath=path;
 
         if(isAccessibilityEnabled(context, InstallAccessibilityService.class.getCanonicalName())){
 
             File file = new File(filePath);
-            Log.d("123",filePath);
+            Log.d("hymmm",filePath);
             if (!file.exists() || !file.isFile() || file.length() <= 0) {
                 return false;
             }

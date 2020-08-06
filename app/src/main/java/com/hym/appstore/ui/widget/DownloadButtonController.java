@@ -19,9 +19,11 @@ import java.io.File;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import zlc.season.rxdownload2.RxDownload;
@@ -68,7 +70,6 @@ public class DownloadButtonController {
                             throws Exception {
 
                         if (DownloadFlag.UN_INSTALL == event.getFlag()) {
-                            Log.d("hymmm", "apply: 存在文件的app名" +appInfo.getDisplayName()) ;
                             return isApkFileExsit(btn.getContext(), appInfo);
                         }
                         return Observable.just(event);
@@ -127,6 +128,8 @@ public class DownloadButtonController {
                         break;
 
                     // 升级 还加上去
+
+
                     case DownloadFlag.STARTED:
                         pausedDownload(appInfo.getAppDownloadInfo().getDownloadUrl());
                         break;
@@ -283,8 +286,8 @@ public class DownloadButtonController {
 
         @Override
         public void accept(@NonNull DownloadEvent event) throws Exception {
-            Integer flag = event.getFlag();
-
+            Integer flag = 0;
+            flag = event.getFlag();
             btn.setTag(R.id.tag_apk_flag, flag);
 
             bindClick(btn, mAppInfo);
@@ -299,7 +302,7 @@ public class DownloadButtonController {
                     break;
 
                 case DownloadFlag.STARTED:
-//                case DownloadFlag.WAITING: //等待中
+                case DownloadFlag.WAITING: //等待中
                     btn.setProgress((int) event.getDownloadStatus().getPercentNumber());
                     break;
 

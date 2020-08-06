@@ -31,14 +31,14 @@ public class HttpModule {
         OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
 
 //        //这个日志需要去掉不然会有oom
-        if (BuildConfig.DEBUG) {
-            //log用拦截器
-            HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-            //开发模式记录整个boby，否则只记录基本信息如返回200，http协议版本等
-            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-            builder.addInterceptor(httpLoggingInterceptor);
-        }
+//        if (BuildConfig.DEBUG) {
+//            //log用拦截器
+//            HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+//            //开发模式记录整个boby，否则只记录基本信息如返回200，http协议版本等
+//            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//
+//            builder.addInterceptor(httpLoggingInterceptor);
+//        }
 
         return builder
                 //headinterceptor实现了interceptor，用来往request header 添加一些业务相关的数据，如app版本等，token信息
