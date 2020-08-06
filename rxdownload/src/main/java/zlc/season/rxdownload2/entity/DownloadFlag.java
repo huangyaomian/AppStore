@@ -20,4 +20,5 @@ public class DownloadFlag {
 
     public static final int UN_INSTALL = 10000;     //未安装
     public static final int FILE_EXIST = 10001;     // 文件存在
+    public static final int UPDATE = 10002;     // 更新
 }

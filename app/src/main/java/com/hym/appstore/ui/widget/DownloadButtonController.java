@@ -1,8 +1,11 @@
 package com.hym.appstore.ui.widget;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.AppDownloadInfo;
 import com.hym.appstore.bean.AppInfoBean;
@@ -16,14 +19,14 @@ import com.hym.appstore.common.utils.PermissionUtil;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import zlc.season.rxdownload2.RxDownload;
@@ -70,8 +73,9 @@ public class DownloadButtonController {
                             throws Exception {
 
                         if (DownloadFlag.UN_INSTALL == event.getFlag()) {
-                            return isApkFileExsit(btn.getContext(), appInfo);
+                            return isApkFileExist(btn.getContext(), appInfo);
                         }
+
                         return Observable.just(event);
 
                     }
@@ -96,7 +100,9 @@ public class DownloadButtonController {
 
                         }
 
-                        return Observable.just(event);
+                        return isUpdate(btn.getContext(), appInfo);
+
+//                        return Observable.just(event);
                     }
                 })
                 .compose(RxSchedulers.<DownloadEvent>io_main())
@@ -136,6 +142,7 @@ public class DownloadButtonController {
 
                     case DownloadFlag.NORMAL:
                     case DownloadFlag.PAUSED:
+                    case DownloadFlag.UPDATE:
                         startDownload(btn, appInfo);
                         break;
 
@@ -251,12 +258,36 @@ public class DownloadButtonController {
     }
 
 
-    public Observable<DownloadEvent> isApkFileExsit(Context context, AppInfoBean appInfo) {
+    public Observable<DownloadEvent> isApkFileExist(Context context, AppInfoBean appInfo) {
         //下载完成的文件是有apk后缀的
         String path = ACache.get(context).getAsString(Constant.APK_DOWNLOAD_DIR) + File.separator + appInfo.getReleaseKeyHash()+".apk";
         File file = new File(path);
         DownloadEvent event = new DownloadEvent();
         event.setFlag(file.exists() ? DownloadFlag.FILE_EXIST : DownloadFlag.NORMAL);
+        return Observable.just(event);
+
+    }
+
+
+    //是否需要更新
+    public Observable<DownloadEvent> isUpdate(Context context, AppInfoBean appInfo) {
+        DownloadEvent event = new DownloadEvent();
+        String json= ACache.get(context).getAsString(Constant.APP_UPDATE_LIST);
+
+        if(!TextUtils.isEmpty(json)){
+            Gson gson = new Gson();
+            List<AppInfoBean> apps = gson.fromJson(json,new TypeToken<List<AppInfoBean>>(){}.getType());
+
+            List<String> packageNames = new ArrayList<>();
+
+            for (int i = 0; i < apps.size(); i++) {
+                packageNames.add(apps.get(i).getPackageName());
+            }
+
+            event.setFlag(packageNames.contains(appInfo.getPackageName()) ? DownloadFlag.UPDATE : DownloadFlag.NORMAL);
+
+        }
+
         return Observable.just(event);
 
     }
@@ -322,6 +353,10 @@ public class DownloadButtonController {
 
                 case DownloadFlag.DELETED: //已删除
 
+                    break;
+
+                case DownloadFlag.UPDATE: //已删除
+                    btn.setText("更新");
                     break;
             }
         }
