@@ -33,6 +33,8 @@ public class SubjectActivity extends BaseActivity {
 
     private int fragmentIndex = FRAGMENT_SUBJECT;
 
+    private Subject mSubject = new Subject();
+
 
     @Override
     protected int setLayoutResourceID() {
@@ -46,6 +48,13 @@ public class SubjectActivity extends BaseActivity {
 
     @Override
     public void init() {
+
+        if (getIntent().getSerializableExtra("subjectId") != null) {
+            mSubject.setRelatedId(Integer.parseInt((String) getIntent().getSerializableExtra("subjectId")));
+        }else {
+            mSubject.setRelatedId(0);
+        }
+
         mToolBar.setNavigationIcon(
                 new IconicsDrawable(this)
                         .icon(Ionicons.Icon.ion_ios_arrow_back)
@@ -63,9 +72,14 @@ public class SubjectActivity extends BaseActivity {
         });
         mFragmentManager = getSupportFragmentManager();
 
-        showSubjectFragment();
 
         showSubjectDetailFragmentRxBus();
+
+        if (mSubject.getRelatedId() > 0){
+            showSubjectDetailFragment(mSubject);
+        }else {
+            showSubjectFragment();
+        }
     }
 
     @Override
@@ -76,7 +90,7 @@ public class SubjectActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        showSubjectFragment();
+//        showSubjectFragment();
     }
 
     @Override
@@ -91,7 +105,6 @@ public class SubjectActivity extends BaseActivity {
         hideFragment(fragmentTransaction);
         if (mSubjectFragment == null) {
             mSubjectFragment = new SubjectFragment();
-
             fragmentTransaction.add(R.id.content,mSubjectFragment);
         }else {
             fragmentTransaction.show(mSubjectFragment);
@@ -100,7 +113,7 @@ public class SubjectActivity extends BaseActivity {
     }
 
     private void handNavigation() {
-        if (fragmentIndex == FRAGMENT_SUBJECT) {
+        if (fragmentIndex == FRAGMENT_SUBJECT || mSubject.getRelatedId()> 0) {
             finish();
         } else {
             showSubjectFragment();

@@ -140,6 +140,7 @@ public class DownloadButtonController {
                         pausedDownload(appInfo.getAppDownloadInfo().getDownloadUrl());
                         break;
 
+                    case DownloadFlag.FAILED:
                     case DownloadFlag.NORMAL:
                     case DownloadFlag.PAUSED:
                     case DownloadFlag.UPDATE:
@@ -177,7 +178,6 @@ public class DownloadButtonController {
                                     @Override
                                     public void accept(AppDownloadInfo appDownloadInfo) {
                                         appInfoBean.setAppDownloadInfo(appDownloadInfo);
-
                                         download(btn,appInfoBean);
 
                                     }

@@ -77,8 +77,7 @@ public class AppDetailsActivity extends BaseActivity {
         mToolbarLayout.setTitle(mAppInfoBean.getDisplayName());
         ImageLoader.load(Constant.BASE_IMG_URL + mAppInfoBean.getIcon(), imgIcon);
 
-
-
+        if (isAnim) {
             View view = mMyApplication.getView();
             Bitmap bitmap = getViewImageCache(view);
             if (bitmap != null) {
@@ -99,13 +98,14 @@ public class AppDetailsActivity extends BaseActivity {
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(marginLayoutParams);
             viewTemp.setLayoutParams(params);
-        open();
-        if (isAnim) {
-
+            open();
         }else {
-            viewTemp.setBackgroundColor(getResources().getColor(R.color.theme_while));
-            viewTemp.setVisibility(View.GONE);
+//            viewTemp.setBackgroundColor(getResources().getColor(R.color.theme_while));
             initFragment();
+            viewTemp.setVisibility(View.GONE);
+            if (viewCoordinator != null) {
+                viewCoordinator.setVisibility(View.VISIBLE);
+            }
         }
 
     }

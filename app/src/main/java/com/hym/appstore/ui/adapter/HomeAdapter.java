@@ -1,6 +1,5 @@
 package com.hym.appstore.ui.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -19,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.hym.appstore.R;
-import com.hym.appstore.app.MyApplication;
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.BannerBean;
 import com.hym.appstore.bean.HomeBean;
@@ -106,8 +104,25 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             bannerViewHolder.banner.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
-//                    banners.get(position)
+                    BannerBean bannerBean = banners.get(position);
+                    switch (bannerBean.getAction()){
+
+                        case "app":
+                            Intent intent = new Intent();
+                            intent.setClass(mContext, AppDetailsActivity.class);
+                            intent.putExtra("isAnim",false);
+                            mContext.startActivity(intent);
+                            break;
+                        case "subject":
+                            Intent intent1 = new Intent();
+                            intent1.setClass(mContext,SubjectActivity.class);
+                            intent1.putExtra("subjectId",bannerBean.getId());
+                            mContext.startActivity(intent1);
+                            break;
+                    }
+
                     Toast.makeText(mContext,"banner--onItemClick " + position, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } else if (position == 1) {
@@ -135,13 +150,18 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             viewHolder.homeRecyclerview.setAdapter(appInfoAdapter);
 
             // 设置点击事件
-           /* appInfoAdapter.setOnItemClickListener(new OnItemClickListener() {
+            appInfoAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
-//                    Tips.show("onItemClick " + position);
                     Toast.makeText(mContext,"onItemClick " + position, Toast.LENGTH_SHORT).show();
+                    AppInfoBean appInfoBean = (AppInfoBean)adapter.getItem(position);
+                    Intent intent = new Intent(mContext, AppDetailsActivity.class);
+                    intent.putExtra("appInfo",appInfoBean);
+                    intent.putExtra("isAnim",false);
+//                    startActivity(intent);
+                    mContext.startActivity(intent);
                 }
-            });*/
+            });
         }
     }
 

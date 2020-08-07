@@ -40,6 +40,11 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder
         return getData().size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
 
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, AppInfoBean appInfoBean) {
