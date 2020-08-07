@@ -31,7 +31,7 @@ public class DownloadProgressButton extends View {
     private int radius;// 圆形的半径
     private int socktwidth = dp2px(2);// 圆环进度条的宽度
     private Paint paint = new Paint();
-    private int progress = 70;// 百分比0~100;
+    private int progress = 0;// 百分比0~100;
     private int textSize = dp2px(10);// 文字大小
 
     @Deprecated
@@ -258,7 +258,9 @@ public class DownloadProgressButton extends View {
     public void setProgress(int progress) {
         if (progress > 100)
             return;
-        this.progress = progress;
+        if (this.progress < progress) {
+            this.progress = progress;
+        }
         setStatue(progressStatue);
         invalidate();
         if (monProgress != null)

@@ -25,6 +25,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
 import static android.Manifest.permission.READ_PHONE_STATE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 
 public class MainPresenter extends BasePresenter<MainContract.IMainModel,MainContract.MainView> {
@@ -38,10 +39,9 @@ public class MainPresenter extends BasePresenter<MainContract.IMainModel,MainCon
 
 
 
-    public  void requestPermisson(){
+    public  void requestPermission(){
 
-
-        PermissionUtil.requestPermisson(mContext,READ_PHONE_STATE).doOnNext(new Consumer<Boolean>() {
+      PermissionUtil.requestPermisson(mContext,READ_PHONE_STATE).doOnNext(new Consumer<Boolean>() {
             @Override
             public void accept(@NonNull Boolean aBoolean) throws Exception {
 
@@ -56,6 +56,43 @@ public class MainPresenter extends BasePresenter<MainContract.IMainModel,MainCon
                 mView.requestPermissionSuccess();
             }
         });
+
+        PermissionUtil.requestPermisson(mContext,WRITE_EXTERNAL_STORAGE).doOnNext(new Consumer<Boolean>() {
+            @Override
+            public void accept(@NonNull Boolean aBoolean) throws Exception {
+
+                if(!aBoolean){
+                    mView.requestPermissionFail();
+                }
+
+            }
+        }).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(@NonNull Boolean aBoolean) throws Exception {
+                mView.requestPermissionSuccess();
+            }
+        });
+
+        /*Observable<Boolean> booleanObservable = PermissionUtil.requestPermisson(mContext, READ_PHONE_STATE);
+
+        Observable<Boolean> booleanObservable2 = PermissionUtil.requestPermisson(mContext, WRITE_EXTERNAL_STORAGE);
+
+        Observable.merge(booleanObservable, booleanObservable2).doOnNext(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+                if (!aBoolean) {
+                    mView.requestPermissionFail();
+                }
+            }
+        }).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+                if (!aBoolean) {
+                    mView.requestPermissionFail();
+                }
+            }
+        });*/
+
 
     }
 

@@ -126,7 +126,7 @@ public class DownloadButtonController {
             public void accept(@NonNull Object o) throws Exception {
 
                 int flag = (int) btn.getTag(R.id.tag_apk_flag);
-                Log.d("bindClick","flag=" + flag);
+                Log.d("hymmm","bindClick:flag=" + flag);
                 switch (flag) {
 
                     case DownloadFlag.INSTALLED:
@@ -182,9 +182,9 @@ public class DownloadButtonController {
 
                                     }
                                 });
+                            }else {
+                                download(btn, appInfoBean);
                             }
-                        }else {
-                            download(btn, appInfoBean);
                         }
                     }
                 });
@@ -336,6 +336,7 @@ public class DownloadButtonController {
                 case DownloadFlag.STARTED:
                 case DownloadFlag.WAITING: //等待中
                     btn.setProgress((int) event.getDownloadStatus().getPercentNumber());
+//                    Log.d("hymmm","getPercentNumber =" + event.getDownloadStatus().getPercentNumber());
                     break;
 
                 case DownloadFlag.PAUSED:

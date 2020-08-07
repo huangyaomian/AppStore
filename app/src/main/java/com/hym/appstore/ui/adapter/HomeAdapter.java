@@ -135,20 +135,13 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             viewHolder.homeRecyclerview.setAdapter(appInfoAdapter);
 
             // 设置点击事件
-            appInfoAdapter.setOnItemClickListener(new OnItemClickListener() {
+           /* appInfoAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
 //                    Tips.show("onItemClick " + position);
                     Toast.makeText(mContext,"onItemClick " + position, Toast.LENGTH_SHORT).show();
-                   /* mMyApplication = (MyApplication) getac.getApplication());
-                    (MyApplication)mContext.getApplicationContext().setView(view);
-                    AppInfoBean appInfoBean = adapter.getItem(position);
-                    Intent intent = new Intent(mContext, AppDetailsActivity.class);
-                    intent.putExtra("appInfo",appInfoBean);
-                    intent.putExtra("isAnim",true);
-                    startActivity(intent);*/
                 }
-            });
+            });*/
         }
     }
 

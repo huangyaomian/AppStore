@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             }
         });
 
-        mPresenter.requestPermisson();
+        mPresenter.requestPermission();
 
         mPresenter.getAppUpdateInfo();
 
