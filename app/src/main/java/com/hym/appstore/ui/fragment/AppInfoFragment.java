@@ -1,6 +1,7 @@
 package com.hym.appstore.ui.fragment;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -17,11 +18,16 @@ import com.hym.appstore.R;
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.PageBean;
 import com.hym.appstore.bean.User;
+import com.hym.appstore.common.Constant;
 import com.hym.appstore.common.rx.RxBus;
+import com.hym.appstore.common.utils.FileUtils;
 import com.hym.appstore.presenter.AppInfoPresenter;
 import com.hym.appstore.presenter.contract.AppInfoContract;
 import com.hym.appstore.ui.activity.AppDetailsActivity;
 import com.hym.appstore.ui.adapter.AppInfoAdapter;
+import com.hym.appstore.ui.widget.DownloadProgressButton;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
@@ -121,6 +127,20 @@ public abstract class AppInfoFragment extends ProgressFragment<AppInfoPresenter>
         mAppInfoAdapter.getLoadMoreModule().loadMoreComplete();
     }
 
+    @Override
+    public void PackageAdded(String packageName) {
 
-
+        for (int i = 0; i < mAppInfoAdapter.getItemCount(); i++) {
+            if (mAppInfoAdapter.getItem(i).getPackageName().equals(packageName)) {
+                Log.d("hymmm", "PackageAdded: " + "安装了应用："+packageName);
+                View childAt = mHomeRv.getLayoutManager().findViewByPosition(i);
+                RecyclerView.ViewHolder childViewHolder = mHomeRv.getChildViewHolder(childAt);
+                DownloadProgressButton  btn = childViewHolder.itemView.findViewById(R.id.btn_download);
+                btn.setText("運行");
+                mAppInfoAdapter.notifyItemChanged(i);
+                FileUtils.deleteFile(Constant.APK_DOWNLOAD_DIR + File.separator + mAppInfoAdapter.getItem(i).getReleaseKeyHash()+".apk");
+                break;
+            }
+        }
+    }
 }

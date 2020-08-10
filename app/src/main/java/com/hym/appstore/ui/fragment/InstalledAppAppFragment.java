@@ -1,7 +1,5 @@
 package com.hym.appstore.ui.fragment;
 
-import android.util.Log;
-
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hym.appstore.common.apkparset.AndroidApk;
@@ -57,17 +55,12 @@ public class InstalledAppAppFragment extends AppManagerFragment {
 
     @Override
     public void PackageRemoved(String packageName) {
-//        super.PackageRemoved(packageName);
-        Log.d("hymmm", "PackageRemoved1: " + "卸载了应用："+packageName);
         for (int i = 0; i < mAdapter.getData().size(); i++) {
-            Log.d("hymmm", "PackageRemoved: " + mAdapter.getData().get(i).getPackageName());
             if (mAdapter.getData().get(i).getPackageName().equals(packageName)){
-                Log.d("hymmm", "PackageRemoved2: " + "卸载了应用："+packageName);
                 mAdapter.getData().remove(i);
                 mAdapter.notifyDataSetChanged();
             }
         }
-
     }
 
 }

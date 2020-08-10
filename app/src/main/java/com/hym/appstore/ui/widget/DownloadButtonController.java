@@ -66,7 +66,17 @@ public class DownloadButtonController {
             return;
         }
         isAppInstalled(btn.getContext(), appInfo)
+                .flatMap(new Function<DownloadEvent, ObservableSource<DownloadEvent>>() {
+                    @Override
+                    public ObservableSource<DownloadEvent> apply(@NonNull DownloadEvent event) throws Exception {
 
+                        if (DownloadFlag.INSTALLED == event.getFlag()) {
+                            return isUpdate(btn.getContext(), appInfo);
+                        }
+
+                        return Observable.just(event);
+                    }
+                })
                 .flatMap(new Function<DownloadEvent, ObservableSource<DownloadEvent>>() {
                     @Override
                     public ObservableSource<DownloadEvent> apply(@NonNull DownloadEvent event)
@@ -74,6 +84,8 @@ public class DownloadButtonController {
 
                         if (DownloadFlag.UN_INSTALL == event.getFlag()) {
                             return isApkFileExist(btn.getContext(), appInfo);
+                        }else if (DownloadFlag.UPDATE == event.getFlag()){
+                            return isApkFileExist2Update(btn.getContext(), appInfo);
                         }
 
                         return Observable.just(event);
@@ -100,9 +112,9 @@ public class DownloadButtonController {
 
                         }
 
-                        return isUpdate(btn.getContext(), appInfo);
+//                        return isUpdate(btn.getContext(), appInfo);
 
-//                        return Observable.just(event);
+                        return Observable.just(event);
                     }
                 })
                 .compose(RxSchedulers.<DownloadEvent>io_main())
@@ -134,7 +146,6 @@ public class DownloadButtonController {
                         break;
 
                     // 升级 还加上去
-
 
 
                     case DownloadFlag.STARTED:
@@ -270,10 +281,21 @@ public class DownloadButtonController {
 
     }
 
+    public Observable<DownloadEvent> isApkFileExist2Update(Context context, AppInfoBean appInfo) {
+        //下载完成的文件是有apk后缀的
+        String path = ACache.get(context).getAsString(Constant.APK_DOWNLOAD_DIR) + File.separator + appInfo.getReleaseKeyHash()+".apk";
+        File file = new File(path);
+        DownloadEvent event = new DownloadEvent();
+        event.setFlag(file.exists() ? DownloadFlag.FILE_EXIST : DownloadFlag.UPDATE);
+        return Observable.just(event);
+
+    }
+
 
     //是否需要更新
     public Observable<DownloadEvent> isUpdate(Context context, AppInfoBean appInfo) {
         DownloadEvent event = new DownloadEvent();
+
         String json= ACache.get(context).getAsString(Constant.APP_UPDATE_LIST);
 
         if(!TextUtils.isEmpty(json)){
@@ -286,7 +308,7 @@ public class DownloadButtonController {
                 packageNames.add(apps.get(i).getPackageName());
             }
 
-            event.setFlag(packageNames.contains(appInfo.getPackageName()) ? DownloadFlag.UPDATE : DownloadFlag.NORMAL);
+            event.setFlag(packageNames.contains(appInfo.getPackageName()) ? DownloadFlag.UPDATE : DownloadFlag.INSTALLED);
 
         }
 
