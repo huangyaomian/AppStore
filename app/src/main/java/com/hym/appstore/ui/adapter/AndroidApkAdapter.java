@@ -107,18 +107,17 @@ public class AndroidApkAdapter extends BaseQuickAdapter<AndroidApk, BaseViewHold
 
         } else if (flag == FLAG_APP) {
 
-
             btn.setText("卸载");
             RxView.clicks(btn).subscribe(new Consumer<Object>() {
 
                 @Override
                 public void accept(@NonNull Object o) throws Exception {
                     //点击后卸载,卸载完成刷新列表
-                    if (AppUtils.uninstallApk(mContext, item.getPackageName())){
+                    /*if (AppUtils.uninstallApk(mContext, item.getPackageName())){
                         getData().remove(helper.getPosition());
                         notifyItemRemoved(helper.getPosition());
-                    }
-
+                    }*/
+                    AppUtils.uninstallApk(mContext, item.getPackageName());
                 }
             });
 

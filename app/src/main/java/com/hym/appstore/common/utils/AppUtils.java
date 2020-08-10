@@ -282,7 +282,10 @@ public class AppUtils {
         if (TextUtils.isEmpty(packageName)) {
             return false;
         }
-        Intent i = new Intent(Intent.ACTION_DELETE, Uri.parse("package:" + packageName));
+      /*  Intent i = new Intent(Intent.ACTION_DELETE, Uri.parse("package:" + packageName));
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);*/
+        Intent i = new Intent(Intent.ACTION_DELETE, Uri.parse(new StringBuilder().append("package:").append(packageName).toString()));
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
         return true;
@@ -467,6 +470,7 @@ public class AppUtils {
             }
 
             apks.add(apk);
+
 
         }
         return  apks;

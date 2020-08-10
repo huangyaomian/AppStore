@@ -1,14 +1,8 @@
 package com.hym.appstore.ui.fragment;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-
-import androidx.annotation.LongDef;
-import androidx.annotation.Nullable;
-import androidx.appcompat.view.menu.ShowableListMenu;
-import androidx.fragment.app.Fragment;
-
-import android.os.strictmode.Violation;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +11,16 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.hym.appstore.R;
 import com.hym.appstore.app.MyApplication;
 import com.hym.appstore.common.exception.BaseException;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.presenter.BasePresenter;
+import com.hym.appstore.service.receiver.MyInstallListener;
+import com.hym.appstore.service.receiver.MyInstallReceiver;
 import com.hym.appstore.ui.BaseView;
 import com.hym.appstore.ui.activity.LoginActivity;
 
@@ -34,7 +33,7 @@ import butterknife.Unbinder;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public abstract class ProgressFragment<T extends BasePresenter> extends Fragment implements BaseView {
+public abstract class ProgressFragment<T extends BasePresenter> extends Fragment implements BaseView, MyInstallListener {
 
     private FrameLayout mRootView;
     private View mViewProgress;
@@ -49,6 +48,8 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
     public T mPresenter;
 
     private Unbinder mUnbinder;
+
+    private MyInstallReceiver mMyInstallReceiver;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,6 +73,7 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        registerMyInstallReceiver();
         mMyApplication = (MyApplication) getActivity().getApplication();
         setupActivityComponent(mMyApplication.getAppComponent());
         setRealContentView();
@@ -182,9 +184,38 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
 
     @Override
     public void onDestroyView() {
+        if(mMyInstallReceiver != null) {
+            getContext().unregisterReceiver(mMyInstallReceiver);
+        }
         super.onDestroyView();
         if (mUnbinder != Unbinder.EMPTY) {
             mUnbinder.unbind();
         }
+    }
+
+    private void registerMyInstallReceiver(){
+        mMyInstallReceiver = new MyInstallReceiver();
+        mMyInstallReceiver.registerListener(this);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.intent.action.PACKAGE_ADDED");
+        filter.addAction("android.intent.action.PACKAGE_REMOVED");
+        filter.addAction("android.intent.action.PACKAGE_REPLACED");
+        filter.addDataScheme("package");
+        getContext().registerReceiver(mMyInstallReceiver, filter);
+    }
+
+    @Override
+    public void PackageAdded(String packageName) {
+        Log.d("hymmm", "ProgressFragment: " + "安装了应用："+packageName);
+    }
+
+    @Override
+    public void PackageRemoved(String packageName) {
+        Log.d("hymmm", "ProgressFragment: " + "卸载了应用："+packageName);
+    }
+
+    @Override
+    public void PackageReplaced(String packageName) {
+        Log.d("hymmm", "ProgressFragment: " + "覆盖安装了应用："+packageName);
     }
 }

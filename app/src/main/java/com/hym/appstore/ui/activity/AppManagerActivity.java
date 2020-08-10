@@ -1,39 +1,20 @@
 package com.hym.appstore.ui.activity;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
-import android.view.OrientationEventListener;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.hym.appstore.R;
-import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.FragmentInfo;
 import com.hym.appstore.common.Constant;
-import com.hym.appstore.common.imageloader.ImageLoader;
-import com.hym.appstore.common.utils.DensityUtil;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.ui.adapter.MyViewPagerAdapter;
-import com.hym.appstore.ui.fragment.AppDetailFragment;
 import com.hym.appstore.ui.fragment.DownloadedFragment;
 import com.hym.appstore.ui.fragment.DownloadingFragment;
-import com.hym.appstore.ui.fragment.GameFragment;
-import com.hym.appstore.ui.fragment.HomeFragment;
 import com.hym.appstore.ui.fragment.InstalledAppAppFragment;
-import com.hym.appstore.ui.fragment.RankingFragment;
-import com.hym.appstore.ui.fragment.SortFragment;
 import com.hym.appstore.ui.fragment.UpgradeAppFragment;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
@@ -42,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class AppManagerActivity extends BaseActivity {
 
@@ -60,6 +40,8 @@ public class AppManagerActivity extends BaseActivity {
     private List<FragmentInfo> fragmentInfos;
 
     private int position;
+
+
 
 
     @Override
@@ -114,6 +96,7 @@ public class AppManagerActivity extends BaseActivity {
             }
         });
     }
+
 
 
 }
