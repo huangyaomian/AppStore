@@ -139,6 +139,7 @@ public abstract class AppInfoFragment extends ProgressFragment<AppInfoPresenter>
                 btn.setText("運行");
                 mAppInfoAdapter.notifyItemChanged(i);
                 FileUtils.deleteFile(Constant.APK_DOWNLOAD_DIR + File.separator + mAppInfoAdapter.getItem(i).getReleaseKeyHash()+".apk");
+                Log.d("hymmm", "PackageAdded: " + Constant.APK_DOWNLOAD_DIR + File.separator + mAppInfoAdapter.getItem(i).getReleaseKeyHash()+".apk");
                 break;
             }
         }
