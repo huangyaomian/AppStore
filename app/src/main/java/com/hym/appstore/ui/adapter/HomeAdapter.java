@@ -195,7 +195,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         @BindView(R.id.banner)
         BannerLayout banner;
 
-        public BannerViewHolder(@NonNull View itemView) {
+        BannerViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             banner.setImageLoader(new ImgLoader());
@@ -211,7 +211,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         @BindView(R.id.icon_hot_recommend)
         LinearLayout mIconHotRecommend;
 
-        public IconViewHolder(@NonNull View itemView) {
+        IconViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -226,7 +226,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
         int type;
 
-        public AppViewHolder(@NonNull View itemView,int type) {
+        AppViewHolder(@NonNull View itemView, int type) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.type = type;

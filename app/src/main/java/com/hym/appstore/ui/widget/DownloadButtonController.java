@@ -136,6 +136,7 @@ public class DownloadButtonController {
                     // 升级 还加上去
 
 
+
                     case DownloadFlag.STARTED:
                         pausedDownload(appInfo.getAppDownloadInfo().getDownloadUrl());
                         break;

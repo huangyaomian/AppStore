@@ -9,10 +9,13 @@ import com.hym.appstore.R;
 import com.hym.appstore.common.apkparset.AndroidApk;
 import com.hym.appstore.common.rx.RxSchedulers;
 import com.hym.appstore.common.utils.AppUtils;
+import com.hym.appstore.common.utils.FileUtils;
 import com.hym.appstore.ui.widget.DownloadProgressButton;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -50,7 +53,6 @@ public class AndroidApkAdapter extends BaseQuickAdapter<AndroidApk, BaseViewHold
             btn.setText("删除");
 
             RxView.clicks(btn).subscribe(new Consumer<Object>() {
-
 
                 @Override
                 public void accept(@NonNull Object o) throws Exception {
@@ -94,6 +96,13 @@ public class AndroidApkAdapter extends BaseQuickAdapter<AndroidApk, BaseViewHold
                         btn.setText("安装");
                     }
                 }
+
+
+            }, new Consumer<Throwable>() {
+                @Override
+                public void accept(Throwable throwable) throws Exception {
+                    throwable.printStackTrace();
+                }
             });
 
         } else if (flag == FLAG_APP) {
@@ -104,8 +113,12 @@ public class AndroidApkAdapter extends BaseQuickAdapter<AndroidApk, BaseViewHold
 
                 @Override
                 public void accept(@NonNull Object o) throws Exception {
+                    //点击后卸载,卸载完成刷新列表
+                    if (AppUtils.uninstallApk(mContext, item.getPackageName())){
+                        getData().remove(helper.getPosition());
+                        notifyItemRemoved(helper.getPosition());
+                    }
 
-                    AppUtils.uninstallApk(mContext, item.getPackageName());
                 }
             });
 
@@ -117,9 +130,19 @@ public class AndroidApkAdapter extends BaseQuickAdapter<AndroidApk, BaseViewHold
     private void deleteApk(AndroidApk item){
 
         // 1. 删除下载记录
-        // 2. 删除文件
 
-//        FileUtils.deleteFile(item.getApkPath());
+
+        // 2. 删除文件
+        List<AndroidApk> list = this.getData();
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            AndroidApk androidApk = list.get(i);
+            if (item.getPackageName().equals(androidApk.getPackageName())) {
+                this.remove(i);
+                break;
+            }
+        }
+        FileUtils.deleteFile(item.getApkPath());
 
 
     }
@@ -135,7 +158,10 @@ public class AndroidApkAdapter extends BaseQuickAdapter<AndroidApk, BaseViewHold
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
 
                 e.onNext( AppUtils.isInstalled(context,packageName));
+
             }
+
+
         }).compose(RxSchedulers.<Boolean>io_main());
 
 
