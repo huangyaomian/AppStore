@@ -20,6 +20,7 @@ import com.hym.appstore.bean.PageBean;
 import com.hym.appstore.bean.User;
 import com.hym.appstore.common.Constant;
 import com.hym.appstore.common.rx.RxBus;
+import com.hym.appstore.common.utils.ACache;
 import com.hym.appstore.common.utils.FileUtils;
 import com.hym.appstore.presenter.AppInfoPresenter;
 import com.hym.appstore.presenter.contract.AppInfoContract;
@@ -132,14 +133,18 @@ public abstract class AppInfoFragment extends ProgressFragment<AppInfoPresenter>
 
         for (int i = 0; i < mAppInfoAdapter.getItemCount(); i++) {
             if (mAppInfoAdapter.getItem(i).getPackageName().equals(packageName)) {
-                Log.d("hymmm", "PackageAdded: " + "安装了应用："+packageName);
-                View childAt = mHomeRv.getLayoutManager().findViewByPosition(i);
-                RecyclerView.ViewHolder childViewHolder = mHomeRv.getChildViewHolder(childAt);
-                DownloadProgressButton  btn = childViewHolder.itemView.findViewById(R.id.btn_download);
-                btn.setText("運行");
                 mAppInfoAdapter.notifyItemChanged(i);
-                FileUtils.deleteFile(Constant.APK_DOWNLOAD_DIR + File.separator + mAppInfoAdapter.getItem(i).getReleaseKeyHash()+".apk");
-                Log.d("hymmm", "PackageAdded: " + Constant.APK_DOWNLOAD_DIR + File.separator + mAppInfoAdapter.getItem(i).getReleaseKeyHash()+".apk");
+                FileUtils.deleteFile(ACache.get(getContext()).getAsString(Constant.APK_DOWNLOAD_DIR) + File.separator + mAppInfoAdapter.getItem(i).getReleaseKeyHash()+".apk");
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void PackageRemoved(String packageName) {
+        for (int i = 0; i < mAppInfoAdapter.getItemCount(); i++) {
+            if (mAppInfoAdapter.getItem(i).getPackageName().equals(packageName)) {
+                mAppInfoAdapter.notifyItemChanged(i);
                 break;
             }
         }

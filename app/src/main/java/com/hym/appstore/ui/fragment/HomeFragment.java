@@ -11,12 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hym.appstore.R;
 import com.hym.appstore.bean.HomeBean;
+import com.hym.appstore.common.Constant;
+import com.hym.appstore.common.utils.ACache;
+import com.hym.appstore.common.utils.FileUtils;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.dagger2.component.DaggerHomeComponent;
 import com.hym.appstore.dagger2.module.HomeModule;
 import com.hym.appstore.presenter.HomePresenter;
 import com.hym.appstore.presenter.contract.AppInfoContract;
+import com.hym.appstore.ui.adapter.AppInfoAdapter;
 import com.hym.appstore.ui.adapter.HomeAdapter;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
@@ -79,7 +85,28 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
         mRecyclerView.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
         Log.d("showResult", String.valueOf(mRecyclerView.getChildCount()));
 
+        adapter.setInstallListener(new HomeAdapter.InstallListener() {
+            @Override
+            public void installAdded(AppInfoAdapter appInfoAdapter,String packageName) {
+                for (int i = 0; i < appInfoAdapter.getItemCount(); i++) {
+                    if (appInfoAdapter.getItem(i).getPackageName().equals(packageName)) {
+                        appInfoAdapter.notifyItemChanged(i);
+                        FileUtils.deleteFile(ACache.get(getContext()).getAsString(Constant.APK_DOWNLOAD_DIR) + File.separator + appInfoAdapter.getItem(i).getReleaseKeyHash()+".apk");
+                        break;
+                    }
+                }
+            }
 
+            @Override
+            public void installRemoved(AppInfoAdapter appInfoAdapter,String packageName) {
+                for (int i = 0; i < appInfoAdapter.getItemCount(); i++) {
+                    if (appInfoAdapter.getItem(i).getPackageName().equals(packageName)) {
+                        appInfoAdapter.notifyItemChanged(i);
+                        break;
+                    }
+                }
+            }
+        });
     }
 
 
@@ -99,7 +126,18 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
         Toast.makeText(getActivity(),"您已拒絕授權!",Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void PackageAdded(String packageName) {
+        adapter.setInstallAdded(packageName);
 
+
+
+    }
+
+    @Override
+    public void PackageRemoved(String packageName) {
+        adapter.setInstallRemoved(packageName);
+    }
 
 
 

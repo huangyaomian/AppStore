@@ -57,10 +57,10 @@ public class InstalledAppAppFragment extends AppManagerFragment {
     public void PackageRemoved(String packageName) {
         for (int i = 0; i < mAdapter.getData().size(); i++) {
             if (mAdapter.getData().get(i).getPackageName().equals(packageName)){
-                mAdapter.getData().remove(i);
-                mAdapter.notifyDataSetChanged();
+                mAdapter.removeAt(i);
             }
         }
     }
+
 
 }

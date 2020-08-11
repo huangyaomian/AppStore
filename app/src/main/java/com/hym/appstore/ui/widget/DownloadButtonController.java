@@ -145,7 +145,7 @@ public class DownloadButtonController {
                         runApp(btn.getContext(), appInfo.getPackageName());
                         break;
 
-                    // 升级 还加上去
+
 
 
                     case DownloadFlag.STARTED:
@@ -155,7 +155,7 @@ public class DownloadButtonController {
                     case DownloadFlag.FAILED:
                     case DownloadFlag.NORMAL:
                     case DownloadFlag.PAUSED:
-                    case DownloadFlag.UPDATE:
+                    case DownloadFlag.UPDATE:// 升级 还加上去
                         startDownload(btn, appInfo);
                         break;
 
@@ -359,7 +359,7 @@ public class DownloadButtonController {
                 case DownloadFlag.STARTED:
                 case DownloadFlag.WAITING: //等待中
                     btn.setProgress((int) event.getDownloadStatus().getPercentNumber());
-//                    Log.d("hymmm","getPercentNumber =" + event.getDownloadStatus().getPercentNumber());
+                    Log.d("hymmm","getPercentNumber =" + event.getDownloadStatus().getPercentNumber());
                     break;
 
                 case DownloadFlag.PAUSED:

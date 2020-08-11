@@ -52,6 +52,29 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     RxDownload mRxDownload;
 
+    private InstallListener installListener;
+
+    private AppInfoAdapter mAppInfoAdapter;
+
+    public interface InstallListener {
+
+        void installAdded(AppInfoAdapter appInfoAdapter,String packageName);
+        void installRemoved(AppInfoAdapter appInfoAdapter,String packageName);
+
+    }
+
+    public void setInstallListener(InstallListener listener){
+        this.installListener = listener;
+    }
+
+    public void setInstallAdded(String packageName){
+        installListener.installAdded(mAppInfoAdapter,packageName);
+    }
+
+    public void setInstallRemoved(String packageName){
+        installListener.installRemoved(mAppInfoAdapter,packageName);
+    }
+
 
     public HomeAdapter(Context context, HomeBean homeBean,RxDownload rxDownload) {
         mLayoutInflater = LayoutInflater.from(context);
@@ -132,7 +155,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             iconViewHolder.mIconHotRecommend.setOnClickListener(this);
         } else {
             AppViewHolder viewHolder = (AppViewHolder) holder;
-            AppInfoAdapter appInfoAdapter = AppInfoAdapter.builder().showPosition(false).showCategoryName(false).showBrief(true).rxDownload(mRxDownload).build();
+            mAppInfoAdapter = AppInfoAdapter.builder().showPosition(false).showCategoryName(false).showBrief(true).rxDownload(mRxDownload).build();
 //            appInfoAdapter.setAnimationEnable(false);
 //            appInfoAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.AlphaIn);
             if (viewHolder.type == TYPE_APP){
@@ -140,17 +163,17 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 List<AppInfoBean> homeApps = mHomeBean.getHomeApps();
                 List<AppInfoBean> homeApps2 = new ArrayList<>();
                 homeApps2=homeApps.subList(0,10);
-                appInfoAdapter.addData(homeApps2);
+                mAppInfoAdapter.addData(homeApps2);
             }else {
                 viewHolder.homeRecyclerviewTitle.setText("热门游戏");
-                appInfoAdapter.addData(mHomeBean.getHomeGames());
+                mAppInfoAdapter.addData(mHomeBean.getHomeGames());
             }
 //            RecyclerView.ItemAnimator itemAnimator = new SlideInLeftAnimator();
 //            viewHolder.homeRecyclerview.setAnimation(SlideInUpAnimator(OvershootInterpolator(1f)));
-            viewHolder.homeRecyclerview.setAdapter(appInfoAdapter);
+            viewHolder.homeRecyclerview.setAdapter(mAppInfoAdapter);
 
             // 设置点击事件
-            appInfoAdapter.setOnItemClickListener(new OnItemClickListener() {
+            mAppInfoAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
                     Toast.makeText(mContext,"onItemClick " + position, Toast.LENGTH_SHORT).show();
