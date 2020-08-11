@@ -1,8 +1,6 @@
 package com.hym.appstore.ui.fragment;
 
 
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hym.appstore.R;
 import com.hym.appstore.bean.HomeBean;
+import com.hym.appstore.bean.User;
 import com.hym.appstore.common.Constant;
+import com.hym.appstore.common.rx.RxBus;
 import com.hym.appstore.common.utils.ACache;
 import com.hym.appstore.common.utils.FileUtils;
 import com.hym.appstore.dagger2.component.AppComponent;
@@ -27,6 +27,7 @@ import java.io.File;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 import zlc.season.rxdownload2.RxDownload;
@@ -59,6 +60,12 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
 
     @Override
     protected void init() {
+        RxBus.getDefault().toObservable(User.class).subscribe(new Consumer<User>() {
+            @Override
+            public void accept(User user) {
+                mPresenter.requestHomeData(true);
+            }
+        });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
 //        mHomeRv.setItemAnimator(new DefaultItemAnimator());

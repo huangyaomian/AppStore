@@ -1,7 +1,6 @@
 package com.hym.appstore.ui.fragment;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,7 +25,6 @@ import com.hym.appstore.presenter.AppInfoPresenter;
 import com.hym.appstore.presenter.contract.AppInfoContract;
 import com.hym.appstore.ui.activity.AppDetailsActivity;
 import com.hym.appstore.ui.adapter.AppInfoAdapter;
-import com.hym.appstore.ui.widget.DownloadProgressButton;
 
 import java.io.File;
 
@@ -97,11 +95,12 @@ public abstract class AppInfoFragment extends ProgressFragment<AppInfoPresenter>
             }
         });
 
+
         // 设置点击事件
         mAppInfoAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
-                Toast.makeText(getContext(),"onItemClick " + position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"AppInfoFragment--onItemClick " + position, Toast.LENGTH_SHORT).show();
                 mMyApplication.setView(view);
                 AppInfoBean appInfoBean = mAppInfoAdapter.getItem(position);
                 Intent intent = new Intent(getActivity(), AppDetailsActivity.class);

@@ -33,12 +33,12 @@ import android.util.Log;
 import androidx.core.content.FileProvider;
 
 import com.hym.appstore.common.apkparset.AndroidApk;
-import com.hym.appstore.service.InstallAccessibilityService;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
@@ -218,7 +218,7 @@ public class AppUtils {
         return installed;
     }
 
-    public static boolean  installApk(Context context, String path) {
+/*    public static boolean  installApk(Context context, String path) {
 
         String filePath=path+".apk";
 //        String filePath=path;
@@ -249,8 +249,61 @@ public class AppUtils {
             context.startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
             return true;
         }
+    }*/
 
+    /**
+     * 兼容8.0的安装apk
+     * @param context
+     * @param path
+     */
+    public static void installApk(Context context,String path) throws FileNotFoundException
+            ,NullPointerException{
 
+        String filePath = path+".apk";
+        if (filePath == null || "".equals(filePath)) {
+            throw new NullPointerException("路径字符是null");
+        }
+        File file = new File(filePath);
+        if (!file.exists()) {
+            throw new FileNotFoundException("文件不存在");
+        }
+        if (Build.VERSION.SDK_INT >= 26) {
+            boolean b = context.getPackageManager().canRequestPackageInstalls();
+            if (b) {
+                installApkComp(context,filePath);
+                //安装应用的逻辑(写自己的就可以)
+            } else {
+                //设置安装未知应用来源的权限
+                Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        } else {
+            installApkComp(context,filePath);
+        }
+    }
+
+    /**
+     * 安装apk,私有目录
+     * @param mContext
+     * @param filePath
+     */
+    public static void installApkComp(Context mContext,String filePath){
+        File apkFile = new File(filePath);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Log.w("hymmm", "版本大于 N ，开始使用 fileProvider 进行安装");
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Uri contentUri = FileProvider.getUriForFile(
+                    mContext
+                    , "com.hym.appstore.fileProvider"
+                    , apkFile);
+            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+        } else {
+            intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+        }
+        mContext.startActivity(intent);
     }
 
     public static boolean isAccessibilityEnabled(Context context,String serviceName) {

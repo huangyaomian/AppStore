@@ -16,8 +16,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.AppInfoBean;
+import com.hym.appstore.bean.User;
 import com.hym.appstore.common.Constant;
 import com.hym.appstore.common.imageloader.ImageLoader;
+import com.hym.appstore.common.rx.RxBus;
 import com.hym.appstore.common.utils.DateUtils;
 import com.hym.appstore.dagger2.component.AppComponent;
 import com.hym.appstore.dagger2.component.DaggerAppDetailComponent;
@@ -32,6 +34,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
 
 
 public class AppDetailFragment extends ProgressFragment<AppDetailPresenter> implements AppInfoContract.AppDetailView {
@@ -77,6 +80,12 @@ public class AppDetailFragment extends ProgressFragment<AppDetailPresenter> impl
 
     @Override
     protected void init() {
+        RxBus.getDefault().toObservable(User.class).subscribe(new Consumer<User>() {
+            @Override
+            public void accept(User user) {
+                mPresenter.getAppDetail(mAppId);
+            }
+        });
         mLayoutInflater = LayoutInflater.from(getActivity());
         mPresenter.getAppDetail(mAppId);
     }

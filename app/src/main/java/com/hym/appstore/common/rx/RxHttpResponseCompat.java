@@ -95,11 +95,13 @@ public class RxHttpResponseCompat {
                 .flatMap(new Function<BaseBean<T>, ObservableSource<Optional<T>>>() {
                              @Override
                              public ObservableSource<Optional<T>> apply(@NonNull BaseBean<T> tBaseBean) throws Exception {
+
                                  if (tBaseBean.success()) {
                                      // result.transform() 就是将返回结果进行包装
                                      return createHttpData(tBaseBean.transform());
                                  } else {
                                      // 发送请求失败的信息
+                                     Log.d("hymmm", "apply:未登錄-- " + tBaseBean.getStatus());
                                      return Observable.error(new ApiException(tBaseBean.getStatus(), tBaseBean.getMessage()));
                                  }
 

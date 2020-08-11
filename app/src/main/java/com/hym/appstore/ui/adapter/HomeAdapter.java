@@ -156,8 +156,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         } else {
             AppViewHolder viewHolder = (AppViewHolder) holder;
             mAppInfoAdapter = AppInfoAdapter.builder().showPosition(false).showCategoryName(false).showBrief(true).rxDownload(mRxDownload).build();
-//            appInfoAdapter.setAnimationEnable(false);
-//            appInfoAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.AlphaIn);
+
             if (viewHolder.type == TYPE_APP){
                 viewHolder.homeRecyclerviewTitle.setText("热门应用");
                 List<AppInfoBean> homeApps = mHomeBean.getHomeApps();
@@ -168,8 +167,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 viewHolder.homeRecyclerviewTitle.setText("热门游戏");
                 mAppInfoAdapter.addData(mHomeBean.getHomeGames());
             }
-//            RecyclerView.ItemAnimator itemAnimator = new SlideInLeftAnimator();
-//            viewHolder.homeRecyclerview.setAnimation(SlideInUpAnimator(OvershootInterpolator(1f)));
+
             viewHolder.homeRecyclerview.setAdapter(mAppInfoAdapter);
 
             // 设置点击事件

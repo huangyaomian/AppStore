@@ -23,12 +23,20 @@ public class PermissionUtil {
 
 
 
-    public static Observable<Boolean> requestPermisson(Context activity, String permission){
+    public static Observable<Boolean> requestPermission(Context activity, String permission){
 
 
         RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
 
         return rxPermissions.request(permission);
+    }
+
+    public static Observable<Boolean> requestPermissions(Context activity, String... permissions){
+
+
+        RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
+
+        return rxPermissions.request(permissions);
     }
 
 }

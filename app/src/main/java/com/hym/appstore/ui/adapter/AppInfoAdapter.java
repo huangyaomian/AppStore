@@ -59,6 +59,7 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfoBean, BaseViewHolder
         if (viewBtn instanceof  DownloadProgressButton){
             DownloadProgressButton btn = (DownloadProgressButton) viewBtn;
             mDownloadButtonController.handClick(btn,appInfoBean);
+            btn.setClickable(false);
         }
 
 

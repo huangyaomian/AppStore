@@ -43,7 +43,7 @@ public class RxErrorHandler {
     }
 
     public void showErrorMsg(BaseException e){
-        Log.d("showErrorMsg","縂的錯誤捕捉");
+        Log.d("hymmm","縂的錯誤捕捉");
         Toast.makeText(mContext,e.getDisplayMessage(),Toast.LENGTH_SHORT).show();
     }
 }

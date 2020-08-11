@@ -41,7 +41,23 @@ public class MainPresenter extends BasePresenter<MainContract.IMainModel,MainCon
 
     public  void requestPermission(){
 
-      PermissionUtil.requestPermisson(mContext,READ_PHONE_STATE).doOnNext(new Consumer<Boolean>() {
+     /* PermissionUtil.requestPermission(mContext,READ_PHONE_STATE).doOnNext(new Consumer<Boolean>() {
+            @Override
+            public void accept(@NonNull Boolean aBoolean) throws Exception {
+
+                if(!aBoolean){
+                    mView.requestPermissionFail();
+                }
+
+            }
+        }).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(@NonNull Boolean aBoolean) throws Exception {
+                mView.requestPermissionSuccess();
+            }
+        });*/
+
+        PermissionUtil.requestPermissions(mContext,READ_PHONE_STATE,WRITE_EXTERNAL_STORAGE).doOnNext(new Consumer<Boolean>() {
             @Override
             public void accept(@NonNull Boolean aBoolean) throws Exception {
 
@@ -56,23 +72,6 @@ public class MainPresenter extends BasePresenter<MainContract.IMainModel,MainCon
                 mView.requestPermissionSuccess();
             }
         });
-
-        PermissionUtil.requestPermisson(mContext,WRITE_EXTERNAL_STORAGE).doOnNext(new Consumer<Boolean>() {
-            @Override
-            public void accept(@NonNull Boolean aBoolean) throws Exception {
-
-                if(!aBoolean){
-                    mView.requestPermissionFail();
-                }
-
-            }
-        }).subscribe(new Consumer<Boolean>() {
-            @Override
-            public void accept(@NonNull Boolean aBoolean) throws Exception {
-                mView.requestPermissionSuccess();
-            }
-        });
-
         /*Observable<Boolean> booleanObservable = PermissionUtil.requestPermisson(mContext, READ_PHONE_STATE);
 
         Observable<Boolean> booleanObservable2 = PermissionUtil.requestPermisson(mContext, WRITE_EXTERNAL_STORAGE);

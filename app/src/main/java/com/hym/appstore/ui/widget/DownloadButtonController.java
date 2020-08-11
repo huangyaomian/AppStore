@@ -11,20 +11,24 @@ import com.hym.appstore.bean.AppDownloadInfo;
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.bean.BaseBean;
 import com.hym.appstore.common.Constant;
+import com.hym.appstore.common.rx.Optional;
 import com.hym.appstore.common.rx.RxHttpResponseCompat;
 import com.hym.appstore.common.rx.RxSchedulers;
+import com.hym.appstore.common.rx.subscriber.ErrorHandlerDisposableObserver;
 import com.hym.appstore.common.utils.ACache;
 import com.hym.appstore.common.utils.AppUtils;
 import com.hym.appstore.common.utils.PermissionUtil;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import retrofit2.http.GET;
@@ -65,6 +69,7 @@ public class DownloadButtonController {
         if (mApi == null) {
             return;
         }
+
         isAppInstalled(btn.getContext(), appInfo)
                 .flatMap(new Function<DownloadEvent, ObservableSource<DownloadEvent>>() {
                     @Override
@@ -96,31 +101,35 @@ public class DownloadButtonController {
                     @Override
                     public ObservableSource<DownloadEvent> apply(@NonNull DownloadEvent event) throws Exception {
 
+                        if (appInfo.getDisplayName().contains("快手")){
+
+                        }
+
+                        Log.d("hymmm", "apply: " + appInfo.getDisplayName() + "---" + event.getFlag());
 
                         if (DownloadFlag.FILE_EXIST == event.getFlag()) {
 
                             return getAppDownloadInfo(appInfo)
-                                    .flatMap(new Function<AppDownloadInfo, ObservableSource<DownloadEvent>>() {
+                                    .flatMap(new Function<Optional<AppDownloadInfo>, ObservableSource<DownloadEvent>>() {
                                         @Override
-                                        public ObservableSource<DownloadEvent> apply(@NonNull AppDownloadInfo appDownloadInfo) throws Exception {
+                                        public ObservableSource<DownloadEvent> apply(Optional<AppDownloadInfo> appDownloadInfoOptional) throws Exception {
 
-                                            appInfo.setAppDownloadInfo(appDownloadInfo);
+                                            appInfo.setAppDownloadInfo(appDownloadInfoOptional.getIncludeNull());
 
-                                            return receiveDownloadStatus(appDownloadInfo.getDownloadUrl());
+                                            return receiveDownloadStatus(appDownloadInfoOptional.getIncludeNull().getDownloadUrl());
                                         }
                                     });
 
-                        }
 
-//                        return isUpdate(btn.getContext(), appInfo);
+                        }
 
                         return Observable.just(event);
                     }
                 })
                 .compose(RxSchedulers.<DownloadEvent>io_main())
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DownloadConsumer(btn, appInfo));
+
+
 
 
     }
@@ -139,14 +148,12 @@ public class DownloadButtonController {
 
                 int flag = (int) btn.getTag(R.id.tag_apk_flag);
                 Log.d("hymmm","bindClick:flag=" + flag);
+
                 switch (flag) {
 
                     case DownloadFlag.INSTALLED:
                         runApp(btn.getContext(), appInfo.getPackageName());
                         break;
-
-
-
 
                     case DownloadFlag.STARTED:
                         pausedDownload(appInfo.getAppDownloadInfo().getDownloadUrl());
@@ -171,7 +178,7 @@ public class DownloadButtonController {
     }
 
     //    安装app
-    private void installApp(Context context, AppInfoBean appInfoBean){
+    private void installApp(Context context, AppInfoBean appInfoBean) throws FileNotFoundException {
         String path = ACache.get(context).getAsString(Constant.APK_DOWNLOAD_DIR) + File.separator + appInfoBean.getReleaseKeyHash();
         Log.d("installApp",path);
         AppUtils.installApk(context, path);
@@ -179,21 +186,34 @@ public class DownloadButtonController {
 
     //    开启下载
     private void startDownload(final DownloadProgressButton btn, final AppInfoBean appInfoBean){
-        PermissionUtil.requestPermisson(btn.getContext(),WRITE_EXTERNAL_STORAGE)
+        PermissionUtil.requestPermission(btn.getContext(),WRITE_EXTERNAL_STORAGE)
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) {
                         if (aBoolean) {
                             final AppDownloadInfo downloadInfo = appInfoBean.getAppDownloadInfo();
                             if (downloadInfo == null) {
-                                getAppDownloadInfo(appInfoBean).subscribe(new Consumer<AppDownloadInfo>() {
-                                    @Override
-                                    public void accept(AppDownloadInfo appDownloadInfo) {
-                                        appInfoBean.setAppDownloadInfo(appDownloadInfo);
-                                        download(btn,appInfoBean);
+                                getAppDownloadInfo(appInfoBean)
+                                        .subscribe(new ErrorHandlerDisposableObserver<Optional<AppDownloadInfo>>(btn.getContext()) {
+                                            @Override
+                                            public void onSubscribe(Disposable d) {
 
-                                    }
-                                });
+                                            }
+
+                                            @Override
+                                            public void onNext(Optional<AppDownloadInfo> appDownloadInfoOptional) {
+
+                                                appInfoBean.setAppDownloadInfo(appDownloadInfoOptional.getIncludeNull());
+                                                download(btn,appInfoBean);
+
+                                            }
+
+                                            @Override
+                                            public void onComplete() {
+
+                                            }
+                                        });
+
                             }else {
                                 download(btn, appInfoBean);
                             }
@@ -322,8 +342,9 @@ public class DownloadButtonController {
     }
 
 
-    public Observable<AppDownloadInfo> getAppDownloadInfo(AppInfoBean appInfoBean) {
-        return mApi.getAppDownloadInfo(appInfoBean.getId()).compose(RxHttpResponseCompat.<AppDownloadInfo>compatResult());
+    public Observable<Optional<AppDownloadInfo>> getAppDownloadInfo(AppInfoBean appInfoBean) {
+        return mApi.getAppDownloadInfo(appInfoBean.getId()).compose(RxHttpResponseCompat.handle_result());
+//        return mApi.getAppDownloadInfo(appInfoBean.getId()).compose(RxHttpResponseCompat.<AppDownloadInfo>compatResult());
     }
 
 
@@ -344,6 +365,8 @@ public class DownloadButtonController {
             Integer flag = 0;
             flag = event.getFlag();
             btn.setTag(R.id.tag_apk_flag, flag);
+
+            Log.d("hymmm","bindClick:accept=" + mAppInfo.getDisplayName());
 
             bindClick(btn, mAppInfo);
 
