@@ -19,6 +19,7 @@ public interface AppManagerContract {
     }
 
     public interface IAppManagerModel{
+
         Observable<List<DownloadRecord>> getDownloadRecord();
 
         RxDownload getRxDownload();

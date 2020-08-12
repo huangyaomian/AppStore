@@ -1,5 +1,10 @@
 package com.hym.appstore.ui.fragment;
 
+import android.view.Gravity;
+import android.view.MenuItem;
+import android.view.View;
+
+import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -68,5 +73,20 @@ public abstract class AppManagerFragment extends ProgressFragment<AppManagerPres
     @Override
     public void showUpdateApps(List<AppInfoBean> appInfoBeans) {
 
+    }
+
+    protected PopupMenu myPopupMenu(View v) {
+        //定义PopupMenu对象
+        PopupMenu popupMenu = new PopupMenu(getContext(), v);
+        //设置PopupMenu对象的布局
+        popupMenu.getMenuInflater().inflate(R.menu.pop_menu, popupMenu.getMenu());
+
+        popupMenu.setGravity(Gravity.END);
+
+
+        //显示菜单
+        popupMenu.show();
+
+        return popupMenu;
     }
 }

@@ -34,6 +34,8 @@ public class AppManagerModel implements AppManagerContract.IAppManagerModel {
         return mRxDownload.getTotalDownloadRecords();
     }
 
+
+
     @Override
     public RxDownload getRxDownload() {
         return mRxDownload;

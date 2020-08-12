@@ -134,6 +134,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                             Intent intent = new Intent();
                             intent.setClass(mContext, AppDetailsActivity.class);
                             intent.putExtra("isAnim",false);
+                            AppInfoBean appInfoBean = new AppInfoBean();
+                            appInfoBean.setPackageName(bannerBean.getId());
+                            intent.putExtra("appInfo",appInfoBean);
                             mContext.startActivity(intent);
                             break;
                         case "subject":

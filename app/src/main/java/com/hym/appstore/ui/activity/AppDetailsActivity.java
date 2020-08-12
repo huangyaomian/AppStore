@@ -74,8 +74,12 @@ public class AppDetailsActivity extends BaseActivity {
         );
         mAppInfoBean = (AppInfoBean) getIntent().getSerializableExtra("appInfo");
         isAnim = (boolean) getIntent().getSerializableExtra("isAnim");
-        mToolbarLayout.setTitle(mAppInfoBean.getDisplayName());
-        ImageLoader.load(Constant.BASE_IMG_URL + mAppInfoBean.getIcon(), imgIcon);
+        if (mAppInfoBean != null) {
+            mToolbarLayout.setTitle(mAppInfoBean.getDisplayName());
+            ImageLoader.load(Constant.BASE_IMG_URL + mAppInfoBean.getIcon(), imgIcon);
+        }
+
+
 
         if (isAnim) {
             View view = mMyApplication.getView();
