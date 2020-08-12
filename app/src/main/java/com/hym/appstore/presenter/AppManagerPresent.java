@@ -18,6 +18,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.BiFunction;
 import zlc.season.rxdownload2.RxDownload;
 import zlc.season.rxdownload2.entity.DownloadFlag;
 import zlc.season.rxdownload2.entity.DownloadRecord;
@@ -41,13 +42,20 @@ public class AppManagerPresent extends BasePresenter<AppManagerContract.IAppMana
     }
 
     public void getDownloadedApps(){
-        mModel.getDownloadRecord().compose(RxSchedulers.io_main())
-                .subscribe(new ProgressDisposableObserver<List<DownloadRecord>>(mContext,mView) {
-                    @Override
-                    public void onNext(List<DownloadRecord> downloadRecords) {
-                        mView.showDownloading(downloadRecordFilter(downloadRecords));
-                    }
-                });
+        Observable<List<DownloadRecord>> downloadRecord = mModel.getDownloadRecord();
+        Observable<List<AndroidApk>> localApks = mModel.getLocalApks();
+        Observable<List<AndroidApk>> downloaded = Observable.zip(localApks, downloadRecord, new BiFunction<List<AndroidApk>, List<DownloadRecord>>() {
+            @Override
+            public Object apply(Object o, Object o2) throws Exception {
+                return null;
+            }
+
+            @Override
+            public List<DownloadRecord> apply(List<AndroidApk> androidApks) throws Exception {
+                return null;
+            }
+        });
+
     }
 
     public Observable<Boolean> DelDownloadingApp(String url,boolean deleteFile){
