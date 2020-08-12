@@ -27,5 +27,7 @@ public interface AppManagerContract {
         Observable<List<AndroidApk>> getLocalApks();
 
         Observable<List<AndroidApk>> getInstalledApps();
+
+        Observable<Boolean> DelDownloadRecord(String url , boolean deleteFile);
     }
 }

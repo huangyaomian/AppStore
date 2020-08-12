@@ -1,7 +1,6 @@
 package com.hym.appstore.ui.fragment;
 
 import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.widget.PopupMenu;
@@ -10,7 +9,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hym.appstore.R;
 import com.hym.appstore.bean.AppInfoBean;
 import com.hym.appstore.common.apkparset.AndroidApk;
@@ -19,7 +17,6 @@ import com.hym.appstore.dagger2.component.DaggerAppManagerComponent;
 import com.hym.appstore.dagger2.module.AppManagerModule;
 import com.hym.appstore.presenter.AppManagerPresent;
 import com.hym.appstore.presenter.contract.AppManagerContract;
-import com.hym.appstore.ui.adapter.DownloadingAdapter;
 
 import java.util.List;
 
@@ -52,9 +49,6 @@ public abstract class AppManagerFragment extends ProgressFragment<AppManagerPres
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.shape_question_diveder));
         mRecyclerView.addItemDecoration(dividerItemDecoration);
-//        mAdapter = new DownloadingAdapter(mPresenter.getRxDownload());
-//        mAdapter.setAnimationEnable(true);
-//        mAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.AlphaIn);
         mRecyclerView.setAdapter(setupAdapter());
     }
 

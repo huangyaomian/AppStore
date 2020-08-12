@@ -24,6 +24,7 @@ import zlc.season.rxdownload2.entity.DownloadRecord;
 
 public class AppManagerPresent extends BasePresenter<AppManagerContract.IAppManagerModel, AppManagerContract.AppManagerView> {
 
+
     @Inject
     public AppManagerPresent(AppManagerContract.IAppManagerModel mModel, AppManagerContract.AppManagerView mView) {
         super(mModel, mView);
@@ -39,11 +40,36 @@ public class AppManagerPresent extends BasePresenter<AppManagerContract.IAppMana
                 });
     }
 
+    public void getDownloadedApps(){
+        mModel.getDownloadRecord().compose(RxSchedulers.io_main())
+                .subscribe(new ProgressDisposableObserver<List<DownloadRecord>>(mContext,mView) {
+                    @Override
+                    public void onNext(List<DownloadRecord> downloadRecords) {
+                        mView.showDownloading(downloadRecordFilter(downloadRecords));
+                    }
+                });
+    }
+
+    public Observable<Boolean> DelDownloadingApp(String url,boolean deleteFile){
+        return mModel.DelDownloadRecord(url,deleteFile);
+    }
+
     //过滤下载中的
     private List<DownloadRecord> downloadRecordFilter(List<DownloadRecord> downloadRecords){
         List<DownloadRecord> newList = new ArrayList<>();
         for (DownloadRecord r : downloadRecords){
             if (r.getFlag() != DownloadFlag.COMPLETED) {
+                newList.add(r);
+            }
+        }
+        return newList;
+    }
+
+    //獲取下載完成的記錄
+    private List<DownloadRecord> downloadedFilter(List<DownloadRecord> downloadRecords){
+        List<DownloadRecord> newList = new ArrayList<>();
+        for (DownloadRecord r : downloadRecords){
+            if (r.getFlag() == DownloadFlag.COMPLETED) {
                 newList.add(r);
             }
         }
@@ -56,7 +82,6 @@ public class AppManagerPresent extends BasePresenter<AppManagerContract.IAppMana
 
             Gson gson = new Gson();
             List<AppInfoBean> apps = gson.fromJson(json,new TypeToken<List<AppInfoBean>>(){}.getType());
-
             Observable.just(apps)
                     .compose(RxSchedulers.<List<AppInfoBean>>io_main())
 
@@ -67,8 +92,6 @@ public class AppManagerPresent extends BasePresenter<AppManagerContract.IAppMana
                             mView.showUpdateApps(appInfos);
                         }
                     });
-
-
         }
 
     }

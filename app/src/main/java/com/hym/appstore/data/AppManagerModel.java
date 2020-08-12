@@ -6,6 +6,7 @@ import com.hym.appstore.common.Constant;
 import com.hym.appstore.common.apkparset.AndroidApk;
 import com.hym.appstore.common.utils.ACache;
 import com.hym.appstore.common.utils.AppUtils;
+import com.hym.appstore.common.utils.FileUtils;
 import com.hym.appstore.presenter.contract.AppManagerContract;
 
 import java.io.File;
@@ -64,6 +65,11 @@ public class AppManagerModel implements AppManagerContract.IAppManagerModel {
                 AndroidApks.onComplete();
             }
         });
+    }
+
+    @Override
+    public Observable<Boolean> DelDownloadRecord(String url, boolean deleteFile) {
+        return (Observable<Boolean>) mRxDownload.deleteServiceDownload(url,deleteFile);
     }
 
     private List<AndroidApk> scanApks(String dir){

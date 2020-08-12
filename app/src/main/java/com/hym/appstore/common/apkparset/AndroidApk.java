@@ -27,6 +27,16 @@ public class AndroidApk implements Comparable<AndroidApk> {
 
     private String apkPath;
 
+    private String downloadUrl;
+
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
+    }
+
     private long lastUpdateTime;
 
     public long getLastUpdateTime() {

@@ -1,6 +1,5 @@
 package com.hym.appstore.ui.fragment;
 
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -10,14 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemLongClickListener;
-import com.hym.appstore.common.apkparset.AndroidApk;
-import com.hym.appstore.common.utils.FileUtils;
-import com.hym.appstore.dagger2.component.AppComponent;
-import com.hym.appstore.dagger2.component.DaggerAppManagerComponent;
-import com.hym.appstore.dagger2.module.AppManagerModule;
+import com.hym.appstore.R;
+import com.hym.appstore.common.rx.RxSchedulers;
 import com.hym.appstore.ui.adapter.DownloadingAdapter;
 
-import java.io.File;
 import java.util.List;
 
 import zlc.season.rxdownload2.entity.DownloadRecord;
@@ -42,6 +37,7 @@ public class DownloadingFragment extends AppManagerFragment {
         mAdapter = new DownloadingAdapter(mPresenter.getRxDownload());
         mAdapter.setAnimationEnable(true);
         mAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.AlphaIn);
+        mAdapter.setEmptyView(R.layout.loading_view);
         return mAdapter;
     }
 
@@ -61,9 +57,10 @@ public class DownloadingFragment extends AppManagerFragment {
 
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
+//                        Log.d("hymmm", "onMenuItemClick: " + mAdapter.getItem(position).getUrl());
+                        mPresenter.DelDownloadingApp(mAdapter.getItem(position).getUrl(),true)
+                                .compose(RxSchedulers.io_main()).subscribe();
                         mAdapter.removeAt(position);
-                        FileUtils.deleteFile(mAdapter.getItem(position).getSavePath() + File.separator + mAdapter.getItem(position).getSaveName());
-                        Log.d("hymmm", "onMenuItemClick: " + mAdapter.getItem(position).getSavePath() + File.separator + mAdapter.getItem(position).getSaveName());
                         return true;
                     }
 
