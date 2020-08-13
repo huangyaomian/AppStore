@@ -259,7 +259,15 @@ public class AppUtils {
     public static void installApk(Context context,String path) throws FileNotFoundException
             ,NullPointerException{
 
-        String filePath = path+".apk";
+        String filePath = "";
+
+        if (path.endsWith("apk")){
+            filePath = path;
+        }else {
+            filePath = path+".apk";
+        }
+
+
         if (filePath == null || "".equals(filePath)) {
             throw new NullPointerException("路径字符是null");
         }

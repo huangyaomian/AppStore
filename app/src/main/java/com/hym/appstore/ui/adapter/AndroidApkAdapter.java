@@ -57,13 +57,11 @@ public class AndroidApkAdapter extends BaseQuickAdapter<AndroidApk, BaseViewHold
                 @Override
                 public void accept(@NonNull Object o) throws Exception {
 
-
                     if (btn.getTag(R.id.tag_package_name).toString().equals(item.getPackageName())) {
 
                         Object obj = btn.getTag();
 
                         if (obj == null) {
-
 
                             AppUtils.installApk(mContext, item.getApkPath());
 
@@ -82,7 +80,6 @@ public class AndroidApkAdapter extends BaseQuickAdapter<AndroidApk, BaseViewHold
             });
 
             isInstalled(mContext, item.getPackageName()).subscribe(new Consumer<Boolean>() {
-
 
                 @Override
                 public void accept(@NonNull Boolean aBoolean) throws Exception {
@@ -126,6 +123,9 @@ public class AndroidApkAdapter extends BaseQuickAdapter<AndroidApk, BaseViewHold
         }
     }
 
+
+
+
     private void deleteApk(AndroidApk item){
 
         // 1. 删除下载记录
@@ -137,10 +137,11 @@ public class AndroidApkAdapter extends BaseQuickAdapter<AndroidApk, BaseViewHold
         for (int i = 0; i < size; i++) {
             AndroidApk androidApk = list.get(i);
             if (item.getPackageName().equals(androidApk.getPackageName())) {
-                this.remove(i);
+                this.removeAt(i);
                 break;
             }
         }
+
         FileUtils.deleteFile(item.getApkPath());
 
 

@@ -2,6 +2,7 @@ package com.hym.appstore.ui.fragment;
 
 
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import com.hym.appstore.presenter.HomePresenter;
 import com.hym.appstore.presenter.contract.AppInfoContract;
 import com.hym.appstore.ui.adapter.AppInfoAdapter;
 import com.hym.appstore.ui.adapter.HomeAdapter;
+import com.hym.appstore.ui.widget.DownloadProgressButton;
 
 import java.io.File;
 
@@ -31,6 +33,7 @@ import io.reactivex.functions.Consumer;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 import zlc.season.rxdownload2.RxDownload;
+import zlc.season.rxdownload2.entity.DownloadFlag;
 
 public class HomeFragment extends ProgressFragment<HomePresenter> implements AppInfoContract.View {
 
@@ -95,10 +98,14 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
         adapter.setInstallListener(new HomeAdapter.InstallListener() {
             @Override
             public void installAdded(AppInfoAdapter appInfoAdapter,String packageName) {
+                Log.d("hymmm", "安装成功的名称installAdded: " + packageName);
                 for (int i = 0; i < appInfoAdapter.getItemCount(); i++) {
                     if (appInfoAdapter.getItem(i).getPackageName().equals(packageName)) {
-                        appInfoAdapter.notifyItemChanged(i);
                         FileUtils.deleteFile(ACache.get(getContext()).getAsString(Constant.APK_DOWNLOAD_DIR) + File.separator + appInfoAdapter.getItem(i).getReleaseKeyHash()+".apk");
+                        View childAt = mRecyclerView.getChildAt(i);
+                        DownloadProgressButton btn = childAt.findViewById(R.id.btn_download);
+                        btn.setStatue(DownloadFlag.NORMAL);
+                        appInfoAdapter.notifyItemChanged(i);
                         break;
                     }
                 }
@@ -106,6 +113,7 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
 
             @Override
             public void installRemoved(AppInfoAdapter appInfoAdapter,String packageName) {
+                Log.d("hymmm", "卸载成功的名称installAdded: " + packageName);
                 for (int i = 0; i < appInfoAdapter.getItemCount(); i++) {
                     if (appInfoAdapter.getItem(i).getPackageName().equals(packageName)) {
                         appInfoAdapter.notifyItemChanged(i);
@@ -136,9 +144,6 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
     @Override
     public void PackageAdded(String packageName) {
         adapter.setInstallAdded(packageName);
-
-
-
     }
 
     @Override

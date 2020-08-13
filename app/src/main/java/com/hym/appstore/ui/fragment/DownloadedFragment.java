@@ -13,11 +13,10 @@ import com.chad.library.adapter.base.listener.OnItemLongClickListener;
 import com.hym.appstore.common.Constant;
 import com.hym.appstore.common.apkparset.AndroidApk;
 import com.hym.appstore.common.rx.RxSchedulers;
+import com.hym.appstore.common.utils.FileUtils;
 import com.hym.appstore.ui.adapter.AndroidApkAdapter;
 
 import java.util.List;
-
-import io.reactivex.functions.Consumer;
 
 
 public class DownloadedFragment extends AppManagerFragment {
@@ -87,5 +86,16 @@ public class DownloadedFragment extends AppManagerFragment {
 
     }
 
-
+    @Override
+    public void PackageAdded(String packageName) {
+//        super.PackageAdded(packageName);
+        mAdapter.notify();
+        for (int i = 0; i < mAdapter.getItemCount(); i++) {
+            if (mAdapter.getItem(i).getPackageName().equals(packageName)) {
+                mAdapter.notifyItemChanged(i);
+                FileUtils.deleteFile(mAdapter.getItem(i).getApkPath());
+                break;
+            }
+        }
+    }
 }

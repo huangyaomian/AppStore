@@ -12,19 +12,14 @@ import com.hym.appstore.common.rx.subscriber.ProgressDisposableObserver;
 import com.hym.appstore.common.utils.ACache;
 import com.hym.appstore.presenter.contract.AppManagerContract;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Scheduler;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
 import zlc.season.rxdownload2.RxDownload;
 import zlc.season.rxdownload2.entity.DownloadFlag;
 import zlc.season.rxdownload2.entity.DownloadRecord;
