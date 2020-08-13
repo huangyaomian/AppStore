@@ -64,12 +64,7 @@ public class DownloadedFragment extends AppManagerFragment {
                     public boolean onMenuItemClick(MenuItem item) {
                         Log.d("hymmm", "onMenuItemClick: " + Constant.BASE_DOWNLOAD_URL + mAdapter.getItem(position).getDownloadUrl());
                         mPresenter.DelDownloadingApp(mAdapter.getItem(position).getDownloadUrl(),true)
-                                .compose(RxSchedulers.io_main()).subscribe(new Consumer<Boolean>() {
-                            @Override
-                            public void accept(Boolean aBoolean) throws Exception {
-                                Log.d("hymmm", "accept: ");
-                            }
-                        });
+                                .compose(RxSchedulers.io_main()).subscribe();
                         mAdapter.removeAt(position);
                         return true;
                     }
@@ -84,7 +79,12 @@ public class DownloadedFragment extends AppManagerFragment {
 
     @Override
     public void showApps(List<AndroidApk> apps) {
-        mAdapter.addData(apps);
+        if (apps.size() ==0 || apps ==null){
+            showEmptyView("暂无数据");
+        }else {
+            mAdapter.addData(apps);
+        }
+
     }
 
 

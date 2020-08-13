@@ -12,13 +12,19 @@ import com.hym.appstore.common.rx.subscriber.ProgressDisposableObserver;
 import com.hym.appstore.common.utils.ACache;
 import com.hym.appstore.presenter.contract.AppManagerContract;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Scheduler;
 import io.reactivex.functions.BiFunction;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
 import zlc.season.rxdownload2.RxDownload;
 import zlc.season.rxdownload2.entity.DownloadFlag;
 import zlc.season.rxdownload2.entity.DownloadRecord;
@@ -41,21 +47,29 @@ public class AppManagerPresent extends BasePresenter<AppManagerContract.IAppMana
                 });
     }
 
-    public void getDownloadedApps(){
-        Observable<List<DownloadRecord>> downloadRecord = mModel.getDownloadRecord();
-        Observable<List<AndroidApk>> localApks = mModel.getLocalApks();
-        Observable<List<AndroidApk>> downloaded = Observable.zip(localApks, downloadRecord, new BiFunction<List<AndroidApk>, List<DownloadRecord>>() {
-            @Override
-            public Object apply(Object o, Object o2) throws Exception {
-                return null;
-            }
+    public Observable<List<AndroidApk>> getDownloadedApps(){
+        Observable<List<DownloadRecord>> downloadRecord = mModel.getDownloadRecord().subscribeOn(Schedulers.io());
+        Observable<List<AndroidApk>> localApks = mModel.getLocalApks().subscribeOn(Schedulers.io());
+        Observable<List<AndroidApk>> downloaded = Observable.zip(localApks, downloadRecord, new BiFunction<List<AndroidApk>, List<DownloadRecord>, List<AndroidApk>>() {
+                    @Override
+                    public List<AndroidApk> apply(List<AndroidApk> androidApks, List<DownloadRecord> downloadRecords) throws Exception {
+                        List<AndroidApk> newList = new ArrayList<>();
+                        List<DownloadRecord> downloadRecords2 = downloadedFilter(downloadRecords);
 
-            @Override
-            public List<DownloadRecord> apply(List<AndroidApk> androidApks) throws Exception {
-                return null;
-            }
-        });
-
+                        for (int i = 0; i < androidApks.size(); i++) {
+                            AndroidApk androidApk = androidApks.get(i);
+                            for (int j = 0; j < downloadRecords2.size(); j++) {
+                                if (androidApk.getPackageName().equals(downloadRecords2.get(j).getExtra4())) {
+                                    androidApk.setDownloadUrl(downloadRecords2.get(j).getUrl());
+                                    newList.add(androidApk);
+                                }
+                            }
+                        }
+                        return newList;
+                    }
+                }
+        );
+        return downloaded;
     }
 
     public Observable<Boolean> DelDownloadingApp(String url,boolean deleteFile){
@@ -110,13 +124,27 @@ public class AppManagerPresent extends BasePresenter<AppManagerContract.IAppMana
 
     //獲取所有已下載的apk
     public void getLocalApks(){
-        mModel.getLocalApks().compose(RxSchedulers.io_main())
+
+        getDownloadedApps().compose(RxSchedulers.io_main())
+                .subscribe(new ProgressDisposableObserver<List<AndroidApk>>(mContext,mView) {
+                    @Override
+                    public void onNext(List<AndroidApk> androidApks) {
+                        if (androidApks.size() ==0 || androidApks ==null){
+                            mView.showError("暂无数据",0);
+                        }else {
+                            mView.showApps(androidApks);
+                        }
+
+                    }
+                });
+
+       /* mModel.getLocalApks().compose(RxSchedulers.io_main())
                 .subscribe(new ProgressDisposableObserver<List<AndroidApk>>(mContext,mView) {
                     @Override
                     public void onNext(List<AndroidApk> androidApks) {
                         mView.showApps(androidApks);
                     }
-                });
+                });*/
     }
 
     //获取所有已安装的app
